@@ -1,0 +1,126 @@
+This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+Observed package id 'cmdline-tools;19.0' in inconsistent location 'D:\DevEnv\Android\Sdk\cmdline-tools\latest' (Expected 'D:\DevEnv\Android\Sdk\cmdline-tools\19.0')
+Observed package id 'cmdline-tools;latest' in inconsistent location 'D:\DevEnv\Android\Sdk\cmdline-tools\latest-2' (Expected 'D:\DevEnv\Android\Sdk\cmdline-tools\latest')
+Observed package id 'cmdline-tools;19.0' in inconsistent location 'D:\DevEnv\Android\Sdk\cmdline-tools\latest' (Expected 'D:\DevEnv\Android\Sdk\cmdline-tools\19.0')
+Observed package id 'cmdline-tools;latest' in inconsistent location 'D:\DevEnv\Android\Sdk\cmdline-tools\latest-2' (Expected 'D:\DevEnv\Android\Sdk\cmdline-tools\latest')
+Checking the license for package Android SDK Build-Tools 34 in D:\DevEnv\Android\Sdk\licenses
+License for package Android SDK Build-Tools 34 accepted.
+Preparing "Install Android SDK Build-Tools 34 v.34.0.0".
+"Install Android SDK Build-Tools 34 v.34.0.0" ready.
+Installing Android SDK Build-Tools 34 in D:\DevEnv\Android\Sdk\build-tools\34.0.0
+"Install Android SDK Build-Tools 34 v.34.0.0" complete.
+"Install Android SDK Build-Tools 34 v.34.0.0" finished.
+Observed package id 'cmdline-tools;19.0' in inconsistent location 'D:\DevEnv\Android\Sdk\cmdline-tools\latest' (Expected 'D:\DevEnv\Android\Sdk\cmdline-tools\19.0')
+Observed package id 'cmdline-tools;latest' in inconsistent location 'D:\DevEnv\Android\Sdk\cmdline-tools\latest-2' (Expected 'D:\DevEnv\Android\Sdk\cmdline-tools\latest')
+> Task :app:buildKotlinToolingMetadata
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:generateReleaseResValues
+> Task :app:dataBindingMergeDependencyArtifactsRelease
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:parseReleaseLocalResources
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:checkReleaseAarMetadata
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:mergeReleaseResources
+> Task :app:processReleaseMainManifest
+> Task :app:dataBindingGenBaseClassesRelease
+> Task :app:processReleaseManifest
+> Task :app:javaPreCompileRelease
+> Task :app:processReleaseManifestForPackage
+> Task :app:extractProguardFiles
+> Task :app:mergeReleaseJniLibFolders
+> Task :app:mergeReleaseArtProfile
+> Task :app:mergeReleaseNativeLibs
+> Task :app:processReleaseResources
+> Task :app:checkReleaseDuplicateClasses
+
+> Task :app:stripReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libffmpegJNI.so, librtmp-jni.so.
+
+> Task :app:mergeReleaseStartupProfile
+> Task :app:mergeReleaseShaders
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:extractReleaseNativeSymbolTables
+> Task :app:mergeReleaseAssets
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:compressReleaseAssets
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:expandReleaseL8ArtProfileWildcards
+> Task :app:collectReleaseDependencies
+> Task :app:sdkReleaseDependencyData
+> Task :app:validateSigningRelease
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :app:convertLinkedResourcesToProtoRelease
+> Task :app:compileReleaseKotlin
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/InfoFragment.kt:25:27 '@Deprecated(...) constructor(): Handler' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:64:40 '@Deprecated(...) static field FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:65:40 '@Deprecated(...) static field FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:80:16 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:81:16 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:83:20 'var navigationBarDividerColor: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:94:13 'var systemUiVisibility: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:95:22 '@Deprecated(...) static field SYSTEM_UI_FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:96:30 '@Deprecated(...) static field SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:97:30 '@Deprecated(...) static field SYSTEM_UI_FLAG_LAYOUT_STABLE: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:98:30 '@Deprecated(...) static field SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:99:30 '@Deprecated(...) static field SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:100:30 '@Deprecated(...) static field SYSTEM_UI_FLAG_IMMERSIVE: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:291:49 'val defaultDisplay: Display!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:291:64 'val width: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:292:50 'val defaultDisplay: Display!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:292:65 'val height: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MainActivity.kt:858:31 '@Deprecated(...) fun updateConfiguration(p0: Configuration!, p1: DisplayMetrics!): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/ModalFragment.kt:29:49 '@Deprecated(...) static field FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/ModalFragment.kt:30:23 'var systemUiVisibility: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/ModalFragment.kt:30:49 '@Deprecated(...) static field SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MyTVApplication.kt:47:23 'val defaultDisplay: Display!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MyTVApplication.kt:47:38 '@Deprecated(...) fun getMetrics(p0: DisplayMetrics!): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MyTVApplication.kt:48:23 'val defaultDisplay: Display!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MyTVApplication.kt:48:38 '@Deprecated(...) fun getRealMetrics(p0: DisplayMetrics!): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MyTVApplication.kt:59:32 '@Deprecated(...) field scaledDensity: Float' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/MyTVApplication.kt:122:31 '@Deprecated(...) fun updateConfiguration(p0: Configuration!, p1: DisplayMetrics!): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/ProgramFragment.kt:19:27 '@Deprecated(...) constructor(): Handler' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SettingFragment.kt:134:37 '@Deprecated(...) @NonNull() fun requireFragmentManager(): FragmentManager' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SettingFragment.kt:146:34 '@Deprecated(...) @NonNull() fun requireFragmentManager(): FragmentManager' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SettingFragment.kt:157:37 '@Deprecated(...) @NonNull() fun requireFragmentManager(): FragmentManager' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SettingFragment.kt:459:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Please add the '@Deprecated' annotation or suppress the diagnostic.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SettingFragment.kt:464:15 '@Deprecated(...) fun onRequestPermissionsResult(p0: Int, @NonNull() p1: (Array<String!>..Array<out String!>), @NonNull() p2: IntArray): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SourcesFragment.kt:30:49 '@Deprecated(...) static field FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SourcesFragment.kt:31:23 'var systemUiVisibility: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/app/src/main/java/com/lizongying/mytv0/SourcesFragment.kt:31:49 '@Deprecated(...) static field SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java.
+
+> Task :app:compileReleaseJavaWithJavac
+> Task :app:generateReleaseLintVitalReportModel
+> Task :app:mergeReleaseGeneratedProguardFiles
+> Task :app:processReleaseJavaRes
+> Task :app:expandReleaseArtProfileWildcards
+> Task :app:mergeReleaseJavaResource
+> Task :app:lintVitalAnalyzeRelease
+> Task :app:minifyReleaseWithR8
+> Task :app:lintVitalReportRelease
+> Task :app:lintVitalRelease
+> Task :app:l8DexDesugarLibRelease
+> Task :app:compileReleaseArtProfile
+> Task :app:shrinkReleaseRes
+> Task :app:convertShrunkResourcesToBinaryRelease
+> Task :app:optimizeReleaseResources
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:assembleRelease
+
+[Incubating] Problems report is available at: file:///C:/Users/efree/Doubao/chats/2026-11-16/new-chat/my-tv-0/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5m 4s
+54 actionable tasks: 54 executed
