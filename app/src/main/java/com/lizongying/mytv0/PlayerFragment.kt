@@ -200,7 +200,9 @@ class PlayerFragment : Fragment() {
 
         val playerView = binding.playerView
 
-        // 软解台：音频只挂 FFmpeg，视频仍走硬解（详见 FfmpegOnlyAudioFactory 注释）
+        // 软解台：音频只挂 FFmpeg，视频仍走硬解（详见 FfmpegOnlyAudioFactory 注释）。
+        // 试过「音频一律走 FFmpeg」，实测会让 CCTV-5 这类正常台出现「播放停止 → playing」
+        // 反复循环（22:31:15、22:31:20 两次中止），所以只对软解标记的台生效。
         val preferSoft = SP.softDecode || softNeeded.contains(tvModel?.tv?.title ?: "")
         val renderersFactory: DefaultRenderersFactory =
             if (preferSoft) FfmpegOnlyAudioFactory(ctx) else DefaultRenderersFactory(ctx)
@@ -460,6 +462,10 @@ class PlayerFragment : Fragment() {
             requiresSecureDecoder: Boolean,
             requiresTunnelingDecoder: Boolean
         ): MutableList<androidx.media3.exoplayer.mediacodec.MediaCodecInfo> {
+            // 注意：这里试过对 audio/mpeg-L2 直接返回空列表，想让它「查无此解码器」从而落到
+            // FFmpeg。实测无效——selector 确实收到了 audio/mpeg-L2（日志可见），返回空之后
+            // MediaCodecRenderer 仍然抛 DecoderInitializationException(-49999)，说明 Media3
+            // 内部有绕开 selector 的兜底路径。要拦只能在渲染器层面拦（见 FfmpegOnlyAudioFactory）。
             val infos = MediaCodecUtil.getDecoderInfos(
                 mimeType,
                 requiresSecureDecoder,
