@@ -39,6 +39,16 @@
             android:authorities="${applicationId}.InitializerProvider"
             android:exported="false"
             android:initOrder="900" />
+        <!-- 在线升级安装 APK 用：Android 7+ 禁止 file:// 直传，必须走 FileProvider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
     <uses-feature
