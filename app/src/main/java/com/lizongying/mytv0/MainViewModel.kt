@@ -449,8 +449,11 @@ class MainViewModel : ViewModel() {
                         var name = nameRegex.find(info.first())?.groupValues?.get(1)?.trim()
                         tv.name = if (name.isNullOrEmpty()) tv.title else name
                         tv.logo = logRegex.find(info.first())?.groupValues?.get(1)?.trim() ?: ""
+                        // 上游用 ?.toInt() ?: -1：toInt() 抛的是异常不是 null，?: 兜不住。
+                        // 用户导入的源里 tvg-chno 只要有一个非纯数字，整个解析就炸在这里。
                         tv.number =
-                            numRegex.find(info.first())?.groupValues?.get(1)?.trim()?.toInt() ?: -1
+                            numRegex.find(info.first())?.groupValues?.get(1)?.trim()?.toIntOrNull()
+                                ?: -1
                         tv.group = groupRegex.find(info.first())?.groupValues?.get(1)?.trim() ?: ""
                     } else if (trimmedLine.startsWith("#EXTVLCOPT:http-")) {
                         val keyValue =
@@ -481,6 +484,10 @@ class MainViewModel : ViewModel() {
                         // uriIsp 与 uris 一一对应，保证后面按运营商挑地址时下标不错位
                         tv.uriIsp = tv.uriIsp + pendingIsp
                         tv.uriRegion = tv.uriRegion + pendingRegion
+                        // 标注只对下一条地址生效。原来不清空，缺 #ISP 的那条会静默沿用上一条的供应商，
+                        // 自带的源是 1:1 标好的没问题，用户导入的源就会被误标成同网地址。
+                        pendingIsp = ""
+                        pendingRegion = ""
                     }
                 }
                 val key = tv.group + tv.name

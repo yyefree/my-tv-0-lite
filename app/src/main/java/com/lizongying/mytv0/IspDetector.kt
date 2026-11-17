@@ -40,7 +40,13 @@ object IspDetector {
      * 用户自己知道家里是移动还是联通，直接指定比猜准。
      */
     fun wantIsp(): Isp {
-        val manual = SP.ispOverride
+        // SP 由 InitializerProvider 初始化，而本对象的检测是 Application.onCreate 起的后台线程，
+        // 两者存在先后竞态。读不到就按「自动」处理，不能让它把整次检测带崩。
+        val manual = try {
+            SP.ispOverride
+        } catch (e: Exception) {
+            ""
+        }
         if (manual.isNotEmpty()) {
             return when (manual) {
                 "MOBILE" -> Isp.MOBILE
@@ -53,8 +59,21 @@ object IspDetector {
     }
 
     /** 当前生效的省份：手动优先，否则用自动识别出来的 */
-    fun wantRegion(): String =
-        SP.regionOverride.ifEmpty { cached?.province ?: "" }
+    fun wantRegion(): String {
+        val manual = try {
+            SP.regionOverride
+        } catch (e: Exception) {
+            ""
+        }
+        return manual.ifEmpty { cached?.province ?: "" }
+    }
+
+    /** 线路/省份是否被手动指定过（用于给状态行加「手动」后缀） */
+    private fun hasManual(): Boolean = try {
+        SP.ispOverride.isNotEmpty() || SP.regionOverride.isNotEmpty()
+    } catch (e: Exception) {
+        false
+    }
 
     @Volatile
     private var cached: Info? = null
@@ -83,7 +102,7 @@ object IspDetector {
             return if (cached == null) "未检测" else "未知"
         }
         val region = wantRegion()
-        val manual = SP.ispOverride.isNotEmpty() || SP.regionOverride.isNotEmpty()
+        val manual = hasManual()
         val body = if (region.isNotBlank()) "$ispName·$region" else ispName
         return if (manual) "$body(手动)" else body
     }
@@ -93,6 +112,7 @@ object IspDetector {
      * 抓不到就返回 UNKNOWN，不影响播放（只是退化成原来的测速优选）。
      */
     fun detect(): Info {
+        var success = false
         val info = try {
             val req = Request.Builder()
                 .url("http://ip-api.com/json/?lang=zh-CN&fields=status,country,regionName,city,isp,org,as,query")
@@ -114,6 +134,9 @@ object IspDetector {
                         all.contains("Telecom") || all.contains("Chinanet") || all.contains("电信") -> Isp.TELECOM
                         else -> Isp.UNKNOWN
                     }
+                    if (kind != Isp.UNKNOWN) {
+                        success = true
+                    }
                     Info(
                         kind,
                         json.optString("isp"),
@@ -128,9 +151,17 @@ object IspDetector {
             Info(Isp.UNKNOWN, "Unknown", "", "", "")
         }
         cached = info
-        lastCheck = System.currentTimeMillis()
+        // 只有真正识别出来才刷新检测时间。原来失败也刷，结果网络抖一下就要再等 10 分钟
+        // 才会重试，这期间「本网优先」全程失效，测速退化成几十条地址乱测。
+        if (success) {
+            lastCheck = System.currentTimeMillis()
+        }
         Logger.i(TAG, "出口线路: ${info.label} ${info.province} ${info.city} ${info.ip} → ${info.isp}")
-        _labelLive.postValue(label())
+        try {
+            _labelLive.postValue(label())
+        } catch (e: Exception) {
+            Logger.i(TAG, "label 刷新失败 ${e.javaClass.simpleName}")
+        }
         return info
     }
 

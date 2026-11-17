@@ -75,6 +75,7 @@ object SP {
     // 手动指定线路和省份：自动识别不准（或想强制用某个网）时用它覆盖
     private const val KEY_ISP_OVERRIDE = "isp_override"
     private const val KEY_REGION_OVERRIDE = "region_override"
+    private const val KEY_SOFT_CHANNELS = "soft_channels"
 
     const val DEFAULT_CHANNEL_REVERSAL = false
     const val DEFAULT_CHANNEL_NUM = false
@@ -291,4 +292,17 @@ object SP {
     var regionOverride: String
         get() = sp.getString(KEY_REGION_OVERRIDE, "") ?: ""
         set(value) = sp.edit().putString(KEY_REGION_OVERRIDE, value).apply()
+
+    /**
+     * 硬解不了的频道名集合（典型是老直播流的 MPEG-1 Layer II 音频，Amlogic 之类的老电视芯片不认）。
+     * 落盘是为了冷启动少失败一轮：盒子每次开机播这类台，原来都要先黑屏十来秒再落到软解。
+     * 按频道名记，不跟地址绑定——换地址解决不了解码器不支持的问题。
+     */
+    var softChannels: Set<String>
+        get() = try {
+            sp.getStringSet(KEY_SOFT_CHANNELS, emptySet()) ?: emptySet()
+        } catch (e: Exception) {
+            emptySet()
+        }
+        set(value) = sp.edit().putStringSet(KEY_SOFT_CHANNELS, value).apply()
 }

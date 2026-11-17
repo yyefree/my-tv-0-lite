@@ -805,6 +805,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // 面板自动收起的延迟回调（hideMenu / hideSetting / hideChannel…）不清掉的话，
+        // Activity 销毁后它们还会在主线程跑一遍，去 hide 已经 detach 的 Fragment
+        handler.removeCallbacksAndMessages(null)
         server?.stop()
     }
 

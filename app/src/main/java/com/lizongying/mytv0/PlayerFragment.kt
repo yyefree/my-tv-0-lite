@@ -62,7 +62,10 @@ class PlayerFragment : Fragment() {
 
     // 硬件解码器不支持某条流的音轨时（典型是老直播流的 MPEG-1 Layer II 音频），
     // 换地址没用，只能让这个台单独改走 FFmpeg 软解。按频道名记，不影响其它台。
-    private val softNeeded = mutableSetOf<String>()
+    // 落盘到 SP：否则盒子每次冷启动播这类台，都要先硬解失败一轮（十来秒黑屏）再落到软解。
+    private val softNeeded: MutableSet<String> by lazy {
+        SP.softChannels.toMutableSet()
+    }
 
     private val startWatchdogRunnable = Runnable {
         val tv = tvModel ?: return@Runnable
@@ -221,6 +224,11 @@ class PlayerFragment : Fragment() {
         player?.playWhenReady = true
         player?.addListener(object : Player.Listener {
             override fun onVideoSizeChanged(videoSize: VideoSize) {
+                // 尺寸回调有可能早于首次布局（此时 measuredHeight 还是 0），
+                // Int.div(0) 抛的是 ArithmeticException，不是返回 0。
+                if (playerView.measuredWidth <= 0 || playerView.measuredHeight <= 0) {
+                    return
+                }
                 val ratio = playerView.measuredWidth.div(playerView.measuredHeight)
                 val layoutParams = playerView.layoutParams
                 if (ratio < aspectRatio) {
@@ -296,10 +304,23 @@ class PlayerFragment : Fragment() {
                             code == PlaybackException.ERROR_CODE_IO_UNSPECIFIED ||
                             code == PlaybackException.ERROR_CODE_TIMEOUT
 
-                // 解码器初始化失败 / 解码失败：设备的硬解能力问题，跟地址无关
+                // 直播窗口漂移（ERROR_CODE_BEHIND_LIVE_WINDOW）：播放点落后于直播边缘，
+                // 地址是好的、解码器也是好的。原来它落到下面的重试/跳台分支，用户看到的是
+                // 无缘无故卡一下然后被换台。正确做法是重新对齐直播边缘再播。
+                if (code == PlaybackException.ERROR_CODE_BEHIND_LIVE_WINDOW) {
+                    Logger.i(TAG, "${tv.tv.title} 直播窗口漂移，重新对齐到直播边缘")
+                    player?.seekToDefaultPosition()
+                    player?.prepare()
+                    player?.play()
+                    armStartWatchdog()
+                    return
+                }
+
+                // 解码器初始化失败 / 解码失败：设备的硬解能力问题，跟地址无关。
+                // 注意不能把 ERROR_CODE_DECODING_FAILED 算进来——那是「解码过程中失败」，
+                // 多半是流数据坏了或瞬时问题，判成设备不支持会把本来正常的台永久降到软解。
                 val decoderFailed =
                     code == PlaybackException.ERROR_CODE_DECODER_INIT_FAILED ||
-                            code == PlaybackException.ERROR_CODE_DECODING_FAILED ||
                             error.cause?.javaClass?.name
                                 ?.contains("DecoderInitializationException") == true
 
@@ -316,6 +337,7 @@ class PlayerFragment : Fragment() {
                     // 硬解器不支持这条流的音轨，换地址也没用，只能这个台改走软解
                     Logger.i(TAG, "${tv.tv.title} 硬解不可用（${error.errorCodeName}），该台改走软解重试")
                     softNeeded.add(tv.tv.title)
+                    SP.softChannels = softNeeded.toSet()
                     tv.retryTimes = 0
                     updatePlayer()
                 } else if (tv.retryTimes < tv.retryMaxTimes) {
@@ -465,6 +487,8 @@ class PlayerFragment : Fragment() {
         if (player?.isPlaying == false) {
             player?.prepare()
             player?.play()
+            // 回前台这次起播同样可能卡住，补挂看门狗，不然没有任何人会来收这个场
+            armStartWatchdog()
         }
     }
 
@@ -477,8 +501,12 @@ class PlayerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // 必须清：hideVolumeRunnable 是 2 秒后执行的，而 onDestroyView 已经把 _binding 置空，
+        // 回调一旦跑到就会在 binding!! 上炸。上游没清，等于留了个定时崩溃。
+        handler.removeCallbacksAndMessages(null)
         probeScope.cancel()
         player?.release()
+        player = null
     }
 
     override fun onDestroyView() {
