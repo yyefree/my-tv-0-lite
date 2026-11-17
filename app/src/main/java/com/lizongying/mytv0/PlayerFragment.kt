@@ -67,6 +67,9 @@ class PlayerFragment : Fragment() {
         SP.softChannels.toMutableSet()
     }
 
+    // FFmpeg 能力自检只做一次
+    private var ffmpegChecked = false
+
     private val startWatchdogRunnable = Runnable {
         val tv = tvModel ?: return@Runnable
         val p = player ?: return@Runnable
@@ -197,14 +200,32 @@ class PlayerFragment : Fragment() {
 
         val playerView = binding.playerView
 
-        val renderersFactory = DefaultRenderersFactory(ctx)
+        // 软解台：音频只挂 FFmpeg，视频仍走硬解（详见 FfmpegOnlyAudioFactory 注释）
+        val preferSoft = SP.softDecode || softNeeded.contains(tvModel?.tv?.title ?: "")
+        val renderersFactory: DefaultRenderersFactory =
+            if (preferSoft) FfmpegOnlyAudioFactory(ctx) else DefaultRenderersFactory(ctx)
         val playerMediaCodecSelector = PlayerMediaCodecSelector()
         renderersFactory.setMediaCodecSelector(playerMediaCodecSelector)
-        val preferSoft = SP.softDecode || softNeeded.contains(tvModel?.tv?.title ?: "")
         Logger.i(
             TAG,
             "updatePlayer ${tvModel?.tv?.title} 软解=$preferSoft（全局=${SP.softDecode}，集合 ${softNeeded.size} 条）"
         )
+        // 自检：MP2 音频（老直播流的 audio/mpeg-L2）到底能不能走 FFmpeg 扩展。
+        // 不能（FFmpeg 扩展没加载 / 渲染器不认这个 MIME）就只能让这些台静音播视频。
+        if (!ffmpegChecked) {
+            ffmpegChecked = true
+            try {
+                val ver = androidx.media3.decoder.ffmpeg.FfmpegLibrary.getVersion()
+                val mp2 = androidx.media3.common.Format.Builder()
+                    .setSampleMimeType(MimeTypes.AUDIO_MPEG_L2)
+                    .build()
+                val supported = androidx.media3.decoder.ffmpeg.FfmpegAudioRenderer()
+                    .supportsFormat(mp2)
+                Logger.i(TAG, "FFmpeg 扩展版本=$ver，支持 audio/mpeg-L2 = $supported")
+            } catch (e: Throwable) {
+                Logger.i(TAG, "FFmpeg 自检失败 ${e.javaClass.simpleName}: ${e.message}")
+            }
+        }
         renderersFactory.setExtensionRendererMode(
             if (preferSoft) {
                 DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
