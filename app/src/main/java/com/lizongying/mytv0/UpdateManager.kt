@@ -551,8 +551,12 @@ class UpdateManager(
         downloadReceiver = DownloadReceiver(apkName, downloadReference)
 
         val intentFilter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.registerReceiver(downloadReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED)
+        // 注册 flags 必须用 RECEIVER_EXPORTED。用 RECEIVER_NOT_EXPORTED 时，Android 14+ 上
+        // 收不到 DownloadManager（系统进程）发出的 ACTION_DOWNLOAD_COMPLETE，
+        // 表现就是「包已经下完、Download 目录里能看见，但永远不弹可以升级」。
+        // 安全性不受影响：onReceive 里用 downloadReference 比对 id，伪造广播对不上会被忽略。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(downloadReceiver, intentFilter, Context.RECEIVER_EXPORTED)
         } else {
             context.registerReceiver(downloadReceiver, intentFilter)
         }
