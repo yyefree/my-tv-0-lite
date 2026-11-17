@@ -210,7 +210,12 @@ class MainViewModel : ViewModel() {
 
     private suspend fun readEPG(str: String): Boolean = withContext(Dispatchers.IO) {
         try {
-            val res: Map<String, List<EPG>> = gson.fromJson(str, typeEPGMap)
+            val res: Map<String, List<EPG>>? = gson.fromJson(str, typeEPGMap)
+            if (res == null) {
+                cacheEPG.delete()
+                Logger.e(TAG, "readEPG 缓存内容无效，已清除待重建")
+                return@withContext false
+            }
 
             withContext(Dispatchers.Main) {
                 for (m in listModel) {
