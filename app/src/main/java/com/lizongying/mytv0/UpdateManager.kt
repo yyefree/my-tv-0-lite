@@ -531,8 +531,9 @@ class UpdateManager(
             val newSigs = pkg.signatures
             @Suppress("DEPRECATION")
             val mySigs = pm.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES).signatures
-            val sigOk = newSigs != null && mySigs != null &&
-                newSigs.any { n -> mySigs.any { it.toCharsString() == n.toCharsString() } }
+            val sigReadable = newSigs != null && mySigs != null
+            val sigOk = sigReadable &&
+                newSigs!!.any { n -> mySigs!!.any { it.toCharsString() == n.toCharsString() } }
             val vc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 pkg.longVersionCode
             } else {
@@ -540,7 +541,14 @@ class UpdateManager(
                 pkg.versionCode.toLong()
             }
             val verOk = targetVersionCode <= 0L || vc == targetVersionCode
-            Logger.i(TAG, "verifyApk 签名一致=$sigOk 版本=$vc(期望 $targetVersionCode) 版本一致=$verOk")
+            Logger.i(TAG, "verifyApk 签名可读=$sigReadable 签名一致=$sigOk 版本=$vc(期望 $targetVersionCode) 版本一致=$verOk")
+            if (!sigReadable) {
+                // 本包是 V2-only 签名（apksigner 只报 V2 Signer）。Android 7.0 以下认不出这种签名，
+                // 会读到 null。这类设备本来就装不上（没有 V1 签名直接被 pm 拒），
+                // 所以这里不能因为读不出签名就判死，否则会把「装不上」变成「永远不提示升级」。
+                Logger.e(TAG, "⚠ 读不出 APK 签名，降级为只校验版本号")
+                return verOk
+            }
             sigOk && verOk
         } catch (e: Exception) {
             Logger.e(TAG, "verifyApk error", e)
