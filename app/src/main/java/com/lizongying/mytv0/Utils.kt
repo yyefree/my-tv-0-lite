@@ -163,26 +163,9 @@ object Utils {
     }
 
     fun getUrls(url: String): List<String> {
-        return if (url.startsWith("https://raw.githubusercontent.com") || url.startsWith("https://github.com")) {
-            listOf(
-                "https://gh.llkk.cc/",
-                "https://github.moeyy.xyz/",
-                "https://mirror.ghproxy.com/",
-                "https://ghproxy.cn/",
-                "https://ghproxy.net/",
-                "https://ghproxy.click/",
-                "https://ghproxy.com/",
-                "https://github.moeyy.cn/",
-                "https://gh-proxy.llyke.com/",
-                "https://www.ghproxy.cc/",
-                "https://cf.ghproxy.cc/",
-                "https://ghp.ci/",
-                "https://ghfast.top"
-            ).map {
-                "$it$url"
-            }
-        } else {
-            listOf(url)
-        }
+        // 原来这里会把 github 地址套上 13 个 ghproxy 镜像依次重试。
+        // 实测这些镜像（ghfast.top / ghproxy.net / gh.llkk.cc / moeyy 等）已全部失效，
+        // 串行重试只会让「更新应用」卡几十秒再失败，所以只请求原始地址。
+        return listOf(url)
     }
 }
