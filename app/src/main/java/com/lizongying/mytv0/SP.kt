@@ -58,6 +58,15 @@ object SP {
 
     private const val KEY_SOURCES = "sources"
 
+    // 后台升级：已下载待安装的包信息、下载任务 id、用户忽略的版本、上次探测时间
+    private const val KEY_UPDATE_PENDING_CODE = "update_pending_code"
+    private const val KEY_UPDATE_PENDING_NAME = "update_pending_name"
+    private const val KEY_UPDATE_PENDING_APK = "update_pending_apk"
+    private const val KEY_UPDATE_PENDING_READY = "update_pending_ready"
+    private const val KEY_UPDATE_DOWNLOAD_ID = "update_download_id"
+    private const val KEY_UPDATE_DISMISSED_CODE = "update_dismissed_code"
+    private const val KEY_UPDATE_LAST_CHECK = "update_last_check"
+
     private const val KEY_SOFT_DECODE = "soft_decode"
 
     const val DEFAULT_CHANNEL_REVERSAL = false
@@ -113,6 +122,34 @@ object SP {
         Log.i(TAG, "default channel $channel")
         Log.i(TAG, "proxy $proxy")
     }
+
+    var updatePendingCode: Long
+        get() = sp.getLong(KEY_UPDATE_PENDING_CODE, 0L)
+        set(value) = sp.edit().putLong(KEY_UPDATE_PENDING_CODE, value).apply()
+
+    var updatePendingName: String
+        get() = sp.getString(KEY_UPDATE_PENDING_NAME, "") ?: ""
+        set(value) = sp.edit().putString(KEY_UPDATE_PENDING_NAME, value).apply()
+
+    var updatePendingApk: String
+        get() = sp.getString(KEY_UPDATE_PENDING_APK, "") ?: ""
+        set(value) = sp.edit().putString(KEY_UPDATE_PENDING_APK, value).apply()
+
+    var updatePendingReady: Boolean
+        get() = sp.getBoolean(KEY_UPDATE_PENDING_READY, false)
+        set(value) = sp.edit().putBoolean(KEY_UPDATE_PENDING_READY, value).apply()
+
+    var updateDownloadId: Long
+        get() = sp.getLong(KEY_UPDATE_DOWNLOAD_ID, -1L)
+        set(value) = sp.edit().putLong(KEY_UPDATE_DOWNLOAD_ID, value).apply()
+
+    var updateDismissedCode: Long
+        get() = sp.getLong(KEY_UPDATE_DISMISSED_CODE, 0L)
+        set(value) = sp.edit().putLong(KEY_UPDATE_DISMISSED_CODE, value).apply()
+
+    var updateLastCheck: Long
+        get() = sp.getLong(KEY_UPDATE_LAST_CHECK, 0L)
+        set(value) = sp.edit().putLong(KEY_UPDATE_LAST_CHECK, value).apply()
 
     var channelReversal: Boolean
         get() = sp.getBoolean(KEY_CHANNEL_REVERSAL, DEFAULT_CHANNEL_REVERSAL)

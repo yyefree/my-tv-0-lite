@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
 
+    private lateinit var updateManager: UpdateManager
+
     private var isSafeToPerformFragmentTransactions = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,6 +113,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.init(this)
+
+        // 后台自动升级：每小时静默探测 GitHub，通了就静默下载，下完再提示安装
+        updateManager = UpdateManager(this, appVersionCode)
+        updateManager.startAutoPoll()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
