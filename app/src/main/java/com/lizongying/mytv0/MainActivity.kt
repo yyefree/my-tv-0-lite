@@ -761,6 +761,12 @@ class MainActivity : AppCompatActivity() {
 
     fun onKey(keyCode: Int): Boolean {
         Log.d(TAG, "keyCode $keyCode")
+        // onCreate 还没执行完（或 Activity 正在重建）时收到的按键，一律忽略，
+        // 避免各分支访问未初始化的 viewModel / Fragment 而崩溃。
+        if (!::viewModel.isInitialized) {
+            Log.d(TAG, "viewModel not ready, ignore key $keyCode")
+            return false
+        }
         when (keyCode) {
             // 0 键 = 回上一台（遥控器惯例位），不再当频道号输入用
             KeyEvent.KEYCODE_0 -> {
