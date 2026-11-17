@@ -136,7 +136,41 @@ class UpdateManager(
     // 思路：每小时静默探测一次 GitHub 可达性；能拿到版本就后台静默下载 APK；
     // 下载完成后才提示用户"可以升级"，由用户确认后安装。
 
+    /**
+     * 清理升级残留。
+     *
+     * installPending() 发出安装 Intent 后就把 updatePendingReady 置 false，因为安装器要自己读那个文件，
+     * 我们不能立刻删。等新版真的装上了，那个 3.69 MB 的包就成了孤儿——盒子只有 8 GB 存储，
+     * 每升一版攒一个包不是小数目。所以放在启动时清理：只有「确实还等着用户确认安装」的包才保留。
+     */
+    private fun cleanStaleApks() {
+        // 已经装上去了（本地版本号追平或超过待装版本号），SP 里的待装记录全部作废
+        if (SP.updatePendingCode in 1..versionCode) {
+            Logger.i(TAG, "cleanStaleApks 已升级到 ${SP.updatePendingCode}，清理待装记录")
+            SP.updatePendingReady = false
+            SP.updatePendingCode = 0L
+            SP.updateDownloadId = -1L
+        }
+
+        val dir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) ?: return
+        val pendingName = SP.updatePendingApk
+        // 用户还没确认安装的包要留着；正在下载的那个文件也不能动（DownloadManager 还在写）
+        val keepName = if (SP.updatePendingReady) pendingName else ""
+        val downloadingName = if (SP.updateDownloadId > 0) pendingName else ""
+
+        dir.listFiles()?.filter { it.isFile && it.name.endsWith(".apk") }?.forEach { f ->
+            if (f.name == keepName || f.name == downloadingName) {
+                Logger.i(TAG, "cleanStaleApks 保留 ${f.name} (${f.length()} B)")
+                return@forEach
+            }
+            val ok = f.delete()
+            Logger.i(TAG, "cleanStaleApks 删除残留 ${f.name} (${f.length()} B) -> $ok")
+        }
+    }
+
     fun startAutoPoll() {
+        // 清理放在轮询 guard 之前：Activity 重建时轮询任务可能还在跑，但清理是每次启动都该做的事
+        cleanStaleApks()
         if (pollJob?.isActive == true) {
             Logger.i(TAG, "startAutoPoll 已在运行，跳过")
             return
@@ -447,7 +481,9 @@ class UpdateManager(
     private var apkUrlIndex = 0
 
     private fun startDownload(release: ReleaseResponse) {
-        if (release.apk_name.isNullOrEmpty() || release.apk_url.isNullOrEmpty()) {
+        // 只要知道包名就能下：asset_id 通道和 jsDelivr 通道都不需要 apk_url，
+        // 以前这里要求 apk_url 非空，会把「只发布 asset_id」的版本直接挡掉。
+        if (release.apk_name.isNullOrEmpty()) {
             return
         }
 
