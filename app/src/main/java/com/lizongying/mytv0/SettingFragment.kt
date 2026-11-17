@@ -389,6 +389,8 @@ class SettingFragment : Fragment() {
 
         // 后台自动升级的状态（检测中 / 未连通 / 正在下载 x% / 已下载待安装）实时显示
         UpdateManager.status.observe(viewLifecycleOwner) { refreshUpdateStatus(it) }
+        // 线路识别是后台线程跑的，识别完再刷一次，面板上就能看到「线路 移动·淄博」
+        IspDetector.labelLive.observe(viewLifecycleOwner) { refreshUpdateStatus(UpdateManager.status.value ?: "") }
     }
 
     /**
@@ -407,7 +409,9 @@ class SettingFragment : Fragment() {
             ""
         }
         val base = desc.ifEmpty { "尚未检测" }
-        binding.updateStatus.text = if (time.isEmpty()) base else "$base · 上次检测 $time"
+        val timePart = if (time.isEmpty()) "" else " · 上次检测 $time"
+        // 顺带把「当前出口是哪家宽带」露出来：多运营商源里 App 就是按它来挑本网地址的
+        binding.updateStatus.text = "线路 ${IspDetector.label()} · $base$timePart"
     }
 
     /**

@@ -45,14 +45,31 @@ object SourceProbe {
 
     data class Result(val index: Int, val costMs: Long)
 
-    /** 并发探测全部地址，返回首包最快的那条；全都不通返回 null */
-    suspend fun fastest(urls: List<String>): Result? = withContext(Dispatchers.IO) {
-        val costs = coroutineScope {
-            urls.mapIndexed { index, url ->
-                async { index to probe(url) }
-            }.awaitAll()
+    /**
+     * 并发探测候选地址，返回首包最快的一条；全都不通返回 null。
+     *
+     * items 里第二个元素标记「是否本网地址」（由 IspDetector 判断出的运营商是否匹配）。
+     * 有本网地址时先只测本网这几条：跨网地址即使首包很快，实际拉流也常常只有几十 KB/s，
+     * 先测本网能省掉一次「能打开但播不动」的误判。本网全不通才回退测全部。
+     */
+    suspend fun fastest(items: List<Pair<String, Boolean>>): Result? =
+        withContext(Dispatchers.IO) {
+            val preferred = items.indices.filter { items[it].second }
+            if (preferred.isNotEmpty()) {
+                probeIndices(items, preferred)?.let { return@withContext it }
+                Logger.i(TAG, "本网 ${preferred.size} 条均不通，回退测全部")
+            }
+            probeIndices(items, items.indices.toList())
         }
-        costs.filter { it.second > 0 }
+
+    private suspend fun probeIndices(
+        items: List<Pair<String, Boolean>>,
+        idxs: List<Int>,
+    ): Result? {
+        val costs = coroutineScope {
+            idxs.map { i -> async { i to probe(items[i].first) } }.awaitAll()
+        }
+        return costs.filter { it.second > 0 }
             .minByOrNull { it.second }
             ?.let { Result(it.first, it.second) }
     }

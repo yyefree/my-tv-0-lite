@@ -76,6 +76,16 @@ class MyTVApplication : Application() {
 
         Thread.setDefaultUncaughtExceptionHandler(MyTVExceptionHandler(this))
 
+        // 后台识别出口是哪家宽带（移动/电信/联通），供切源时「本网优先」用。
+        // 只是一个 HTTP 请求，失败就退化成纯测速，不影响启动。
+        Thread {
+            try {
+                IspDetector.detectIfStale()
+            } catch (e: Exception) {
+                Logger.i(TAG, "isp detect fail ${e.javaClass.simpleName}")
+            }
+        }.start()
+
         imageHelper = ImageHelper(this)
     }
 

@@ -86,6 +86,8 @@ class PlayerFragment : Fragment() {
             return false
         }
         probeTried++
+        // 当前这条已经失败了，之前的测速缓存也不再可信，先清掉
+        SourceProbe.forget(tv.tv.title)
         // 当前这条已经失败了，只测其余的
         val others = uris.indices.filter { it != tv.videoIndexValue }
         if (others.isEmpty()) {
@@ -93,10 +95,16 @@ class PlayerFragment : Fragment() {
         }
         Logger.i(
             TAG,
-            "${tv.tv.title} $reason，开始测速（第 $probeTried/$probeTriedMax 次，共 ${others.size} 条候选）"
+            "${tv.tv.title} $reason，开始测速（第 $probeTried/$probeTriedMax 次，共 ${others.size} 条候选，" +
+                "本网=${IspDetector.label()}）"
         )
+        // 本网地址优先：移动宽带优先走移动 CDN，跨网地址常常「能打开但拉流慢」
+        val wantIsp = IspDetector.isp()
         probeScope.launch {
-            val best = SourceProbe.fastest(others.map { uris[it] })
+            val items = others.map { i ->
+                uris[i] to (wantIsp != IspDetector.Isp.UNKNOWN && tv.tv.uriIsp.getOrNull(i) == wantIsp.name)
+            }
+            val best = SourceProbe.fastest(items)
             // 探测期间用户可能已经换台，结果作废
             if (tvModel?.tv?.title != tv.tv.title) {
                 return@launch
@@ -317,11 +325,15 @@ class PlayerFragment : Fragment() {
             probeTriedFor = tvModel.tv.title
             probeTried = 0
         }
-        // 这个台之前测过哪条地址最快，直接用它，省掉一轮黑屏
-        SourceProbe.cachedIndex(tvModel.tv.title)?.let { best ->
-            if (best in tvModel.tv.uris.indices && best != tvModel.videoIndexValue) {
-                Logger.i(TAG, "${tvModel.tv.title} 使用测速缓存地址 #$best")
-                tvModel.selectVideo(best)
+        // 这个台之前测过哪条地址最快，直接用它，省掉一轮黑屏。
+        // 只在「本台第一次播放」时用：一旦已经失败过（probeTried>0），缓存就可能是错的那条，
+        // 再套用会和 handleUnavailable 的按顺序切换互相覆盖，形成 9 秒一轮的无限重试。
+        if (probeTried == 0) {
+            SourceProbe.cachedIndex(tvModel.tv.title)?.let { best ->
+                if (best in tvModel.tv.uris.indices && best != tvModel.videoIndexValue) {
+                    Logger.i(TAG, "${tvModel.tv.title} 使用测速缓存地址 #$best")
+                    tvModel.selectVideo(best)
+                }
             }
         }
         player?.run {
