@@ -269,6 +269,17 @@ class UpdateManager(
 
     private fun hasPendingApk(): Boolean {
         if (!SP.updatePendingReady) return false
+        // 这个包可能早就装上了：用户如果绕过 App 的安装流程（adb、第三方商店），
+        // SP 里的待装标记不会自己消失。此时文件还在、ready 还是 true，
+        // 就会每一轮都卡在「提示装旧包」而永远探测不到新版——必须用版本号把它作废。
+        if (SP.updatePendingCode in 1..versionCode) {
+            Logger.i(
+                TAG,
+                "hasPendingApk 待装版本 ${SP.updatePendingCode} 已不大于本地 ${versionCode}，标记作废"
+            )
+            SP.updatePendingReady = false
+            return false
+        }
         val file = File(
             context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
             SP.updatePendingApk

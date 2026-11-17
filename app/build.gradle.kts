@@ -15,8 +15,8 @@ android {
         targetSdk = 35
         // 本机没有 git，无法从 tag 取版本号；固定成一个高于上游 1.3.9.8 的版本，
         // 保证能覆盖安装（降级安装会被 pm 拒绝）
-        versionCode = 2 * 16777216 + 4
-        versionName = "2.0.4-lite"
+        versionCode = 2 * 16777216 + 5
+        versionName = "2.0.5-lite"
 
         // ffmpeg 的 aar 里四种架构的 so 都齐（arm64-v8a / armeabi-v7a / x86 / x86_64）。
         // 只打 v7a 会让纯 64 位电视装不上，现在同时带上 arm64-v8a：
