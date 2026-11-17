@@ -23,3 +23,4 @@ _tool/*.jar.bak
 *.apk
 _tool/gradle-8.12-bin.zip
 _tool/*.zip
+_commit_msg.txt

@@ -439,7 +439,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun play(position: Int): Boolean {
-        return if (position > -1 && position < viewModel.groupModel.getAllList()!!.size()) {
+        val total = viewModel.groupModel.getAllCount()
+        return if (position > -1 && position < total) {
             rememberCurrent()
             val prevGroup = viewModel.groupModel.positionValue
             val tvModel = viewModel.groupModel.getPosition(position)

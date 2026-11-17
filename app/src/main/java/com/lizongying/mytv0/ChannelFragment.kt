@@ -135,10 +135,11 @@ class ChannelFragment : Fragment() {
     }
 
     private val playRunnable = Runnable {
-        var c = channel - 1
-        viewModel.listModel.find { it.tv.number == channel }?.let {
-            c = it.tv.id
-        }
+        // 频道号 -> 全局位置。以前这里用 tv.id，但 id 只是「全部频道」组内的下标，
+        // 前面还有一个「我的收藏」组，getPosition() 把两组串起来计数，于是差一个收藏数，
+        // 表现就是按 5 落到 CCTV-4。
+        val position = viewModel.groupModel.findPositionByNumber(channel)
+        val c = if (position >= 0) position else -1
         if ((activity as MainActivity).play(c)) {
             channel = 0
             channelCount = 0

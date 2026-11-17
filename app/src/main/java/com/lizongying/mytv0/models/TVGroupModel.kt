@@ -129,6 +129,30 @@ class TVGroupModel : ViewModel() {
         return getTVListModelNotFilter(1)
     }
 
+    // getPosition() 是把「收藏 + 全部」等所有组串起来按顺序计数的，
+    // 所以合法的 position 上限不是单个列表的大小，而是所有组的总数。
+    fun getAllCount(): Int {
+        var count = 0
+        for (group in tvGroupValue) {
+            count += group.size()
+        }
+        return count
+    }
+
+    // 按频道号（m3u 的 tvg-chno）找它在 getPosition() 语义下的全局位置
+    fun findPositionByNumber(number: Int): Int {
+        var count = 0
+        for (group in tvGroupValue) {
+            for (i in 0 until group.size()) {
+                if (group.getTVModel(i)?.tv?.number == number) {
+                    return count
+                }
+                count++
+            }
+        }
+        return -1
+    }
+
     // get & set
     // keep: In the current list loop
     fun getPrev(keep: Boolean = false): TVModel? {
