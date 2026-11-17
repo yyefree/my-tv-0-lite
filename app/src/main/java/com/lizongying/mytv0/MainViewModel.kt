@@ -422,6 +422,7 @@ class MainViewModel : ViewModel() {
 
                 var tv = TV()
                 var pendingIsp = ""
+                var pendingRegion = ""
                 for (line in lines) {
                     val trimmedLine = line.trim()
                     if (trimmedLine.isEmpty()) {
@@ -437,6 +438,7 @@ class MainViewModel : ViewModel() {
                         }
                         tv = TV()
                         pendingIsp = ""
+                        pendingRegion = ""
                         val info = trimmedLine.split(",")
                         tv.title = info.last().trim()
                         var name = nameRegex.find(info.first())?.groupValues?.get(1)?.trim()
@@ -460,6 +462,9 @@ class MainViewModel : ViewModel() {
                     } else if (trimmedLine.startsWith("#ISP:")) {
                         // 多运营商源用它标注下一条地址属于哪家：MOBILE / TELECOM / UNICOM
                         pendingIsp = trimmedLine.substringAfter("#ISP:").trim().uppercase()
+                    } else if (trimmedLine.startsWith("#REGION:")) {
+                        // 标注下一条地址在哪个省：同省地址少跳骨干，测速时优先
+                        pendingRegion = trimmedLine.substringAfter("#REGION:").trim()
                     } else if (!trimmedLine.startsWith("#")) {
                         tv.uris = if (tv.uris.isEmpty()) {
                             listOf(trimmedLine)
@@ -470,6 +475,7 @@ class MainViewModel : ViewModel() {
                         }
                         // uriIsp 与 uris 一一对应，保证后面按运营商挑地址时下标不错位
                         tv.uriIsp = tv.uriIsp + pendingIsp
+                        tv.uriRegion = tv.uriRegion + pendingRegion
                     }
                 }
                 val key = tv.group + tv.name
@@ -479,6 +485,7 @@ class MainViewModel : ViewModel() {
                 for ((_, tv) in tvMap) {
                     val uris = tv.map { t -> t.uris }.flatten()
                     val uriIsp = tv.map { t -> t.uriIsp }.flatten()
+                    val uriRegion = tv.map { t -> t.uriRegion }.flatten()
                     val t0 = tv[0]
                     val t1 = TV(
                         -1,
@@ -495,6 +502,7 @@ class MainViewModel : ViewModel() {
                         t0.number,
                         emptyList(),
                         uriIsp,
+                        uriRegion,
                     )
                     l.add(t1)
                 }

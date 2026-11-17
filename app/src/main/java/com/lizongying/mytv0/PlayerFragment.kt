@@ -98,11 +98,22 @@ class PlayerFragment : Fragment() {
             "${tv.tv.title} $reason，开始测速（第 $probeTried/$probeTriedMax 次，共 ${others.size} 条候选，" +
                 "本网=${IspDetector.label()}）"
         )
-        // 本网地址优先：移动宽带优先走移动 CDN，跨网地址常常「能打开但拉流慢」
-        val wantIsp = IspDetector.isp()
+        // 本网 + 同省地址优先：移动宽带优先走移动 CDN，本省地址又比跨省少跳几段骨干
+        val wantIsp = IspDetector.wantIsp()
+        val wantRegion = IspDetector.wantRegion()
         probeScope.launch {
             val items = others.map { i ->
-                uris[i] to (wantIsp != IspDetector.Isp.UNKNOWN && tv.tv.uriIsp.getOrNull(i) == wantIsp.name)
+                val ispHit = wantIsp != IspDetector.Isp.UNKNOWN &&
+                    tv.tv.uriIsp.getOrNull(i) == IspDetector.codeOf(wantIsp)
+                val regHit = wantRegion.isNotEmpty() &&
+                    tv.tv.uriRegion.getOrNull(i) == wantRegion
+                val prio = when {
+                    ispHit && regHit -> 0  // 同网同省，最该先用
+                    ispHit -> 1            // 同网跨省
+                    regHit -> 2            // 同省跨网
+                    else -> 3              // 跨网跨省
+                }
+                uris[i] to prio
             }
             val best = SourceProbe.fastest(items)
             // 探测期间用户可能已经换台，结果作废

@@ -22,8 +22,39 @@ object IspDetector {
         val isp: Isp,
         val label: String,   // 运营商原名，如 China Mobile
         val city: String,
+        val province: String, // 河北 / 山东…（ip-api 的 regionName，去掉「省/市」后缀）
         val ip: String,
     )
+
+    /** 枚举名和源里的 #ISP: 标注文本一致（MOBILE / TELECOM / UNICOM），可直接比较 */
+    fun codeOf(isp: Isp): String = when (isp) {
+        Isp.MOBILE -> "MOBILE"
+        Isp.TELECOM -> "TELECOM"
+        Isp.UNICOM -> "UNICOM"
+        Isp.UNKNOWN -> ""
+    }
+
+    /**
+     * 当前生效的运营商：**手动设置优先**。
+     * 自动识别依赖 ip-api（HTTP 请求），网络抖动、代理、双出口都可能识别不出来；
+     * 用户自己知道家里是移动还是联通，直接指定比猜准。
+     */
+    fun wantIsp(): Isp {
+        val manual = SP.ispOverride
+        if (manual.isNotEmpty()) {
+            return when (manual) {
+                "MOBILE" -> Isp.MOBILE
+                "TELECOM" -> Isp.TELECOM
+                "UNICOM" -> Isp.UNICOM
+                else -> Isp.UNKNOWN
+            }
+        }
+        return isp()
+    }
+
+    /** 当前生效的省份：手动优先，否则用自动识别出来的 */
+    fun wantRegion(): String =
+        SP.regionOverride.ifEmpty { cached?.province ?: "" }
 
     @Volatile
     private var cached: Info? = null
@@ -40,16 +71,21 @@ object IspDetector {
 
     fun isp(): Isp = cached?.isp ?: Isp.UNKNOWN
 
-    /** 给界面用的一行字，例如「移动·淄博」 */
+    /** 给界面用的一行字，例如「移动·淄博」；手动指定时带「手动」后缀 */
     fun label(): String {
-        val c = cached ?: return "未检测"
-        val name = when (c.isp) {
+        val ispName = when (wantIsp()) {
             Isp.MOBILE -> "移动"
             Isp.TELECOM -> "电信"
             Isp.UNICOM -> "联通"
-            else -> "未知"
+            else -> ""
         }
-        return if (c.city.isNotBlank()) "$name·${c.city}" else name
+        if (ispName.isEmpty()) {
+            return if (cached == null) "未检测" else "未知"
+        }
+        val region = wantRegion()
+        val manual = SP.ispOverride.isNotEmpty() || SP.regionOverride.isNotEmpty()
+        val body = if (region.isNotBlank()) "$ispName·$region" else ispName
+        return if (manual) "$body(手动)" else body
     }
 
     /**
@@ -65,7 +101,7 @@ object IspDetector {
                 val body = resp.body?.string().orEmpty()
                 val json = JSONObject(body)
                 if (json.optString("status") != "success") {
-                    Info(Isp.UNKNOWN, "Unknown", "", "")
+                    Info(Isp.UNKNOWN, "Unknown", "", "", "")
                 } else {
                     val all = listOf(
                         json.optString("isp"),
@@ -78,16 +114,22 @@ object IspDetector {
                         all.contains("Telecom") || all.contains("Chinanet") || all.contains("电信") -> Isp.TELECOM
                         else -> Isp.UNKNOWN
                     }
-                    Info(kind, json.optString("isp"), json.optString("city"), json.optString("query"))
+                    Info(
+                        kind,
+                        json.optString("isp"),
+                        json.optString("city"),
+                        json.optString("regionName").replace("省", "").replace("市", ""),
+                        json.optString("query"),
+                    )
                 }
             }
         } catch (e: Exception) {
             Logger.i(TAG, "detect fail ${e.javaClass.simpleName}")
-            Info(Isp.UNKNOWN, "Unknown", "", "")
+            Info(Isp.UNKNOWN, "Unknown", "", "", "")
         }
         cached = info
         lastCheck = System.currentTimeMillis()
-        Logger.i(TAG, "出口线路: ${info.label} ${info.city} ${info.ip} → ${info.isp}")
+        Logger.i(TAG, "出口线路: ${info.label} ${info.province} ${info.city} ${info.ip} → ${info.isp}")
         _labelLive.postValue(label())
         return info
     }

@@ -390,7 +390,61 @@ class SettingFragment : Fragment() {
         // 后台自动升级的状态（检测中 / 未连通 / 正在下载 x% / 已下载待安装）实时显示
         UpdateManager.status.observe(viewLifecycleOwner) { refreshUpdateStatus(it) }
         // 线路识别是后台线程跑的，识别完再刷一次，面板上就能看到「线路 移动·淄博」
-        IspDetector.labelLive.observe(viewLifecycleOwner) { refreshUpdateStatus(UpdateManager.status.value ?: "") }
+        IspDetector.labelLive.observe(viewLifecycleOwner) {
+            refreshUpdateStatus(UpdateManager.status.value ?: "")
+            refreshLineSettings()
+        }
+
+        // 线路 / 省份：遥控器点一下循环切换，不用进子页面
+        binding.btnIsp.setOnClickListener {
+            val cur = ISP_CYCLE.indexOf(SP.ispOverride).let { if (it < 0) 0 else it }
+            SP.ispOverride = ISP_CYCLE[(cur + 1) % ISP_CYCLE.size]
+            applyLineChange()
+        }
+        binding.btnRegion.setOnClickListener {
+            val cur = REGION_CYCLE.indexOf(SP.regionOverride).let { if (it < 0) 0 else it }
+            SP.regionOverride = REGION_CYCLE[(cur + 1) % REGION_CYCLE.size]
+            applyLineChange()
+        }
+        refreshLineSettings()
+    }
+
+    private val ISP_CYCLE = listOf("", "MOBILE", "TELECOM", "UNICOM")
+    private val REGION_CYCLE = listOf("", "山东", "浙江", "河北", "广东", "河南", "湖北", "江苏")
+
+    /**
+     * 两个按钮的文字。「自动」时把识别结果显示在括号里，
+     * 这样用户一眼能看出「它到底判断成了什么」，判断错了才有人会去手动改。
+     */
+    private fun refreshLineSettings() {
+        if (_binding == null) {
+            return
+        }
+        val autoIsp = when (IspDetector.current()?.isp) {
+            IspDetector.Isp.MOBILE -> "移动"
+            IspDetector.Isp.TELECOM -> "电信"
+            IspDetector.Isp.UNICOM -> "联通"
+            else -> "未检测"
+        }
+        val manualIsp = when (SP.ispOverride) {
+            "MOBILE" -> "移动"
+            "TELECOM" -> "电信"
+            "UNICOM" -> "联通"
+            else -> ""
+        }
+        binding.btnIsp.text =
+            if (manualIsp.isEmpty()) "线路：自动（$autoIsp）" else "线路：$manualIsp"
+
+        val autoRegion = IspDetector.current()?.province.orEmpty().ifEmpty { "未检测" }
+        binding.btnRegion.text =
+            if (SP.regionOverride.isEmpty()) "省份：自动（$autoRegion）" else "省份：${SP.regionOverride}"
+    }
+
+    /** 改了线路或省份，之前按旧条件挑出来的地址作废，下次切台重新测 */
+    private fun applyLineChange() {
+        SourceProbe.clear()
+        refreshLineSettings()
+        refreshUpdateStatus(UpdateManager.status.value ?: "")
     }
 
     /**

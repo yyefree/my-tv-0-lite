@@ -72,6 +72,10 @@ object SP {
     // 局域网服务（34567）的访问令牌，见 SimpleServer.serve
     private const val KEY_SERVER_TOKEN = "server_token"
 
+    // 手动指定线路和省份：自动识别不准（或想强制用某个网）时用它覆盖
+    private const val KEY_ISP_OVERRIDE = "isp_override"
+    private const val KEY_REGION_OVERRIDE = "region_override"
+
     const val DEFAULT_CHANNEL_REVERSAL = false
     const val DEFAULT_CHANNEL_NUM = false
     const val DEFAULT_TIME = true
@@ -274,4 +278,17 @@ object SP {
             return created
         }
         set(value) = sp.edit().putString(KEY_SERVER_TOKEN, value).apply()
+
+    /**
+     * 手动指定的运营商：空串=自动识别。取值 MOBILE / TELECOM / UNICOM。
+     * 自动识别失败（ip-api 不通）或识别错（比如多出口、代理）时，用它强制指定。
+     */
+    var ispOverride: String
+        get() = sp.getString(KEY_ISP_OVERRIDE, "") ?: ""
+        set(value) = sp.edit().putString(KEY_ISP_OVERRIDE, value).apply()
+
+    /** 手动指定的省份：空串=自动识别。同省地址在测速时优先，跨省排后面。 */
+    var regionOverride: String
+        get() = sp.getString(KEY_REGION_OVERRIDE, "") ?: ""
+        set(value) = sp.edit().putString(KEY_REGION_OVERRIDE, value).apply()
 }

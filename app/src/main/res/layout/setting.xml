@@ -209,6 +209,27 @@
             app:trackTint="@color/switch_track_color"
             />
 
+        <!-- 线路/省份：决定用哪一组地址（同网同省优先）。放在最常用的位置，遥控器点一下循环切换 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_isp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/description_blur"
+            android:textColor="@color/blur"
+            android:textSize="14sp"
+            android:text="线路：自动" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@color/description_blur"
+            android:textColor="@color/blur"
+            android:textSize="14sp"
+            android:text="省份：自动" />
+
         <!-- 不常用的 5 项收在这里，默认收起：面板一屏放不下 13 项，最常见的那几项要翻半天 -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/more_settings"

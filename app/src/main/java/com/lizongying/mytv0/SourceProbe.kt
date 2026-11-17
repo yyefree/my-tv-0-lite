@@ -43,18 +43,27 @@ object SourceProbe {
         cache.remove(key)
     }
 
+    /** 手动改了线路/省份之后，之前按旧条件选出来的地址全部作废 */
+    fun clear() {
+        cache.clear()
+    }
+
     data class Result(val index: Int, val costMs: Long)
 
     /**
      * 并发探测候选地址，返回首包最快的一条；全都不通返回 null。
      *
-     * items 里第二个元素标记「是否本网地址」（由 IspDetector 判断出的运营商是否匹配）。
-     * 有本网地址时先只测本网这几条：跨网地址即使首包很快，实际拉流也常常只有几十 KB/s，
+     * items 第一个元素是地址，第二个元素是「优先级」（由 PlayerFragment 按运营商/省份算出来）：
+     *   0 = 同运营商 + 同省（最优：同一个骨干区域，延迟和丢包都最小）
+     *   1 = 同运营商（同网不同省）
+     *   2 = 同省不同网
+     *   3 = 跨网跨省
+     * 先只测 0/1 这两档：跨网地址即使首包很快，实际拉流也常常只有几十 KB/s，
      * 先测本网能省掉一次「能打开但播不动」的误判。本网全不通才回退测全部。
      */
-    suspend fun fastest(items: List<Pair<String, Boolean>>): Result? =
+    suspend fun fastest(items: List<Pair<String, Int>>): Result? =
         withContext(Dispatchers.IO) {
-            val preferred = items.indices.filter { items[it].second }
+            val preferred = items.indices.filter { items[it].second <= 1 }
             if (preferred.isNotEmpty()) {
                 probeIndices(items, preferred)?.let { return@withContext it }
                 Logger.i(TAG, "本网 ${preferred.size} 条均不通，回退测全部")
@@ -63,7 +72,7 @@ object SourceProbe {
         }
 
     private suspend fun probeIndices(
-        items: List<Pair<String, Boolean>>,
+        items: List<Pair<String, Int>>,
         idxs: List<Int>,
     ): Result? {
         val costs = coroutineScope {
