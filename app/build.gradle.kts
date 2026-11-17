@@ -18,9 +18,11 @@ android {
         versionCode = 2 * 16777216
         versionName = "2.0.0-lite"
 
-        // 这台电视是 armeabi-v7a，剔掉其余 ABI 的 so，装包小一半以上
+        // ffmpeg 的 aar 里四种架构的 so 都齐（arm64-v8a / armeabi-v7a / x86 / x86_64）。
+        // 只打 v7a 会让纯 64 位电视装不上，现在同时带上 arm64-v8a：
+        // 32 位老盒子走 v7a，64 位新电视走 v8a，代价是包大约多 1.1 MB。
         ndk {
-            abiFilters += "armeabi-v7a"
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
         // 中文资源在 values-zh-rCN，只写 "zh" 会把它过滤掉、界面回退成英文
         resourceConfigurations += listOf("zh", "zh-rCN")

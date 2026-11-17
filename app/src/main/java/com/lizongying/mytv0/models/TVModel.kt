@@ -237,6 +237,17 @@ class TVModel(var tv: TV) : ViewModel() {
         return isLastVideo()
     }
 
+    /** 直接跳到指定地址（测速优选用），不再按顺序一条条试 */
+    fun selectVideo(index: Int) {
+        if (tv.uris.isEmpty()) {
+            return
+        }
+        _videoIndex.value = max(0, min(tv.uris.size - 1, index))
+        sourceTypeList = listOf(
+            SourceType.UNKNOWN,
+        )
+    }
+
     fun update(t: TV) {
         tv = t
     }

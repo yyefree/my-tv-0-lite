@@ -25,6 +25,11 @@ import androidx.media3.exoplayer.mediacodec.MediaCodecUtil
 import com.lizongying.mytv0.data.SourceType
 import com.lizongying.mytv0.databinding.PlayerBinding
 import com.lizongying.mytv0.models.TVModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 
 class PlayerFragment : Fragment() {
@@ -47,13 +52,67 @@ class PlayerFragment : Fragment() {
     private var autoSkipCount = 0
     private val autoSkipMax = 3
 
+    // 测速优选用的协程作用域，Fragment 销毁时取消
+    private val probeScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+    // 同一个台最多发起几次测速，防止「探测 → 换地址 → 又失败 → 再探测」死循环
+    private var probeTried = 0
+    private val probeTriedMax = 2
+    private var probeTriedFor: String? = null
+
     private val startWatchdogRunnable = Runnable {
         val tv = tvModel ?: return@Runnable
         val p = player ?: return@Runnable
         if (p.playbackState == Player.STATE_READY) {
             return@Runnable
         }
+        if (probeAndSwitch(tv, "起播超时 ${delayStartWatchdog}ms")) {
+            return@Runnable
+        }
         handleUnavailable(tv, "起播超时 ${delayStartWatchdog}ms")
+    }
+
+    /**
+     * 起播失败或超时后，不再按顺序一条条试（每条都要等 3~20 s 超时，用户看到的是十几秒黑屏），
+     * 改成对全部地址并发测首包，直接跳到最快能用的那条。返回 true 表示已经发起切换。
+     */
+    private fun probeAndSwitch(tv: TVModel, reason: String): Boolean {
+        val uris = tv.tv.uris
+        if (uris.size <= 1) {
+            return false
+        }
+        if (probeTried >= probeTriedMax) {
+            Logger.i(TAG, "${tv.tv.title} $reason，测速次数已用尽，改回按顺序切")
+            return false
+        }
+        probeTried++
+        // 当前这条已经失败了，只测其余的
+        val others = uris.indices.filter { it != tv.videoIndexValue }
+        if (others.isEmpty()) {
+            return false
+        }
+        Logger.i(
+            TAG,
+            "${tv.tv.title} $reason，开始测速（第 $probeTried/$probeTriedMax 次，共 ${others.size} 条候选）"
+        )
+        probeScope.launch {
+            val best = SourceProbe.fastest(others.map { uris[it] })
+            // 探测期间用户可能已经换台，结果作废
+            if (tvModel?.tv?.title != tv.tv.title) {
+                return@launch
+            }
+            if (best == null) {
+                Logger.i(TAG, "${tv.tv.title} 测速：没有一条能通")
+                handleUnavailable(tv, "$reason（测速无可用地址）")
+                return@launch
+            }
+            val realIndex = others[best.index]
+            SourceProbe.remember(tv.tv.title, realIndex)
+            Logger.i(TAG, "${tv.tv.title} 测速选中第 $realIndex 条（首包 ${best.costMs} ms）")
+            tv.selectVideo(realIndex)
+            tv.setReady(true)
+        }
+        return true
     }
 
     // 一条地址彻底不可用时的统一出口：先换该台的备用地址，没有就自动跳到下一个频道。
@@ -211,18 +270,12 @@ class PlayerFragment : Fragment() {
                             code == PlaybackException.ERROR_CODE_TIMEOUT
 
                 if (isNetworkError) {
-                    // 注释说「有备用地址就换」，但原来这里直接 handleUnavailable，
-                    // 把同一个频道后面的可用地址全放弃了 —— 表现为 CCTV-1 主源挂了就黑屏，
-                    // 明明还有个备用地址能播。现在先把同频道的下一个地址试一遍，全试完才判死。
-                    if (!tv.isLastVideo()) {
-                        tv.nextVideo()
-                        tv.setReady(true)
-                        Logger.i(
-                            TAG,
-                            "${tv.tv.title} 网络错误 code=$code，换下一个地址 ${tv.videoIndex.value}"
-                        )
+                    // 有备用地址时不按顺序一个个试（每条都要等 3~20 s 超时），
+                    // 直接并发测速跳到最快那条；只有单地址、或测速次数用尽才判死。
+                    if (probeAndSwitch(tv, "网络错误 code=$code")) {
+                        Logger.i(TAG, "${tv.tv.title} 网络错误 code=$code，转入测速优选")
                     } else {
-                        Logger.i(TAG, "${tv.tv.title} 网络错误 code=$code，该频道地址已全部失败")
+                        Logger.i(TAG, "${tv.tv.title} 网络错误 code=$code，无可切换地址")
                         handleUnavailable(tv, "网络错误 code=$code")
                     }
                 } else if (tv.retryTimes < tv.retryMaxTimes) {
@@ -259,6 +312,18 @@ class PlayerFragment : Fragment() {
     @OptIn(UnstableApi::class)
     fun play(tvModel: TVModel) {
         this.tvModel = tvModel
+        // 只有换台才重置测速计数；同一个台内部重播（setReady）不能重置，否则会无限探测
+        if (probeTriedFor != tvModel.tv.title) {
+            probeTriedFor = tvModel.tv.title
+            probeTried = 0
+        }
+        // 这个台之前测过哪条地址最快，直接用它，省掉一轮黑屏
+        SourceProbe.cachedIndex(tvModel.tv.title)?.let { best ->
+            if (best in tvModel.tv.uris.indices && best != tvModel.videoIndexValue) {
+                Logger.i(TAG, "${tvModel.tv.title} 使用测速缓存地址 #$best")
+                tvModel.selectVideo(best)
+            }
+        }
         player?.run {
             tvModel.getVideoUrl() ?: return
 
@@ -368,6 +433,7 @@ class PlayerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        probeScope.cancel()
         player?.release()
     }
 
