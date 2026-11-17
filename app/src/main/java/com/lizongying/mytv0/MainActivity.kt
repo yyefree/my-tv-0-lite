@@ -36,11 +36,11 @@ class MainActivity : AppCompatActivity() {
     private val errorFragment = ErrorFragment()
     private val loadingFragment = LoadingFragment()
     private var infoFragment = InfoFragment()
-    private var channelFragment = ChannelFragment()
-    private var timeFragment = TimeFragment()
-    private var menuFragment = MenuFragment()
-    private var settingFragment = SettingFragment()
-    private var programFragment = ProgramFragment()
+    internal var channelFragment = ChannelFragment()
+    internal var timeFragment = TimeFragment()
+    internal var menuFragment = MenuFragment()
+    internal var settingFragment = SettingFragment()
+    internal var programFragment = ProgramFragment()
 
     private val handler = Handler(Looper.myLooper()!!)
     // 频道菜单 15 s 收起（上游 10 s，手慢还没看完就没了）
@@ -132,15 +132,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ready(tag: String) {
-        Log.i(TAG, "ready $tag")
+        Logger.i(TAG, "ready $tag")
         ok++
         if (ok == 2) {
-            Log.i(TAG, "all ready")
+            Logger.i(TAG, "all ready")
 
             gestureDetector = GestureDetector(this, GestureListener(this))
 
             viewModel.groupModel.change.observe(this) { _ ->
-                Log.i(TAG, "group changed")
+                Logger.i(TAG, "group changed")
                 if (viewModel.groupModel.tvGroup.value != null) {
                     watch()
                     menuFragment.update()
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                             SP.channel = 0
                             0
                         }
-                        Log.i(TAG, "播放默認頻道")
+                        Logger.i(TAG, "播放默認頻道")
                         viewModel.groupModel.getPosition(position)
                     } else {
 //                if (SP.position < 0 || SP.position >= TVList.groupModel.getAllList()!!
@@ -178,20 +178,20 @@ class MainActivity : AppCompatActivity() {
 //                    // R.string.play_last_channel.showToast()
 //                    SP.position
 //                }
-                        Log.i(TAG, "播放上次頻道")
+                        Logger.i(TAG, "播放上次頻道")
                         viewModel.groupModel.getCurrent()
                     }
                     viewModel.groupModel.setPositionPlaying()
                     viewModel.groupModel.getCurrentList()
                         ?.let {
-                            Log.i(TAG, "當前組 ${it.getName()}")
+                            Logger.i(TAG, "當前組 ${it.getName()}")
                             it.setPositionPlaying()
                         }
                     tvModel?.setReady()
 
                     val currentGroup = viewModel.groupModel.positionValue
                     if (currentGroup != prevGroup) {
-                        Log.i(TAG, "group change")
+                        Logger.i(TAG, "group change")
                         menuFragment.updateList(currentGroup)
                     }
 
@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity() {
 //                R.string.standard_mode.showToast()
                     }
 
-                    // TODO group position
+                    // 组位置由 groupModel 自己恢复，这里只需要接着刷新 EPG
                     viewModel.updateEPG()
                 }
             }
@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity() {
                         if (channels.isNotEmpty()) {
                             viewModel.tryStr2Channels(channels, null, "")
                         } else {
-                            Log.w(TAG, "$it is empty")
+                            Logger.w(TAG, "$it is empty")
                         }
                     }
             }
@@ -245,11 +245,11 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     hideFragment(loadingFragment)
                     if (tvModel.errInfo.value == "") {
-                        Log.i(TAG, "${tvModel.tv.title} playing")
+                        Logger.i(TAG, "${tvModel.tv.title} playing")
                         hideFragment(errorFragment)
                         showFragment(playerFragment)
                     } else {
-                        Log.i(TAG, "${tvModel.tv.title} ${tvModel.errInfo.value.toString()}")
+                        Logger.i(TAG, "${tvModel.tv.title} ${tvModel.errInfo.value.toString()}")
                         hideFragment(playerFragment)
                         errorFragment.setMsg(tvModel.errInfo.value.toString())
                         showFragment(errorFragment)
@@ -263,7 +263,7 @@ class MainActivity : AppCompatActivity() {
                 if (tvModel.ready.value != null
 //                    && tvModel.tv.id == TVList.positionValue
                 ) {
-                    Log.i(TAG, "${tvModel.tv.title} 嘗試播放")
+                    Logger.i(TAG, "${tvModel.tv.title} 嘗試播放")
                     hideFragment(errorFragment)
                     showFragment(loadingFragment)
                     playerFragment.play(tvModel)
@@ -594,7 +594,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun switchToLastChannel() {
+    internal fun switchToLastChannel() {
         val id = lastChannelId
         val size = viewModel.groupModel.getAllList()?.size() ?: 0
         if (id < 0 || id >= size) {
@@ -606,12 +606,12 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        Log.i(TAG, "回到上一台 id=$id")
+        Logger.i(TAG, "回到上一台 id=$id")
         R.string.play_last_channel.showToast()
         play(id)
     }
 
-    private fun showChannel(channel: Int) {
+    internal fun showChannel(channel: Int) {
         // menuFragment 在 onCreate 里并没有 add，此时 isHidden 的默认值是 false，
         // 上游写 `if (!menuFragment.isHidden) return` 会让数字键永远在这里被吃掉。
         // 必须先判断 isAdded。
@@ -630,7 +630,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun channelUp() {
+    internal fun channelUp() {
         if (programFragment.isAdded && !programFragment.isHidden) {
             return
         }
@@ -644,7 +644,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun channelDown() {
+    internal fun channelDown() {
         if (programFragment.isAdded && !programFragment.isHidden) {
             return
         }
@@ -658,7 +658,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun back() {
+    internal fun back() {
         if (menuFragment.isAdded && !menuFragment.isHidden) {
             hideFragment(menuFragment)
             return
@@ -693,7 +693,7 @@ class MainActivity : AppCompatActivity() {
         }, 2000)
     }
 
-    private fun showSetting() {
+    internal fun showSetting() {
         if (programFragment.isAdded && !programFragment.isHidden) {
             return
         }
@@ -707,7 +707,7 @@ class MainActivity : AppCompatActivity() {
         settingActive()
     }
 
-    private fun showProgram() {
+    internal fun showProgram() {
         if (menuFragment.isAdded && !menuFragment.isHidden) {
             return
         }
@@ -765,115 +765,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onKey(keyCode: Int): Boolean {
-        Log.d(TAG, "keyCode $keyCode")
-        // onCreate 还没执行完（或 Activity 正在重建）时收到的按键，一律忽略，
-        // 避免各分支访问未初始化的 viewModel / Fragment 而崩溃。
-        if (!::viewModel.isInitialized) {
-            Log.d(TAG, "viewModel not ready, ignore key $keyCode")
-            return false
-        }
-        when (keyCode) {
-            // 0 键 = 回上一台（遥控器惯例位），不再当频道号输入用
-            KeyEvent.KEYCODE_0 -> {
-                switchToLastChannel()
-                return true
-            }
+    private val keyRouter by lazy { KeyRouter(this) }
 
-            KeyEvent.KEYCODE_1,
-            KeyEvent.KEYCODE_2,
-            KeyEvent.KEYCODE_3,
-            KeyEvent.KEYCODE_4,
-            KeyEvent.KEYCODE_5,
-            KeyEvent.KEYCODE_6,
-            KeyEvent.KEYCODE_7,
-            KeyEvent.KEYCODE_8,
-            KeyEvent.KEYCODE_9,
-                -> {
-                showChannel(keyCode - 7)
-                return true
-            }
+    // 按键路由整体搬到 KeyRouter：这里只留一层委托，Activity 不再被按键逻辑撑大。
+    fun onKey(keyCode: Int): Boolean = keyRouter.route(keyCode)
 
-            KeyEvent.KEYCODE_ESCAPE -> {
-                back()
-                return true
-            }
+    internal fun viewModelReady(): Boolean = ::viewModel.isInitialized
 
-            KeyEvent.KEYCODE_BACK -> {
-                back()
-                return true
-            }
+    internal fun settingVisible(): Boolean =
+        settingFragment.isAdded && !settingFragment.isHidden
 
-            KeyEvent.KEYCODE_BOOKMARK -> {
-                showSetting()
-                return true
-            }
+    internal fun channelVisible(): Boolean =
+        channelFragment.isAdded && channelFragment.isVisible
 
-            KeyEvent.KEYCODE_UNKNOWN -> {
-                showSetting()
-                return true
-            }
-
-            KeyEvent.KEYCODE_HELP -> {
-                showSetting()
-                return true
-            }
-
-            KeyEvent.KEYCODE_SETTINGS -> {
-                showSetting()
-                return true
-            }
-
-            KeyEvent.KEYCODE_MENU -> {
-                showSetting()
-                return true
-            }
-
-            KeyEvent.KEYCODE_ENTER -> {
-                if (channelFragment.isAdded && channelFragment.isVisible) {
-                    channelFragment.playNow()
-                    return true
-                }
-
-                showFragment(menuFragment)
-            }
-
-            KeyEvent.KEYCODE_DPAD_CENTER -> {
-                if (channelFragment.isAdded && channelFragment.isVisible) {
-                    channelFragment.playNow()
-                    return true
-                }
-
-                showFragment(menuFragment)
-            }
-
-            KeyEvent.KEYCODE_DPAD_UP -> {
-                channelUp()
-            }
-
-            KeyEvent.KEYCODE_CHANNEL_UP -> {
-                channelUp()
-            }
-
-            KeyEvent.KEYCODE_DPAD_DOWN -> {
-                channelDown()
-            }
-
-            KeyEvent.KEYCODE_CHANNEL_DOWN -> {
-                channelDown()
-            }
-
-            KeyEvent.KEYCODE_DPAD_LEFT -> {
-                showProgram()
-            }
-
-            KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                showSetting()
-            }
-        }
-        return false
+    internal fun showMenu() {
+        showFragment(menuFragment)
     }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (onKey(keyCode)) {
             return true

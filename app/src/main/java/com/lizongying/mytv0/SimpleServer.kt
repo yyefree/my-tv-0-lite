@@ -35,11 +35,23 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
         try {
             start()
         } catch (e: Exception) {
-            Log.e(TAG, "init", e)
+            Logger.e(TAG, "init", e)
         }
     }
 
     override fun serve(session: IHTTPSession): Response {
+        // 写接口鉴权：原来 /api/settings、/api/import-text、/api/proxy、/api/remove-source
+        // 等八个接口谁都能调，同一个 WiFi 下的任何设备（包括手机上的网页）都能改你的源和代理。
+        // 现在要求带 token：它只出现在设置面板二维码的地址里，页面 JS 会把它拼到后续请求上。
+        if (session.uri.startsWith("/api") && !isAuthorized(session)) {
+            Logger.w(TAG, "拒绝无 token 的请求 ${session.uri} from ${session.remoteIpAddress}")
+            return newFixedLengthResponse(
+                Response.Status.FORBIDDEN,
+                MIME_PLAINTEXT,
+                "forbidden: token required"
+            )
+        }
+
         return when (session.uri) {
             "/api/settings" -> handleSettings()
             "/api/sources" -> handleSources()
@@ -89,7 +101,7 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
             )
             response = gson.toJson(respSettings) ?: ""
         } catch (e: Exception) {
-            Log.e(TAG, "handleSettings", e)
+            Logger.e(TAG, "handleSettings", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -105,7 +117,7 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
         var sources = ""
         var success = false
         for (u in urls) {
-            Log.i(TAG, "request $u")
+            Logger.i(TAG, "request $u")
             withContext(Dispatchers.IO) {
                 try {
                     val request = okhttp3.Request.Builder().url(u).build()
@@ -115,10 +127,10 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
                         sources = response.bodyAlias()?.string() ?: ""
                         success = true
                     } else {
-                        Log.e(TAG, "Request status ${response.codeAlias()}")
+                        Logger.e(TAG, "Request status ${response.codeAlias()}")
                     }
                 } catch (e: Exception) {
-                    Log.e(TAG, "fetchSources", e)
+                    Logger.e(TAG, "fetchSources", e)
                 }
             }
 
@@ -150,7 +162,7 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "handleImportText", e)
+            Logger.e(TAG, "handleImportText", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -172,7 +184,7 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "handleImportUri", e)
+            Logger.e(TAG, "handleImportUri", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -190,15 +202,15 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
                     if (req.proxy != null) {
                         SP.proxy = req.proxy
                         R.string.default_proxy_set_success.showToast()
-                        Log.i(TAG, "set proxy success")
+                        Logger.i(TAG, "set proxy success")
                     } else {
                         R.string.default_proxy_set_failure.showToast()
-                        Log.i(TAG, "set proxy failure")
+                        Logger.i(TAG, "set proxy failure")
                     }
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "handleProxy", e)
+            Logger.e(TAG, "handleProxy", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -224,7 +236,7 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "handleEPG", e)
+            Logger.e(TAG, "handleEPG", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -251,7 +263,7 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "handleDefaultChannel", e)
+            Logger.e(TAG, "handleDefaultChannel", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -267,21 +279,21 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
             readBody(session)?.let {
                 handler.post {
                     val req = gson.fromJson(it, ReqSources::class.java)
-                    Log.i(TAG, "req $req")
+                    Logger.i(TAG, "req $req")
                     if (req.sourceId.isNotEmpty()) {
                         val res = viewModel.sources.removeSource(req.sourceId)
                         if (res) {
-                            Log.i(TAG, "remove source success ${req.sourceId}")
+                            Logger.i(TAG, "remove source success ${req.sourceId}")
                         } else {
-                            Log.i(TAG, "remove source failure ${req.sourceId}")
+                            Logger.i(TAG, "remove source failure ${req.sourceId}")
                         }
                     } else {
-                        Log.i(TAG, "remove source failure, sourceId is empty")
+                        Logger.i(TAG, "remove source failure, sourceId is empty")
                     }
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "handleRemoveSource", e)
+            Logger.e(TAG, "handleRemoveSource", e)
             return newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR,
                 MIME_PLAINTEXT,
@@ -295,6 +307,12 @@ class SimpleServer(private val context: Context, private val viewModel: MainView
         val map = HashMap<String, String>()
         session.parseBody(map)
         return map["postData"]
+    }
+
+    /** token 从 query 参数取（页面 JS 统一拼在 URL 上），不匹配就拒绝 */
+    private fun isAuthorized(session: IHTTPSession): Boolean {
+        val token = session.parms?.get("token") ?: return false
+        return token == SP.serverToken
     }
 
     private fun handleStaticContent(): Response {

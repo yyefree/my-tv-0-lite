@@ -1,5 +1,7 @@
 package com.lizongying.mytv0.requests
 
+import com.lizongying.mytv0.Logger
+
 
 import android.net.Uri
 import android.os.Build
@@ -46,9 +48,9 @@ object HttpClient {
                 proxyType?.let {
                     builder.proxy(Proxy(it, InetSocketAddress(proxyUri.host, proxyUri.port)))
                 }
-                Log.i(TAG, "apply proxy $proxyUri")
+                Logger.i(TAG, "apply proxy $proxyUri")
             } catch (e: Exception) {
-                Log.e(TAG, "getClientWithProxy", e)
+                Logger.e(TAG, "getClientWithProxy", e)
             }
         }
 
@@ -119,7 +121,7 @@ object HttpClient {
                     )
                 )
             } catch (e: Exception) {
-                Log.e(TAG, "enableTls12OnPreLollipop", e)
+                Logger.e(TAG, "enableTls12OnPreLollipop", e)
             }
         }
     }

@@ -168,7 +168,7 @@ class TVModel(var tv: TV) : ViewModel() {
     }
 
     fun confirmSourceType() {
-        // TODO save default sourceType
+        // sourceType 不落盘：每次播放重新探测，避免把某个类型写死
         tv.sourceType = getSourceTypeCurrent()
     }
 

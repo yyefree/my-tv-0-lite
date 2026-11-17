@@ -71,9 +71,9 @@ class InfoFragment : Fragment() {
     }
 
     fun show(tvModel: TVModel) {
-        // TODO make sure attached
+        // Fragment 可能还没 attach，先确认再加观察
         if (!isAdded) {
-            Log.e(TAG, "Fragment not attached to a context.")
+            Logger.e(TAG, "Fragment not attached to a context.")
             return
         }
 

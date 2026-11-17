@@ -40,8 +40,8 @@ class ImageHelper(private val context: Context) {
                     true
                 }
             } catch (e: Exception) {
-//                Log.e(TAG, "downloadImage error $url", e)
-                Log.e(TAG, "downloadImage error $url")
+//                Logger.e(TAG, "downloadImage error $url", e)
+                Logger.e(TAG, "downloadImage error $url")
                 false
             }
         }
@@ -53,7 +53,7 @@ class ImageHelper(private val context: Context) {
     ) {
         val file = files[key]
         if (file != null) {
-            Log.d(TAG, "image exists ${file.absolutePath}")
+            Logger.d(TAG, "image exists ${file.absolutePath}")
             return
         }
 
@@ -65,7 +65,7 @@ class ImageHelper(private val context: Context) {
             val file = File(cacheDir, "$LOGO/$key")
             if (downloadImage(url, file)) {
                 files[file.name] = file
-                Log.d(TAG, "downloadImage success $url ${file.absolutePath}")
+                Logger.d(TAG, "downloadImage success $url ${file.absolutePath}")
                 break
             }
         }
@@ -79,7 +79,7 @@ class ImageHelper(private val context: Context) {
     ) {
         val file = files[key]
         if (file != null) {
-            Log.d(TAG, "image exists ${file.absolutePath}")
+            Logger.d(TAG, "image exists ${file.absolutePath}")
             Glide.with(context)
                 .load(file)
                 .fitCenter()
@@ -88,13 +88,13 @@ class ImageHelper(private val context: Context) {
         }
 
         if (url.isEmpty()) {
-            Log.i(TAG, "$key image bitmap")
+            Logger.i(TAG, "$key image bitmap")
             Glide.with(context)
                 .load(bitmap)
                 .fitCenter()
                 .into(imageView)
         } else {
-            Log.i(TAG, "$key image $url")
+            Logger.i(TAG, "$key image $url")
             Glide.with(context)
                 .load(url)
                 .placeholder(BitmapDrawable(context.resources, bitmap))

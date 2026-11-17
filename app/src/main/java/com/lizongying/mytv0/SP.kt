@@ -69,6 +69,9 @@ object SP {
 
     private const val KEY_SOFT_DECODE = "soft_decode"
 
+    // 局域网服务（34567）的访问令牌，见 SimpleServer.serve
+    private const val KEY_SERVER_TOKEN = "server_token"
+
     const val DEFAULT_CHANNEL_REVERSAL = false
     const val DEFAULT_CHANNEL_NUM = false
     const val DEFAULT_TIME = true
@@ -117,10 +120,10 @@ object SP {
                 }
             }
 
-        Log.i(TAG, "group position $positionGroup")
-        Log.i(TAG, "list position $position")
-        Log.i(TAG, "default channel $channel")
-        Log.i(TAG, "proxy $proxy")
+        Logger.i(TAG, "group position $positionGroup")
+        Logger.i(TAG, "list position $position")
+        Logger.i(TAG, "default channel $channel")
+        Logger.i(TAG, "proxy $proxy")
     }
 
     var updatePendingCode: Long
@@ -254,4 +257,21 @@ object SP {
     var sources: String?
         get() = sp.getString(KEY_SOURCES, DEFAULT_SOURCES)
         set(value) = sp.edit().putString(KEY_SOURCES, value).apply()
+
+    /**
+     * 局域网配置服务的访问令牌。首次访问时生成并持久化，之后固定。
+     * 设置面板二维码地址里带上它，页面 JS 会把 token 拼在后续请求上；
+     * 同一 WiFi 下的其它设备不知道 token，就改不了你的源和代理。
+     */
+    var serverToken: String
+        get() {
+            val old = sp.getString(KEY_SERVER_TOKEN, "") ?: ""
+            if (old.isNotEmpty()) {
+                return old
+            }
+            val created = java.util.UUID.randomUUID().toString().replace("-", "").take(12)
+            sp.edit().putString(KEY_SERVER_TOKEN, created).apply()
+            return created
+        }
+        set(value) = sp.edit().putString(KEY_SERVER_TOKEN, value).apply()
 }

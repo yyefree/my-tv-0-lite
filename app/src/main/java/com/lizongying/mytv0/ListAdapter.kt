@@ -261,7 +261,7 @@ class ListAdapter(
     }
 
     fun toPosition(position: Int) {
-        Log.i(TAG, "position $position")
+        Logger.i(TAG, "position $position")
         recyclerView.post {
             (recyclerView.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(
                 position,

@@ -68,12 +68,12 @@ class TimeFragment : Fragment() {
         super.onHiddenChanged(hidden)
         if (!hidden) {
             if (_binding == null) {
-                Log.w(TAG, "_binding is null")
+                Logger.w(TAG, "_binding is null")
                 return
             }
 
             if (!this::viewModel.isInitialized) {
-                Log.w(TAG, "viewModel is not initialized")
+                Logger.w(TAG, "viewModel is not initialized")
                 return
             }
 

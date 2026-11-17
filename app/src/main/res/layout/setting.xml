@@ -59,6 +59,16 @@
             android:textSize="14sp"
             />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/update_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/description_blur"
+            android:text=""
+            android:textSize="12sp"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,33 +176,11 @@
             app:trackTint="@color/switch_track_color"
             />
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_display_seconds"
-            android:text="@string/display_seconds"
-            android:textColor="@color/title_blur"
-            android:textSize="14sp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:thumbTint="@color/switch_thumb_color"
-            app:trackTint="@color/switch_track_color"
-            />
-        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_boot_startup"
             android:text="@string/title_boot_startup"
             android:textColor="@color/title_blur"
             android:layout_marginTop="5dp"
             android:textSize="14sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:thumbTint="@color/switch_thumb_color"
-            app:trackTint="@color/switch_track_color"
-            />
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_repeat_info"
-            android:text="@string/title_repeat_info"
-            android:textColor="@color/title_blur"
-            android:textSize="14sp"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:thumbTint="@color/switch_thumb_color"
@@ -220,39 +208,81 @@
             app:thumbTint="@color/switch_thumb_color"
             app:trackTint="@color/switch_track_color"
             />
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_show_all_channels"
-            android:text="@string/show_all_channels"
-            android:textColor="@color/title_blur"
-            android:textSize="14sp"
-            android:layout_marginTop="5dp"
+
+        <!-- 不常用的 5 项收在这里，默认收起：面板一屏放不下 13 项，最常见的那几项要翻半天 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/more_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:thumbTint="@color/switch_thumb_color"
-            app:trackTint="@color/switch_track_color"
-            />
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_compact_menu"
-            android:text="@string/compact_menu"
-            android:textColor="@color/title_blur"
+            android:layout_marginTop="8dp"
+            android:background="@color/description_blur"
+            android:textColor="@color/blur"
             android:textSize="14sp"
-            android:layout_marginTop="5dp"
+            android:text="更多设置 ▾" />
+
+        <LinearLayout
+            android:id="@+id/more_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:thumbTint="@color/switch_thumb_color"
-            app:trackTint="@color/switch_track_color"
-            />
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_soft_decode"
-            android:text="@string/soft_decode"
-            android:textColor="@color/title_blur"
-            android:textSize="14sp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:thumbTint="@color/switch_thumb_color"
-            app:trackTint="@color/switch_track_color"
-            />
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_show_all_channels"
+                android:text="@string/show_all_channels"
+                android:textColor="@color/title_blur"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/switch_thumb_color"
+                app:trackTint="@color/switch_track_color"
+                />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_compact_menu"
+                android:text="@string/compact_menu"
+                android:textColor="@color/title_blur"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/switch_thumb_color"
+                app:trackTint="@color/switch_track_color"
+                />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_display_seconds"
+                android:text="@string/display_seconds"
+                android:textColor="@color/title_blur"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/switch_thumb_color"
+                app:trackTint="@color/switch_track_color"
+                />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_repeat_info"
+                android:text="@string/title_repeat_info"
+                android:textColor="@color/title_blur"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/switch_thumb_color"
+                app:trackTint="@color/switch_track_color"
+                />
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_soft_decode"
+                android:text="@string/soft_decode"
+                android:textColor="@color/title_blur"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/switch_thumb_color"
+                app:trackTint="@color/switch_track_color"
+                />
+        </LinearLayout>
     </LinearLayout>
     </ScrollView>
 </LinearLayout>

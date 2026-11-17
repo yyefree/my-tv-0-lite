@@ -61,7 +61,7 @@ class ModalFragment : DialogFragment() {
                         mainActivity.showWebViewPopup(u)
                         handler.postDelayed(hideAppreciateModal, 0)
                     } catch (e: Exception) {
-                        Log.e(TAG, "onViewCreated", e)
+                        Logger.e(TAG, "onViewCreated", e)
                     }
                 }
             }

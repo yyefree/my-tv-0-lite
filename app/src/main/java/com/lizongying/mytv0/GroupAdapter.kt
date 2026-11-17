@@ -90,8 +90,8 @@ class GroupAdapter(
 //
 //                    // "position" should not be used here, as the "list" may have been filtered out.
 //                    val p = listTVModel.getGroupIndex()
-//                    Log.e(TAG, "group getGroupIndex $p")
-//                    Log.e(TAG, "group positionValue ${tvGroupModel.positionValue}")
+//                    Logger.e(TAG, "group getGroupIndex $p")
+//                    Logger.e(TAG, "group positionValue ${tvGroupModel.positionValue}")
 //                    if (p != tvGroupModel.positionValue) {
 //                        tvGroupModel.setPosition(p)
 //                    }

@@ -79,7 +79,7 @@ private fun hashSignature(signature: Signature): String {
         val digest = md.digest()
         digest.let { it -> it.joinToString("") { "%02x".format(it) } }
     } catch (e: Exception) {
-        Log.e(TAG, "Error hashing signature", e)
+        Logger.e(TAG, "Error hashing signature", e)
         ""
     }
 }

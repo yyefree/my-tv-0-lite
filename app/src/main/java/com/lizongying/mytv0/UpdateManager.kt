@@ -14,6 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
 import com.lizongying.mytv0.Utils.getUrls
 import com.lizongying.mytv0.data.Global.gson
 import com.lizongying.mytv0.data.ReleaseResponse
@@ -41,11 +42,27 @@ class UpdateManager(
     // 后台自动升级：每小时静默探测一次，通了就静默下载，下完只在确认安装时打扰用户
     private var pendingInstallMode = false
 
+    // 最近一次探测失败的通俗原因，给「更新应用」失败提示用
+    private var lastError = ""
+
+    /** 把异常翻译成用户看得懂的原因，而不是只丢一句「版本获取失败」 */
+    private fun describeError(e: Exception): String {
+        val msg = e.message ?: ""
+        return when {
+            e is javax.net.ssl.SSLException || msg.contains("reset", true) ->
+                "连接被重置（${e.javaClass.simpleName}）"
+
+            e is java.net.SocketTimeoutException -> "连接超时"
+            e is java.net.UnknownHostException -> "域名解析失败"
+            else -> e.javaClass.simpleName
+        }
+    }
+
     private suspend fun getRelease(): ReleaseResponse? {
         val urls = VERSION_URLS.flatMap { getUrls(it) }
 
         for (u in urls) {
-            Log.i(TAG, "request $u")
+            Logger.i(TAG, "request $u")
             // 注意：以前这里直接 withContext { return@withContext ... }，返回值被丢弃，函数最后必然 return null，
             // 导致「更新应用」永远提示版本获取失败。必须把 withContext 的结果接出来再返回。
             val result: ReleaseResponse? = withContext(Dispatchers.IO) {
@@ -56,19 +73,20 @@ class UpdateManager(
                     if (response.isSuccessful) {
                         val body = response.bodyAlias()
                         if (body == null) {
-                            Log.e(TAG, "getRelease $u body null")
+                            Logger.e(TAG, "getRelease $u body null")
                             null
                         } else {
                             val text = body.string()
-                            Log.i(TAG, "getRelease body ${text.length} $text")
+                            Logger.i(TAG, "getRelease body ${text.length} $text")
                             parseRelease(text)
                         }
                     } else {
-                        Log.e(TAG, "getRelease $u ${response.codeAlias()}")
+                        Logger.e(TAG, "getRelease $u ${response.codeAlias()}")
                         null
                     }
                 } catch (e: Exception) {
-                    Log.e(TAG, "getRelease $u error $e")
+                    Logger.e(TAG, "getRelease $u error $e")
+                    lastError = describeError(e)
                     null
                 }
             }
@@ -90,7 +108,7 @@ class UpdateManager(
                 if (obj.isNull("apk_url")) null else obj.getString("apk_url")
             )
         } catch (e: Exception) {
-            Log.e(TAG, "parseRelease error $e")
+            Logger.e(TAG, "parseRelease error $e")
             null
         }
     }
@@ -101,10 +119,10 @@ class UpdateManager(
 
     fun startAutoPoll() {
         if (pollJob?.isActive == true) {
-            Log.i(TAG, "startAutoPoll 已在运行，跳过")
+            Logger.i(TAG, "startAutoPoll 已在运行，跳过")
             return
         }
-        Log.i(
+        Logger.i(
             TAG,
             "startAutoPoll 启动：首轮 ${INITIAL_DELAY_MS / 1000}s 后，之后每 ${POLL_INTERVAL_MS / 60000} 分钟一次"
         )
@@ -114,7 +132,7 @@ class UpdateManager(
                 try {
                     autoCheck()
                 } catch (e: Exception) {
-                    Log.e(TAG, "autoCheck error", e)
+                    Logger.e(TAG, "autoCheck error", e)
                 }
                 delay(POLL_INTERVAL_MS)
             }
@@ -133,7 +151,8 @@ class UpdateManager(
 
     private suspend fun autoCheck() {
         SP.updateLastCheck = System.currentTimeMillis()
-        Log.i(TAG, "autoCheck 开始静默探测")
+        Logger.i(TAG, "autoCheck 开始静默探测")
+        setStatus("检测中…")
 
         if (hasPendingApk()) {
             promptPendingInstall()
@@ -151,21 +170,23 @@ class UpdateManager(
                     )
                     if (file.exists() && file.length() > 0) {
                         SP.updatePendingReady = true
-                        Log.i(TAG, "autoCheck 上一轮后台下载已完成 (${file.length()} B)")
+                        Logger.i(TAG, "autoCheck 上一轮后台下载已完成 (${file.length()} B)")
+                        setStatus("已下载完成，等确认安装")
                         promptPendingInstall()
                         return
                     }
-                    Log.i(TAG, "autoCheck 下载记录成功但文件已不存在，清理后重新探测")
+                    Logger.i(TAG, "autoCheck 下载记录成功但文件已不存在，清理后重新探测")
                     clearPendingDownload()
                 }
 
                 DownloadManager.STATUS_RUNNING, DownloadManager.STATUS_PAUSED -> {
-                    Log.i(TAG, "autoCheck 下载仍在进行，本轮跳过")
+                    Logger.i(TAG, "autoCheck 下载仍在进行，本轮跳过")
+                    trackProgress(downloadId)
                     return
                 }
 
                 else -> {
-                    Log.i(TAG, "autoCheck 上一轮下载未成功，清理后重试")
+                    Logger.i(TAG, "autoCheck 上一轮下载未成功，清理后重试")
                     clearPendingDownload()
                 }
             }
@@ -173,20 +194,23 @@ class UpdateManager(
 
         val r = getRelease()
         if (r == null) {
-            Log.i(TAG, "autoCheck 探测失败：当前网络拿不到版本信息，等下一轮")
+            Logger.i(TAG, "autoCheck 探测失败：当前网络拿不到版本信息，等下一轮")
+            setStatus("未连通，等下一轮重试")
             return
         }
         val remoteCode = r.version_code ?: return
-        Log.i(TAG, "autoCheck 远端 ${r.version_name}($remoteCode) 本地 $versionCode")
+        Logger.i(TAG, "autoCheck 远端 ${r.version_name}($remoteCode) 本地 $versionCode")
         if (remoteCode <= versionCode) {
-            Log.i(TAG, "autoCheck 已是最新版本")
+            Logger.i(TAG, "autoCheck 已是最新版本")
+            setStatus("已是最新版本")
             return
         }
         if (remoteCode.toLong() == SP.updateDismissedCode) {
-            Log.i(TAG, "autoCheck 该版本已被用户忽略，不再提示")
+            Logger.i(TAG, "autoCheck 该版本已被用户忽略，不再提示")
+            setStatus("发现 ${r.version_name}，已被忽略")
             return
         }
-        Log.i(TAG, "autoCheck 发现新版本，开始后台静默下载 ${r.apk_name}")
+        Logger.i(TAG, "autoCheck 发现新版本，开始后台静默下载 ${r.apk_name}")
         startDownload(r)
     }
 
@@ -197,7 +221,7 @@ class UpdateManager(
             SP.updatePendingApk
         )
         val exists = file.exists() && file.length() > 0
-        Log.i(TAG, "hasPendingApk ${SP.updatePendingApk} -> $exists (${file.length()} B)")
+        Logger.i(TAG, "hasPendingApk ${SP.updatePendingApk} -> $exists (${file.length()} B)")
         if (!exists) SP.updatePendingReady = false
         return exists
     }
@@ -213,7 +237,7 @@ class UpdateManager(
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "queryDownloadStatus error", e)
+            Logger.e(TAG, "queryDownloadStatus error", e)
         }
         return status
     }
@@ -223,11 +247,84 @@ class UpdateManager(
         SP.updatePendingReady = false
     }
 
+    // ==================== 状态可见性 ====================
+    // 后台静默探测/下载时界面本来什么都不显示，用户只会觉得「点了没反应」。
+    // 把当前状态写进静态 LiveData，设置面板里那行小字实时变化，让功能「看得见」。
+
+    private fun setStatus(text: String) {
+        status.postValue(text)
+    }
+
+    /** 每 2 秒查一次下载进度，直到成功/失败；期间把百分比写进状态行 */
+    private fun trackProgress(id: Long) {
+        progressJob?.cancel()
+        progressJob = CoroutineScope(Dispatchers.Main).launch {
+            while (isActive) {
+                delay(2000)
+                when (val percent = queryDownloadProgress(id)) {
+                    null -> {
+                        setStatus("下载记录已失效")
+                        break
+                    }
+
+                    -1 -> {
+                        setStatus("下载失败，下一轮重试")
+                        break
+                    }
+
+                    100 -> {
+                        setStatus("已下载完成，等确认安装")
+                        break
+                    }
+
+                    else -> setStatus("正在后台下载 $percent%")
+                }
+            }
+        }
+    }
+
+    /** 0-100 进度；-1 下载失败；null 查不到记录 */
+    private fun queryDownloadProgress(id: Long): Int? {
+        val downloadManager =
+            context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        try {
+            downloadManager.query(DownloadManager.Query().setFilterById(id))?.use { cursor ->
+                if (!cursor.moveToFirst()) {
+                    return null
+                }
+                val statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+                if (statusIndex < 0) {
+                    return null
+                }
+                when (cursor.getInt(statusIndex)) {
+                    DownloadManager.STATUS_SUCCESSFUL -> return 100
+                    DownloadManager.STATUS_FAILED -> return -1
+                }
+
+                val doneIndex =
+                    cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)
+                val totalIndex = cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)
+                if (doneIndex < 0 || totalIndex < 0) {
+                    return null
+                }
+                val done = cursor.getLong(doneIndex)
+                val total = cursor.getLong(totalIndex)
+                if (total <= 0) {
+                    return 0
+                }
+                return ((done * 100) / total).toInt().coerceIn(0, 99)
+            }
+        } catch (e: Exception) {
+            Logger.e(TAG, "queryDownloadProgress error", e)
+        }
+        return null
+    }
+
     private fun promptPendingInstall() {
         val activity = context as? FragmentActivity ?: return
         if (activity.isFinishing || activity.isDestroyed) return
         if (activity.supportFragmentManager.findFragmentByTag(TAG) is ConfirmationFragment) return
-        Log.i(TAG, "promptPendingInstall 提示安装 ${SP.updatePendingName}")
+        Logger.i(TAG, "promptPendingInstall 提示安装 ${SP.updatePendingName}")
         pendingInstallMode = true
         ConfirmationFragment(this@UpdateManager, "新版本 ${SP.updatePendingName} 已下载完成", true)
             .show(activity.supportFragmentManager, TAG)
@@ -238,9 +335,9 @@ class UpdateManager(
             context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
             SP.updatePendingApk
         )
-        Log.i(TAG, "installPending apkFile $apkFile (${apkFile.length()} B)")
+        Logger.i(TAG, "installPending apkFile $apkFile (${apkFile.length()} B)")
         if (!apkFile.exists()) {
-            Log.e(TAG, "installPending APK 不存在")
+            Logger.e(TAG, "installPending APK 不存在")
             SP.updatePendingReady = false
             return
         }
@@ -258,28 +355,38 @@ class UpdateManager(
             SP.updatePendingReady = false
             SP.updateDownloadId = -1L
         } catch (e: Exception) {
-            Log.e(TAG, "installPending error", e)
+            Logger.e(TAG, "installPending error", e)
         }
     }
 
     fun checkAndUpdate() {
-        Log.i(TAG, "checkAndUpdate")
+        Logger.i(TAG, "checkAndUpdate")
+        setStatus("检查中…")
         CoroutineScope(Dispatchers.Main).launch {
             var text = "版本获取失败"
             var update = false
             try {
                 release = getRelease()
-                Log.i(TAG, "versionCode $versionCode ${release?.version_code} ${release?.version_name}")
+                Logger.i(TAG, "versionCode $versionCode ${release?.version_code} ${release?.version_name}")
                 if (release?.version_code != null) {
                     if (release?.version_code!! > versionCode) {
                         text = "最新版本：${release?.version_name}"
                         update = true
+                        setStatus("发现 ${release?.version_name}")
                     } else {
                         text = "已是最新版本，不需要更新"
+                        setStatus("已是最新版本")
                     }
+                } else {
+                    // 说清楚为什么失败：是域名解析、连接被重置还是超时，
+                    // 再告诉用户后台每小时会自动重试，避免「点了没反应」的观感。
+                    text = "版本获取失败：" + (lastError.ifEmpty { "网络不可达" })
+                    setStatus("未连通，等自动重试")
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Error occurred: ${e.message}", e)
+                Logger.e(TAG, "Error occurred: ${e.message}", e)
+                text = "版本获取失败：" + describeError(e)
+                setStatus("未连通，等自动重试")
             }
             updateUI(text, update)
         }
@@ -306,7 +413,7 @@ class UpdateManager(
         val request =
             Request(Uri.parse(release.apk_url))
         context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)?.mkdirs()
-        Log.i(TAG, "save dir ${Environment.DIRECTORY_DOWNLOADS}")
+        Logger.i(TAG, "save dir ${Environment.DIRECTORY_DOWNLOADS}")
         request.setDestinationInExternalFilesDir(
             context,
             Environment.DIRECTORY_DOWNLOADS,
@@ -320,7 +427,7 @@ class UpdateManager(
         // 获取下载任务的引用
         val downloadReference = downloadManager.enqueue(request)
         SP.updateDownloadId = downloadReference
-        Log.i(TAG, "startDownload enqueue id=$downloadReference ${release.apk_name}")
+        Logger.i(TAG, "startDownload enqueue id=$downloadReference ${release.apk_name}")
 
         downloadReceiver = DownloadReceiver(release.apk_name, downloadReference)
 
@@ -331,6 +438,9 @@ class UpdateManager(
         } else {
             context.registerReceiver(downloadReceiver, intentFilter)
         }
+
+        trackProgress(downloadReference)
+        setStatus("正在后台下载 0%")
     }
 
     private fun getDownloadProgress(
@@ -344,7 +454,7 @@ class UpdateManager(
 
         handler.post(object : Runnable {
             override fun run() {
-                Log.i(TAG, "search")
+                Logger.i(TAG, "search")
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 val cursor: Cursor = downloadManager.query(query)
                 cursor.use {
@@ -381,7 +491,7 @@ class UpdateManager(
     ) : BroadcastReceiver() {
         override fun onReceive(ctx: Context, intent: Intent) {
             val reference = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            Log.i(TAG, "DownloadReceiver id=$reference")
+            Logger.i(TAG, "DownloadReceiver id=$reference")
 
             if (reference == downloadReference) {
                 val downloadManager =
@@ -391,7 +501,7 @@ class UpdateManager(
                 if (cursor != null && cursor.moveToFirst()) {
                     val statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
                     if (statusIndex < 0) {
-                        Log.i(TAG, "Download failure")
+                        Logger.i(TAG, "Download failure")
                         return
                     }
                     val status = cursor.getInt(statusIndex)
@@ -399,7 +509,7 @@ class UpdateManager(
                     val progressIndex =
                         cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)
                     if (progressIndex < 0) {
-                        Log.i(TAG, "Download failure")
+                        Logger.i(TAG, "Download failure")
                         return
                     }
                     val progress = cursor.getInt(progressIndex)
@@ -418,26 +528,28 @@ class UpdateManager(
                             )
                             if (file.exists() && file.length() > 0) {
                                 SP.updatePendingReady = true
-                                Log.i(
+                                setStatus("已下载完成，等确认安装")
+                                Logger.i(
                                     TAG,
                                     "下载完成 $apkFileName (${file.length()} B)，等待用户确认安装"
                                 )
                                 promptPendingInstall()
                             } else {
-                                Log.e(TAG, "下载完成但文件不存在或为空")
+                                Logger.e(TAG, "下载完成但文件不存在或为空")
                                 clearPendingDownload()
                             }
                         }
 
                         DownloadManager.STATUS_FAILED -> {
-                            Log.i(TAG, "下载失败，下一轮探测会重试")
+                            Logger.i(TAG, "下载失败，下一轮探测会重试")
+                            setStatus("下载失败，下一轮重试")
                             clearPendingDownload()
                         }
 
                         else -> {
                             // Update UI with download progress
                             val percentage = progress * 100 / totalSize
-                            Log.i(TAG, "Download progress: $percentage%")
+                            Logger.i(TAG, "Download progress: $percentage%")
                         }
                     }
                 }
@@ -462,6 +574,12 @@ class UpdateManager(
 
         // 轮询任务放静态，Activity 重建时不会重复起一份
         private var pollJob: Job? = null
+
+        // 设置面板「更新应用」下面那行状态字：让用户看到后台在探测/下载，而不是一片沉默
+        val status = MutableLiveData<String>("")
+
+        // 下载进度轮询（每 2 秒一次，完成后自动结束）
+        private var progressJob: Job? = null
     }
 
     override fun onConfirm() {
@@ -470,7 +588,7 @@ class UpdateManager(
             installPending()
             return
         }
-        Log.i(TAG, "onConfirm $release")
+        Logger.i(TAG, "onConfirm $release")
         release?.let { startDownload(it) }
     }
 
@@ -479,14 +597,14 @@ class UpdateManager(
             pendingInstallMode = false
             // 用户选了「稍后」，本轮不再自动弹这个版本；文件留着，手动点「更新应用」仍可装
             SP.updateDismissedCode = SP.updatePendingCode
-            Log.i(TAG, "用户忽略本次安装提示：${SP.updatePendingName}")
+            Logger.i(TAG, "用户忽略本次安装提示：${SP.updatePendingName}")
         }
     }
 
     fun destroy() {
         if (downloadReceiver != null) {
             context.unregisterReceiver(downloadReceiver)
-            Log.i(TAG, "destroy downloadReceiver")
+            Logger.i(TAG, "destroy downloadReceiver")
         }
     }
 }

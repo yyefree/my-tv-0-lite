@@ -67,11 +67,11 @@ class PlayerFragment : Fragment() {
         }
         if (autoSkipCount < autoSkipMax) {
             autoSkipCount++
-            Log.i(TAG, "${tv.tv.title} $reason，自动跳到下一个频道（第 $autoSkipCount 次）")
+            Logger.i(TAG, "${tv.tv.title} $reason，自动跳到下一个频道（第 $autoSkipCount 次）")
             (activity as? MainActivity)?.next()
             return
         }
-        Log.i(TAG, "${tv.tv.title} $reason，连续 ${autoSkipMax} 台不可用，停止跳转")
+        Logger.i(TAG, "${tv.tv.title} $reason，连续 ${autoSkipMax} 台不可用，停止跳转")
         tv.setErrInfo(R.string.play_error.getString())
     }
 
@@ -101,7 +101,7 @@ class PlayerFragment : Fragment() {
     @OptIn(UnstableApi::class)
     fun updatePlayer() {
         if (context == null) {
-            Log.e(TAG, "context == null")
+            Logger.e(TAG, "context == null")
             return
         }
 
@@ -152,7 +152,7 @@ class PlayerFragment : Fragment() {
                 super.onIsPlayingChanged(isPlaying)
 
                 if (tvModel == null) {
-                    Log.e(TAG, "tvModel == null")
+                    Logger.e(TAG, "tvModel == null")
                     return
                 }
 
@@ -166,7 +166,7 @@ class PlayerFragment : Fragment() {
                     tv.setErrInfo("")
                     tv.retryTimes = 0
                 } else {
-                    Log.i(TAG, "${tv.tv.title} 播放停止")
+                    Logger.i(TAG, "${tv.tv.title} 播放停止")
                 }
             }
 
@@ -185,7 +185,7 @@ class PlayerFragment : Fragment() {
                 super.onPlayerError(error)
 
                 if (tvModel == null) {
-                    Log.e(TAG, "tvModel == null")
+                    Logger.e(TAG, "tvModel == null")
                     return
                 }
 
@@ -193,7 +193,7 @@ class PlayerFragment : Fragment() {
 
                 cancelStartWatchdog()
 
-                Log.i(
+                Logger.i(
                     TAG,
                     "${tv.tv.title} onPlayerError ${error.errorCodeName}(${error.errorCode}) cause=${error.cause}"
                 )
@@ -211,8 +211,20 @@ class PlayerFragment : Fragment() {
                             code == PlaybackException.ERROR_CODE_TIMEOUT
 
                 if (isNetworkError) {
-                    Log.i(TAG, "${tv.tv.title} 网络错误 code=$code，跳过同源重试")
-                    handleUnavailable(tv, "网络错误 code=$code")
+                    // 注释说「有备用地址就换」，但原来这里直接 handleUnavailable，
+                    // 把同一个频道后面的可用地址全放弃了 —— 表现为 CCTV-1 主源挂了就黑屏，
+                    // 明明还有个备用地址能播。现在先把同频道的下一个地址试一遍，全试完才判死。
+                    if (!tv.isLastVideo()) {
+                        tv.nextVideo()
+                        tv.setReady(true)
+                        Logger.i(
+                            TAG,
+                            "${tv.tv.title} 网络错误 code=$code，换下一个地址 ${tv.videoIndex.value}"
+                        )
+                    } else {
+                        Logger.i(TAG, "${tv.tv.title} 网络错误 code=$code，该频道地址已全部失败")
+                        handleUnavailable(tv, "网络错误 code=$code")
+                    }
                 } else if (tv.retryTimes < tv.retryMaxTimes) {
                     var last = true
                     if (tv.getSourceTypeDefault() == SourceType.UNKNOWN) {
@@ -222,7 +234,7 @@ class PlayerFragment : Fragment() {
                     if (last) {
                         tv.retryTimes++
                     }
-                    Log.i(
+                    Logger.i(
                         TAG,
                         "retry ${tv.videoIndex.value} ${tv.getSourceTypeCurrent()} ${tv.retryTimes}/${tv.retryMaxTimes}"
                     )

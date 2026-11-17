@@ -2,6 +2,7 @@ package com.lizongying.mytv0
 
 import android.app.Application
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
@@ -40,6 +41,11 @@ class MyTVApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        // release 包（debuggable=false）里关掉 Logger.i/d：这台电视内存只有 424MB，
+        // 171 处 info 日志的字符串拼接 + logcat 写入是纯开销，还会把真正的错误冲掉。
+        Logger.verbose =
+            (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
 
         displayMetrics = DisplayMetrics()
         realDisplayMetrics = DisplayMetrics()

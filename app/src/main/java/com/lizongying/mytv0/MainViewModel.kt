@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonSyntaxException
 import com.lizongying.mytv0.ImageHelper
+import com.lizongying.mytv0.Logger
 import com.lizongying.mytv0.MyTVApplication
 import com.lizongying.mytv0.R
 import com.lizongying.mytv0.SP
@@ -84,7 +85,7 @@ class MainViewModel : ViewModel() {
             SP.configUrl?.let {
                 if (it.startsWith("http")) {
                     viewModelScope.launch {
-                        Log.i(TAG, "update config url: $it")
+                        Logger.i(TAG, "update config url: $it")
                         importFromUrl(it)
                         updateEPG()
                     }
@@ -117,18 +118,18 @@ class MainViewModel : ViewModel() {
         cacheChannels = getCache()
 
         if (cacheChannels.isEmpty()) {
-            Log.i(TAG, "cacheChannels isEmpty")
+            Logger.i(TAG, "cacheChannels isEmpty")
             cacheChannels =
                 context.resources.openRawResource(DEFAULT_CHANNELS_FILE).bufferedReader()
                     .use { it.readText() }
         }
 
-        Log.i(TAG, "cacheChannels $cacheFile $cacheChannels")
+        Logger.i(TAG, "cacheChannels $cacheFile $cacheChannels")
 
         try {
             str2Channels(cacheChannels)
         } catch (e: Exception) {
-            Log.e(TAG, "init", e)
+            Logger.e(TAG, "init", e)
             cacheFile!!.deleteOnExit()
             R.string.channel_read_error.showToast()
         }
@@ -138,11 +139,11 @@ class MainViewModel : ViewModel() {
             if (!cacheEPG.exists()) {
                 cacheEPG.createNewFile()
             } else {
-                Log.i(TAG, "cacheEPG exists")
+                Logger.i(TAG, "cacheEPG exists")
                 if (readEPG(cacheEPG.readText())) {
-                    Log.i(TAG, "cacheEPG success")
+                    Logger.i(TAG, "cacheEPG success")
                 } else {
-                    Log.i(TAG, "cacheEPG failure")
+                    Logger.i(TAG, "cacheEPG failure")
                 }
             }
         }
@@ -154,7 +155,7 @@ class MainViewModel : ViewModel() {
 
     suspend fun preloadLogo() {
         if (!this::imageHelper.isInitialized) {
-            Log.w(TAG, "imageHelper is not initialized")
+            Logger.w(TAG, "imageHelper is not initialized")
             return
         }
 
@@ -199,10 +200,10 @@ class MainViewModel : ViewModel() {
                 }
                 cacheEPG.writeText(gson.toJson(e1))
             }
-            Log.i(TAG, "readEPG success")
+            Logger.i(TAG, "readEPG success")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "readEPG", e)
+            Logger.e(TAG, "readEPG", e)
             false
         }
     }
@@ -224,10 +225,10 @@ class MainViewModel : ViewModel() {
                     }
                 }
             }
-            Log.i(TAG, "readEPG success")
+            Logger.i(TAG, "readEPG success")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "readEPG", e)
+            Logger.e(TAG, "readEPG", e)
             false
         }
     }
@@ -237,7 +238,7 @@ class MainViewModel : ViewModel() {
 
         var success = false
         for (a in urls) {
-            Log.i(TAG, "request $a")
+            Logger.i(TAG, "request $a")
             withContext(Dispatchers.IO) {
                 try {
                     val request = okhttp3.Request.Builder().url(a).build()
@@ -245,15 +246,15 @@ class MainViewModel : ViewModel() {
 
                     if (response.isSuccessful) {
                         if (readEPG(response.bodyAlias()!!.byteStream())) {
-                            Log.i(TAG, "EPG $a success")
+                            Logger.i(TAG, "EPG $a success")
                             success = true
                         }
                     } else {
-                        Log.e(TAG, "EPG $a ${response.codeAlias()}")
+                        Logger.e(TAG, "EPG $a ${response.codeAlias()}")
                     }
                 } catch (e: Exception) {
-//                    Log.e(TAG, "EPG $a error", e)
-                    Log.e(TAG, "EPG $a error")
+//                    Logger.e(TAG, "EPG $a error", e)
+                    Logger.e(TAG, "EPG $a error")
                 }
             }
 
@@ -271,7 +272,7 @@ class MainViewModel : ViewModel() {
         var err = 0
         var shouldBreak = false
         for ((a, b) in urls) {
-            Log.i(TAG, "request $a")
+            Logger.i(TAG, "request $a")
             withContext(Dispatchers.IO) {
                 try {
                     val request = okhttp3.Request.Builder().url(a).build()
@@ -285,21 +286,21 @@ class MainViewModel : ViewModel() {
                         err = 0
                         shouldBreak = true
                     } else {
-                        Log.e(TAG, "Request status ${response.codeAlias()}")
+                        Logger.e(TAG, "Request status ${response.codeAlias()}")
                         err = R.string.channel_status_error
                     }
                 } catch (e: JsonSyntaxException) {
                     e.printStackTrace()
-                    Log.e(TAG, "JSON Parse Error", e)
+                    Logger.e(TAG, "JSON Parse Error", e)
                     err = R.string.channel_format_error
                     shouldBreak = true
                 } catch (e: NullPointerException) {
                     e.printStackTrace()
-                    Log.e(TAG, "Null Pointer Error", e)
+                    Logger.e(TAG, "Null Pointer Error", e)
                     err = R.string.channel_read_error
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Log.e(TAG, "Request error $e")
+                    Logger.e(TAG, "Request error $e")
                     err = R.string.channel_request_error
                 }
             }
@@ -326,7 +327,7 @@ class MainViewModel : ViewModel() {
     fun importFromUri(uri: Uri, id: String = "") {
         if (uri.scheme == "file") {
             val file = uri.toFile()
-            Log.i(TAG, "file $file")
+            Logger.i(TAG, "file $file")
             val str = if (file.exists()) {
                 file.readText()
             } else {
@@ -345,9 +346,9 @@ class MainViewModel : ViewModel() {
     fun tryStr2Channels(str: String, file: File?, url: String, id: String = "") {
         try {
             if (str2Channels(str)) {
-                Log.i(TAG, "write to cacheFile $cacheFile $str")
+                Logger.i(TAG, "write to cacheFile $cacheFile $str")
                 cacheFile!!.writeText(str)
-                Log.i(TAG, "cacheFile ${getCache()}")
+                Logger.i(TAG, "cacheFile ${getCache()}")
                 cacheChannels = str
                 if (url.isNotEmpty()) {
                     SP.configUrl = url
@@ -361,13 +362,13 @@ class MainViewModel : ViewModel() {
                 }
                 _channelsOk.value = true
                 R.string.channel_import_success.showToast()
-                Log.i(TAG, "channel import success")
+                Logger.i(TAG, "channel import success")
             } else {
                 R.string.channel_import_error.showToast()
-                Log.w(TAG, "channel import error")
+                Logger.w(TAG, "channel import error")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "tryStr2Channels", e)
+            Logger.e(TAG, "tryStr2Channels", e)
             file?.deleteOnExit()
             R.string.channel_read_error.showToast()
         }
@@ -376,7 +377,7 @@ class MainViewModel : ViewModel() {
     private fun str2Channels(str: String): Boolean {
         var string = str
         if (initialized && string == cacheChannels) {
-            Log.w(TAG, "same channels")
+            Logger.w(TAG, "same channels")
             return true
         }
 
@@ -386,12 +387,12 @@ class MainViewModel : ViewModel() {
         }
 
         if (string.isEmpty()) {
-            Log.w(TAG, "channels is empty")
+            Logger.w(TAG, "channels is empty")
             return false
         }
 
         if (initialized && string == cacheChannels) {
-            Log.w(TAG, "same channels")
+            Logger.w(TAG, "same channels")
             return true
         }
 
@@ -401,9 +402,9 @@ class MainViewModel : ViewModel() {
             '[' -> {
                 try {
                     list = gson.fromJson(string, typeTvList)
-                    Log.i(TAG, "导入频道 ${list.size} $list")
+                    Logger.i(TAG, "导入频道 ${list.size} $list")
                 } catch (e: Exception) {
-                    Log.e(TAG, "str2Channels", e)
+                    Logger.e(TAG, "str2Channels", e)
                     return false
                 }
             }
@@ -489,7 +490,7 @@ class MainViewModel : ViewModel() {
                     l.add(t1)
                 }
                 list = l
-                Log.i(TAG, "导入频道 ${list.size} $list")
+                Logger.i(TAG, "导入频道 ${list.size} $list")
             }
 
             else -> {
@@ -540,8 +541,8 @@ class MainViewModel : ViewModel() {
                     l.add(tv)
                 }
                 list = l
-                Log.d(TAG, "导入频道 $list")
-                Log.i(TAG, "导入频道 ${list.size}")
+                Logger.d(TAG, "导入频道 $list")
+                Logger.i(TAG, "导入频道 ${list.size}")
             }
         }
 

@@ -34,8 +34,20 @@ class MyTVExceptionHandler(val context: Context) : Thread.UncaughtExceptionHandl
     }
 
     private suspend fun saveCrashInfoToFile(crashInfo: String) {
+        // 本地始终留一份最近一次崩溃。原来只往作者服务器上报，
+        // 这台电视外网时通时不通，上报失败就等于什么都没留下，出问题只能靠猜。
+        withContext(Dispatchers.IO) {
+            try {
+                val file = java.io.File(context.filesDir, "crash_last.txt")
+                file.writeText(crashInfo)
+                Logger.e(TAG, "崩溃堆栈已写本地 ${file.absolutePath}")
+            } catch (e: Exception) {
+                Logger.e(TAG, "写本地崩溃日志失败", e)
+            }
+        }
+
         if (isLimit()) {
-            Log.e(TAG, crashInfo)
+            Logger.e(TAG, crashInfo)
         } else {
             try {
                 saveLog(crashInfo)
@@ -66,9 +78,9 @@ class MyTVExceptionHandler(val context: Context) : Thread.UncaughtExceptionHandl
 
                 HttpClient.okHttpClient.newCall(request).execute().use { response ->
                     if (response.isSuccessful) {
-                        Log.i(TAG, "log success")
+                        Logger.i(TAG, "log success")
                     } else {
-                        Log.e(TAG, "log failed: ${response.codeAlias()}")
+                        Logger.e(TAG, "log failed: ${response.codeAlias()}")
                     }
                 }
             } catch (e: Exception) {

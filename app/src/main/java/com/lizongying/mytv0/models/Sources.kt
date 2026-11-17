@@ -1,5 +1,7 @@
 package com.lizongying.mytv0.models
 
+import com.lizongying.mytv0.Logger
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -46,7 +48,7 @@ class Sources {
         } else {
             getSource(position)?.checked = checked
 //            if (checked) {
-//                Log.i(TAG, "setChecked $position")
+//                Logger.i(TAG, "setChecked $position")
 //                setChecked(position)
 //            }
 //
@@ -80,7 +82,7 @@ class Sources {
 
     fun removeSource(id: String): Boolean {
         if (sourcesValue.isEmpty()) {
-            Log.i(TAG, "sources is empty")
+            Logger.i(TAG, "sources is empty")
             return false
         }
 
@@ -96,7 +98,7 @@ class Sources {
             return true
         }
 
-        Log.i(TAG, "sourceId is not exists")
+        Logger.i(TAG, "sourceId is not exists")
         return false
     }
 

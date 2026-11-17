@@ -181,6 +181,11 @@
 <div style="height: 100%"></div>
 </body>
 <script>
+    // 访问令牌：只出现在设置面板二维码的地址里（/?token=xxx）。
+    // 服务端对 /api/* 校验它，没有 token 的请求一律 403 ——
+    // 这样同一个局域网里的其它设备即使知道 34567 端口，也改不了这台电视的源和代理。
+    const TOKEN = new URLSearchParams(location.search).get('token') || '';
+    const withToken = (url) => url + (url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(TOKEN);
     const lang = {
         TRADITIONAL_CHINESE: {
             appName: '我的電視·〇',
@@ -350,7 +355,7 @@
     }
 
     const save = async (url, body) => {
-        const response = await fetch(url, {
+        const response = await fetch(withToken(url), {
             method: 'POST',
             body: body
         });
@@ -421,7 +426,7 @@
     }
 
     (async () => {
-        const response = await fetch('/api/settings');
+        const response = await fetch(withToken('/api/settings'));
         const json = await response.json();
         console.log(json);
         document.querySelector('#channel').value = json.channelDefault;
@@ -438,7 +443,7 @@
 
         handleRemove()
 
-        const sources = await fetch('/api/sources');
+        const sources = await fetch(withToken('/api/sources'));
         const sourcesText = await sources.text();
         console.log(sourcesText);
 

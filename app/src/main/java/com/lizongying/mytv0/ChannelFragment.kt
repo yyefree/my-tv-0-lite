@@ -64,7 +64,7 @@ class ChannelFragment : Fragment() {
 
     fun show(tvModel: TVModel) {
         val tv = tvModel.tv
-        Log.i(TAG, "show $tv")
+        Logger.i(TAG, "show $tv")
         handler.removeCallbacks(hideRunnable)
         handler.removeCallbacks(playRunnable)
         if (_binding != null) {
@@ -78,12 +78,12 @@ class ChannelFragment : Fragment() {
     }
 
     fun show(channel: Int) {
-        Log.i(TAG, "input $channel ${this.channel}")
+        Logger.i(TAG, "input $channel ${this.channel}")
         // App 刚启动、本 Fragment 还没 attach 到 Activity 时按数字键会走到这里，
         // 此时 viewModel 尚未在 onViewCreated 里初始化，直接访问会抛
         // "lateinit property viewModel has not been initialized" 并把进程崩掉。
         if (!::viewModel.isInitialized) {
-            Log.i(TAG, "viewModel not ready, drop input $channel")
+            Logger.i(TAG, "viewModel not ready, drop input $channel")
             return
         }
         val tv = viewModel.groupModel.getCurrent()?.tv ?: return
@@ -98,7 +98,7 @@ class ChannelFragment : Fragment() {
         this.channel = "${this.channel}$channel".toInt()
         handler.removeCallbacks(hideRunnable)
         handler.removeCallbacks(playRunnable)
-        Log.d(TAG, "channelCount $channelCount")
+        Logger.d(TAG, "channelCount $channelCount")
         if (_binding != null) {
             binding.content.text = "${this.channel}"
         }

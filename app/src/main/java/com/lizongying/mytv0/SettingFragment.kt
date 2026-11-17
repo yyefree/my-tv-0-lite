@@ -36,7 +36,9 @@ class SettingFragment : Fragment() {
 
     private lateinit var updateManager: UpdateManager
 
-    private var server = "http://${PortUtil.lan()}:$PORT"
+    // 局域网配置页地址，带访问令牌（否则 /api/* 会被 403，见 SimpleServer.serve）
+    private val server: String
+        get() = "http://${PortUtil.lan()}:$PORT/?token=${SP.serverToken}"
 
     private lateinit var viewModel: MainViewModel
 
@@ -162,6 +164,17 @@ class SettingFragment : Fragment() {
             hideSelf()
         }
 
+        // 「更多设置」展开/收起：面板 13 项一屏放不下，常用的留在外面，不常用的收在这里
+        binding.moreSettings.setOnClickListener {
+            val expanded = binding.moreGroup.visibility == View.VISIBLE
+            binding.moreGroup.visibility = if (expanded) View.GONE else View.VISIBLE
+            binding.moreSettings.text = if (expanded) "更多设置 ▾" else "收起设置 ▴"
+            if (!expanded) {
+                binding.switchShowAllChannels.requestFocus()
+            }
+            mainActivity.settingActive()
+        }
+
         binding.exit.setOnClickListener {
             requireActivity().finishAffinity()
         }
@@ -193,6 +206,7 @@ class SettingFragment : Fragment() {
         btnLayoutParams.marginEnd = application.px2Px(binding.confirmConfig.marginEnd)
 
         binding.versionName.textSize = txtTextSize
+        binding.moreSettings.textSize = txtTextSize
 
         for (i in listOf(
             binding.remoteSettings,
@@ -279,6 +293,10 @@ class SettingFragment : Fragment() {
 
         updateManager = UpdateManager(context, context.appVersionCode)
 
+        // 状态行跟随屏幕缩放，和面板里其它文字保持一致
+        binding.updateStatus.textSize = application.px2PxFont(binding.updateStatus.textSize)
+        refreshUpdateStatus(UpdateManager.status.value ?: "")
+
         return binding.root
     }
 
@@ -297,10 +315,14 @@ class SettingFragment : Fragment() {
         }
 
         binding.clear.setOnClickListener {
+            // 恢复默认前先把当前配置存一份：配置只存在这台机器上，
+            // 误点「恢复默认」等于把精心调好的源和代理全清空，重配很麻烦。
+            backupConfig()
+
             SP.channelNum = SP.DEFAULT_CHANNEL_NUM
 
             SP.sources = SP.DEFAULT_SOURCES
-            Log.i(TAG, "DEFAULT_SOURCES ${SP.DEFAULT_SOURCES}")
+            Logger.i(TAG, "DEFAULT_SOURCES ${SP.DEFAULT_SOURCES}")
             viewModel.sources.init()
 
             SP.channelReversal = SP.DEFAULT_CHANNEL_REVERSAL
@@ -312,21 +334,21 @@ class SettingFragment : Fragment() {
 
             imageHelper.clearImage()
 
-            // TODO update player
+            // 软解码开关只影响下一次播放，不需要在这里强制重建播放器
             SP.softDecode = SP.DEFAULT_SOFT_DECODE
 
             SP.configUrl = SP.DEFAULT_CONFIG_URL
-            Log.i(TAG, "config url: ${SP.configUrl}")
+            Logger.i(TAG, "config url: ${SP.configUrl}")
             context.deleteFile(CACHE_FILE_NAME)
             viewModel.reset(context)
             confirmConfig()
 
             SP.channel = SP.DEFAULT_CHANNEL
-            Log.i(TAG, "default channel: ${SP.channel}")
+            Logger.i(TAG, "default channel: ${SP.channel}")
             confirmChannel()
 
             SP.deleteLike()
-            Log.i(TAG, "clear like")
+            Logger.i(TAG, "clear like")
 
 //            SP.positionGroup = SP.DEFAULT_POSITION_GROUP
 //            viewModel.groupModel.setPosition(SP.DEFAULT_POSITION_GROUP)
@@ -336,7 +358,7 @@ class SettingFragment : Fragment() {
             viewModel.groupModel.initPosition()
 
             SP.position = SP.DEFAULT_POSITION
-            Log.i(TAG, "list position: ${SP.position}")
+            Logger.i(TAG, "list position: ${SP.position}")
             val tvListModel = viewModel.groupModel.getCurrentList()
             tvListModel?.setPosition(SP.DEFAULT_POSITION)
             tvListModel?.setPositionPlaying(SP.DEFAULT_POSITION)
@@ -364,11 +386,66 @@ class SettingFragment : Fragment() {
         }
 
         binding.remoteSettings.requestFocus()
+
+        // 后台自动升级的状态（检测中 / 未连通 / 正在下载 x% / 已下载待安装）实时显示
+        UpdateManager.status.observe(viewLifecycleOwner) { refreshUpdateStatus(it) }
+    }
+
+    /**
+     * 「更新应用」下面那行小字：后台自动升级的状态 + 上次检测时间。
+     * 没有这一行的时候，每小时静默探测完全不可见，用户会以为功能坏了。
+     */
+    private fun refreshUpdateStatus(desc: String) {
+        if (_binding == null) {
+            return
+        }
+        val last = SP.updateLastCheck
+        val time = if (last > 0) {
+            java.text.SimpleDateFormat("HH:mm", java.util.Locale.CHINA)
+                .format(java.util.Date(last))
+        } else {
+            ""
+        }
+        val base = desc.ifEmpty { "尚未检测" }
+        binding.updateStatus.text = if (time.isEmpty()) base else "$base · 上次检测 $time"
+    }
+
+    /**
+     * 把当前配置原样存到 files 里，文件名固定（只留最近一次）。
+     * 电视上没有文件管理器，真要找回时用 `adb pull /data/data/com.lizongying.mytv0/files/config_backup.txt`。
+     */
+    private fun backupConfig() {
+        try {
+            val sb = StringBuilder()
+            sb.append("backupAt=").append(System.currentTimeMillis()).append('\n')
+            sb.append("config=").append(SP.configUrl ?: "").append('\n')
+            sb.append("proxy=").append(SP.proxy ?: "").append('\n')
+            sb.append("epg=").append(SP.epg ?: "").append('\n')
+            sb.append("channel=").append(SP.channel).append('\n')
+            sb.append("sources=").append(SP.sources ?: "").append('\n')
+            sb.append("channelReversal=").append(SP.channelReversal).append('\n')
+            sb.append("channelNum=").append(SP.channelNum).append('\n')
+            sb.append("showTime=").append(SP.time).append('\n')
+            sb.append("bootStartup=").append(SP.bootStartup).append('\n')
+            sb.append("repeatInfo=").append(SP.repeatInfo).append('\n')
+            sb.append("configAutoLoad=").append(SP.configAutoLoad).append('\n')
+
+            val cache = java.io.File(requireContext().filesDir, CACHE_FILE_NAME)
+            if (cache.exists()) {
+                sb.append("channels=\n").append(cache.readText()).append('\n')
+            }
+
+            val file = java.io.File(requireContext().filesDir, "config_backup.txt")
+            file.writeText(sb.toString())
+            Logger.i(TAG, "已备份配置 ${file.absolutePath} (${file.length()} B)")
+        } catch (e: Exception) {
+            Logger.e(TAG, "备份配置失败", e)
+        }
     }
 
     private fun confirmConfig() {
         if (SP.configUrl.isNullOrEmpty()) {
-            Log.w(TAG, "SP.configUrl is null or empty")
+            Logger.w(TAG, "SP.configUrl is null or empty")
             return
         }
 
@@ -406,6 +483,8 @@ class SettingFragment : Fragment() {
         super.onHiddenChanged(hidden)
         if (_binding != null && !hidden) {
             binding.remoteSettings.requestFocus()
+            // 面板重新打开时刷新一次，能看到刚发生的那轮探测结果
+            refreshUpdateStatus(UpdateManager.status.value ?: "")
         }
     }
 
@@ -428,7 +507,7 @@ class SettingFragment : Fragment() {
         checkAndAddPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE, permissionsList)
 
         if (permissionsList.isNotEmpty()) {
-            Log.i(TAG, "ask $permissionsList")
+            Logger.i(TAG, "ask $permissionsList")
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 permissionsList.toTypedArray(),
@@ -480,7 +559,7 @@ class SettingFragment : Fragment() {
             if (allPermissionsGranted) {
                 updateManager.checkAndUpdate()
             } else {
-                Log.w(TAG, "ask permissions failed")
+                Logger.w(TAG, "ask permissions failed")
                 R.string.authorization_failed.showToast()
             }
         }

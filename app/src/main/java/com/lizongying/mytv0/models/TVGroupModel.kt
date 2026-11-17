@@ -1,5 +1,7 @@
 package com.lizongying.mytv0.models
 
+import com.lizongying.mytv0.Logger
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -177,7 +179,7 @@ class TVGroupModel : ViewModel() {
             setPositionPlaying(p)
             setPosition(p)
 
-//            Log.i(TAG, "group positionPlaying $p/${tvGroupValue.size - 1}")
+//            Logger.i(TAG, "group positionPlaying $p/${tvGroupValue.size - 1}")
             tvListModel = getTVListModelNotFilter(p)!!
             return tvListModel.getTVModel(tvListModel.size() - 1)
         }
@@ -208,7 +210,7 @@ class TVGroupModel : ViewModel() {
             setPositionPlaying(p)
             setPosition(p)
 
-//            Log.i(TAG, "group positionPlaying $p/${tvGroupValue.size - 1}")
+//            Logger.i(TAG, "group positionPlaying $p/${tvGroupValue.size - 1}")
             tvListModel = getTVListModelNotFilter(p)!!
             return tvListModel.getTVModel(0)
         }

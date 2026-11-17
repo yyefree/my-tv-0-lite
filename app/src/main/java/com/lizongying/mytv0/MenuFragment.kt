@@ -43,7 +43,7 @@ class MenuFragment : Fragment(), GroupAdapter.ItemListener, ListAdapter.ItemList
         val application = context.applicationContext as MyTVApplication
         viewModel = ViewModelProvider(context)[MainViewModel::class.java]
 
-        Log.i(TAG, "group size ${viewModel.groupModel.size()}")
+        Logger.i(TAG, "group size ${viewModel.groupModel.size()}")
         groupAdapter = GroupAdapter(
             context,
             binding.group,
@@ -90,7 +90,7 @@ class MenuFragment : Fragment(), GroupAdapter.ItemListener, ListAdapter.ItemList
 
     private fun getList(): TVListModel? {
         if (!this::viewModel.isInitialized) {
-            Log.e(TAG, "viewModel is not initialized")
+            Logger.e(TAG, "viewModel is not initialized")
             return null
         }
 
@@ -130,7 +130,7 @@ class MenuFragment : Fragment(), GroupAdapter.ItemListener, ListAdapter.ItemList
 
     fun updateList(position: Int) {
         if (!this::viewModel.isInitialized) {
-            Log.e(TAG, "viewModel is not initialized")
+            Logger.e(TAG, "viewModel is not initialized")
             return
         }
 
@@ -163,14 +163,14 @@ class MenuFragment : Fragment(), GroupAdapter.ItemListener, ListAdapter.ItemList
 
     override fun onItemClicked(position: Int) {
         if (!this::viewModel.isInitialized) {
-            Log.e(TAG, "viewModel is not initialized")
+            Logger.e(TAG, "viewModel is not initialized")
             return
         }
     }
 
     override fun onItemClicked(position: Int, type: String) {
         if (!this::viewModel.isInitialized) {
-            Log.e(TAG, "viewModel is not initialized")
+            Logger.e(TAG, "viewModel is not initialized")
             return
         }
 

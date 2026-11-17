@@ -74,12 +74,12 @@ object Utils {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val currentTimeMillis = getTimestampFromServer()
-                Log.i(TAG, "currentTimeMillis $currentTimeMillis")
+                Logger.i(TAG, "currentTimeMillis $currentTimeMillis")
                 if (currentTimeMillis > 0) {
                     between = System.currentTimeMillis() - currentTimeMillis
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "init", e)
+                Logger.e(TAG, "init", e)
             }
 
 //            try {
@@ -104,7 +104,7 @@ object Utils {
                     response.bodyAlias()?.string()?.toLong() ?: 0
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "getTimestampFromServer", e)
+                Logger.e(TAG, "getTimestampFromServer", e)
                 0
             }
         }
@@ -129,7 +129,7 @@ object Utils {
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "getISP", e)
+                Logger.e(TAG, "getISP", e)
                 UNKNOWN
             }
         }
