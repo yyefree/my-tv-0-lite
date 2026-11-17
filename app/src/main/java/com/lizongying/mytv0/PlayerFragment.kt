@@ -60,6 +60,10 @@ class PlayerFragment : Fragment() {
     private val probeTriedMax = 2
     private var probeTriedFor: String? = null
 
+    // 硬件解码器不支持某条流的音轨时（典型是老直播流的 MPEG-1 Layer II 音频），
+    // 换地址没用，只能让这个台单独改走 FFmpeg 软解。按频道名记，不影响其它台。
+    private val softNeeded = mutableSetOf<String>()
+
     private val startWatchdogRunnable = Runnable {
         val tv = tvModel ?: return@Runnable
         val p = player ?: return@Runnable
@@ -191,7 +195,11 @@ class PlayerFragment : Fragment() {
         val playerMediaCodecSelector = PlayerMediaCodecSelector()
         renderersFactory.setMediaCodecSelector(playerMediaCodecSelector)
         renderersFactory.setExtensionRendererMode(
-            if (SP.softDecode) DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER else DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
+            if (SP.softDecode || softNeeded.contains(tvModel?.tv?.title)) {
+                DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
+            } else {
+                DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
+            }
         )
 
         if (player != null) {
@@ -288,6 +296,13 @@ class PlayerFragment : Fragment() {
                             code == PlaybackException.ERROR_CODE_IO_UNSPECIFIED ||
                             code == PlaybackException.ERROR_CODE_TIMEOUT
 
+                // 解码器初始化失败 / 解码失败：设备的硬解能力问题，跟地址无关
+                val decoderFailed =
+                    code == PlaybackException.ERROR_CODE_DECODER_INIT_FAILED ||
+                            code == PlaybackException.ERROR_CODE_DECODING_FAILED ||
+                            error.cause?.javaClass?.name
+                                ?.contains("DecoderInitializationException") == true
+
                 if (isNetworkError) {
                     // 有备用地址时不按顺序一个个试（每条都要等 3~20 s 超时），
                     // 直接并发测速跳到最快那条；只有单地址、或测速次数用尽才判死。
@@ -297,6 +312,12 @@ class PlayerFragment : Fragment() {
                         Logger.i(TAG, "${tv.tv.title} 网络错误 code=$code，无可切换地址")
                         handleUnavailable(tv, "网络错误 code=$code")
                     }
+                } else if (decoderFailed && !SP.softDecode && !softNeeded.contains(tv.tv.title)) {
+                    // 硬解器不支持这条流的音轨，换地址也没用，只能这个台改走软解
+                    Logger.i(TAG, "${tv.tv.title} 硬解不可用（${error.errorCodeName}），该台改走软解重试")
+                    softNeeded.add(tv.tv.title)
+                    tv.retryTimes = 0
+                    updatePlayer()
                 } else if (tv.retryTimes < tv.retryMaxTimes) {
                     var last = true
                     if (tv.getSourceTypeDefault() == SourceType.UNKNOWN) {
