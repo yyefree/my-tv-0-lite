@@ -134,7 +134,10 @@ class PlayerFragment : Fragment() {
             }
             val realIndex = others[best.index]
             SourceProbe.remember(tv.tv.title, realIndex)
-            Logger.i(TAG, "${tv.tv.title} 测速选中第 $realIndex 条（首包 ${best.costMs} ms）")
+            Logger.i(
+                TAG,
+                "${tv.tv.title} 测速选中第 $realIndex 条（拉流 ${best.speedKb} KB/s，测 ${best.costMs} ms）"
+            )
             tv.selectVideo(realIndex)
             tv.setReady(true)
         }
@@ -197,8 +200,13 @@ class PlayerFragment : Fragment() {
         val renderersFactory = DefaultRenderersFactory(ctx)
         val playerMediaCodecSelector = PlayerMediaCodecSelector()
         renderersFactory.setMediaCodecSelector(playerMediaCodecSelector)
+        val preferSoft = SP.softDecode || softNeeded.contains(tvModel?.tv?.title ?: "")
+        Logger.i(
+            TAG,
+            "updatePlayer ${tvModel?.tv?.title} 软解=$preferSoft（全局=${SP.softDecode}，集合 ${softNeeded.size} 条）"
+        )
         renderersFactory.setExtensionRendererMode(
-            if (SP.softDecode || softNeeded.contains(tvModel?.tv?.title)) {
+            if (preferSoft) {
                 DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
             } else {
                 DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
@@ -340,6 +348,13 @@ class PlayerFragment : Fragment() {
                     SP.softChannels = softNeeded.toSet()
                     tv.retryTimes = 0
                     updatePlayer()
+                } else if (decoderFailed) {
+                    // 已经在软解模式下了还是解不出来：说明这台机器连 FFmpeg 都救不了它，
+                    // 硬赖在软解上只会无限重试（用户看到的是永远黑屏）。去掉标记，按不可用处理。
+                    Logger.i(TAG, "${tv.tv.title} 软解下仍解码失败，移除软解标记")
+                    softNeeded.remove(tv.tv.title)
+                    SP.softChannels = softNeeded.toSet()
+                    handleUnavailable(tv, "解码失败（软解无效）")
                 } else if (tv.retryTimes < tv.retryMaxTimes) {
                     var last = true
                     if (tv.getSourceTypeDefault() == SourceType.UNKNOWN) {
