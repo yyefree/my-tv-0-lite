@@ -9,4 +9,7 @@ data class ReleaseResponse(
     @SerializedName("version_name") val version_name: String?,
     @SerializedName("apk_name") val apk_name: String?,
     @SerializedName("apk_url") val apk_url: String?,
+    // 本次版本对应的 git commit/tag。jsDelivr 对 @main 有 12 小时缓存，
+    // 用具体 ref 下载才能保证拿到的是这一版，而不是半年前的缓存。
+    @SerializedName("ref") val ref: String? = null,
 )

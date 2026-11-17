@@ -122,7 +122,8 @@ class UpdateManager(
                 if (obj.isNull("version_code")) null else obj.getInt("version_code"),
                 if (obj.isNull("version_name")) null else obj.getString("version_name"),
                 if (obj.isNull("apk_name")) null else obj.getString("apk_name"),
-                if (obj.isNull("apk_url")) null else obj.getString("apk_url")
+                if (obj.isNull("apk_url")) null else obj.getString("apk_url"),
+                if (obj.isNull("ref")) null else obj.getString("ref")
             )
         } catch (e: Exception) {
             Logger.e(TAG, "parseRelease error $e")
@@ -418,10 +419,18 @@ class UpdateManager(
     // github.com 官方直链兜底（只有域名没被污染时才通，但来源最可信所以留着）。
     private fun buildApkUrls(release: ReleaseResponse): List<String> {
         val name = release.apk_name ?: return emptyList()
+        // jsDelivr 对 @main 有 12 小时缓存，按 @main 下载可能拿到上一版；
+        // 而刚推的 commit 引用要等 CDN 回源，头几十分钟可能 404。
+        // 所以同一 CDN 先试精确 ref、再退回 @main——放后面的旧包会被版本号校验拦下，是安全的。
+        val ref = release.ref?.takeIf { it.isNotEmpty() }
         val list = mutableListOf<String>()
-        for (cdn in APK_CDNS) list.add("$cdn/$name")
+        for (prefix in APK_CDN_PREFIX) {
+            if (ref != null) list.add("$prefix@$ref/dist/$name")
+            list.add("$prefix@main/dist/$name")
+        }
         release.apk_url?.takeIf { it.isNotEmpty() }?.let { list.add(it) }
-        Logger.i(TAG, "buildApkUrls ${list.size} 条: $list")
+        Logger.i(TAG, "buildApkUrls ref=${ref ?: "main"} ${list.size} 条")
+        list.forEach { Logger.i(TAG, "  → $it") }
         return list
     }
 
@@ -675,29 +684,27 @@ class UpdateManager(
         private const val TAG = "UpdateManager"
         private const val BUFFER_SIZE = 8192
 
-        // 版本探测端点。2026-11-18 实测（移动宽带、github.com 域名被 DNS 污染的环境）：
-        //   raw.githubusercontent.com  FAIL（SSL）
-        //   cdn.jsdelivr.net          FAIL（SSL）      ← 原来用的就是这两条，所以升级永远失败
-        //   gcore.jsdelivr.net        OK 0.9s
-        //   fastly.jsdelivr.net       OK 1.4s
-        //   testingcf.jsdelivr.net    OK 2.5s
-        //   api.github.com            OK 0.6s（独立域名，污染不同步）
-        // 所以按「实测能通且快」的顺序排，坏的放最后当兜底。
+        // 版本探测端点，顺序按「能不能立刻看到新版」排：
+        //   api.github.com  NO cache，推上去立刻可见（实测 0.6s）
+        //   jsDelivr 三个 CDN  有 12 小时缓存，@main 可能还是上一版 → 只能当兜底
+        //   2026-11-18 实测：raw.githubusercontent.com 与 cdn.jsdelivr.net 均 SSL 失败，
+        //   而 gcore/fastly/testingcf 三个子域都通——这正是升级一直报"连接被重置"的原因。
         private val VERSION_URLS = listOf(
+            "https://api.github.com/repos/yyefree/my-tv-0-lite/contents/version.json",
             "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
             "https://fastly.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
             "https://testingcf.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
-            "https://api.github.com/repos/yyefree/my-tv-0-lite/contents/version.json",
             "https://raw.githubusercontent.com/yyefree/my-tv-0-lite/main/version.json",
             "https://cdn.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json"
         )
 
-        // APK 下载通道。github.com 直链必然被污染，所以主力是 jsDelivr 代理仓库里的 dist/ 包。
+        // APK 下载通道前缀。github.com 直链必然被污染，所以主力是 jsDelivr 代理仓库里的 dist/ 包。
         // 实测 gcore 能整包拉（3689054 B，Range 返回 206，支持断点续传）。
-        private val APK_CDNS = listOf(
-            "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/dist",
-            "https://fastly.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/dist",
-            "https://testingcf.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/dist"
+        // 这里只写到仓库名，ref 由 version.json 的 ref 字段拼上去（见 buildApkUrls）。
+        private val APK_CDN_PREFIX = listOf(
+            "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite",
+            "https://fastly.jsdelivr.net/gh/yyefree/my-tv-0-lite",
+            "https://testingcf.jsdelivr.net/gh/yyefree/my-tv-0-lite"
         )
 
         // 每 1 小时静默探测一次；App 启动后先等 60 秒，避免和首屏播放抢带宽
