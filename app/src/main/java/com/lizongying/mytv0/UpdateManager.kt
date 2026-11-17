@@ -123,7 +123,8 @@ class UpdateManager(
                 if (obj.isNull("version_name")) null else obj.getString("version_name"),
                 if (obj.isNull("apk_name")) null else obj.getString("apk_name"),
                 if (obj.isNull("apk_url")) null else obj.getString("apk_url"),
-                if (obj.isNull("ref")) null else obj.getString("ref")
+                if (obj.isNull("ref")) null else obj.getString("ref"),
+                if (obj.isNull("asset_id")) null else obj.getLong("asset_id")
             )
         } catch (e: Exception) {
             Logger.e(TAG, "parseRelease error $e")
@@ -424,12 +425,18 @@ class UpdateManager(
         // 所以同一 CDN 先试精确 ref、再退回 @main——放后面的旧包会被版本号校验拦下，是安全的。
         val ref = release.ref?.takeIf { it.isNotEmpty() }
         val list = mutableListOf<String>()
+
+        // 第一位放 GitHub Releases 的 asset：走 api.github.com，没有整树快照缓存的问题，
+        // 实测整包 3690055 B / 3.57 s / 1010 KB/s，支持 Range，且不受 github.com 域名污染影响。
+        // 这是目前最可靠的一条，所以排最前。
+        release.asset_id?.let { list.add("$API_ASSET_PREFIX$it") }
+
         for (prefix in APK_CDN_PREFIX) {
             if (ref != null) list.add("$prefix@$ref/dist/$name")
             list.add("$prefix@main/dist/$name")
         }
         release.apk_url?.takeIf { it.isNotEmpty() }?.let { list.add(it) }
-        Logger.i(TAG, "buildApkUrls ref=${ref ?: "main"} ${list.size} 条")
+        Logger.i(TAG, "buildApkUrls ref=${ref ?: "main"} asset=${release.asset_id} ${list.size} 条")
         list.forEach { Logger.i(TAG, "  → $it") }
         return list
     }
@@ -474,6 +481,10 @@ class UpdateManager(
         File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), apkName).delete()
 
         val request = Request(Uri.parse(url))
+        // api.github.com 的 release asset 默认返回 JSON 元数据，必须显式要求二进制流才给文件本体
+        if (url.startsWith(API_ASSET_PREFIX)) {
+            request.addRequestHeader("Accept", "application/octet-stream")
+        }
         request.setDestinationInExternalFilesDir(
             context,
             Environment.DIRECTORY_DOWNLOADS,
@@ -543,10 +554,11 @@ class UpdateManager(
             val verOk = targetVersionCode <= 0L || vc == targetVersionCode
             Logger.i(TAG, "verifyApk 签名可读=$sigReadable 签名一致=$sigOk 版本=$vc(期望 $targetVersionCode) 版本一致=$verOk")
             if (!sigReadable) {
-                // 本包是 V2-only 签名（apksigner 只报 V2 Signer）。Android 7.0 以下认不出这种签名，
-                // 会读到 null。这类设备本来就装不上（没有 V1 签名直接被 pm 拒），
-                // 所以这里不能因为读不出签名就判死，否则会把「装不上」变成「永远不提示升级」。
-                Logger.e(TAG, "⚠ 读不出 APK 签名，降级为只校验版本号")
+                // 防御分支：正常情况下读不出来是不可能的——APK 同时带 V1(CERT.SF/CERT.RSA) 与 V2，
+                // `apksigner verify --min-sdk-version 21` 对两种方案都返回 true，Android 5.0 起都能读。
+                // 但个别 ROM 的 getPackageArchiveInfo 行为异常时会返回 null，此时不能判死，
+                // 否则会把「签名读不出」变成「永远不提示升级」。降级为只校验版本号。
+                Logger.e(TAG, "⚠ 读不出 APK 签名（异常 ROM？），降级为只校验版本号")
                 return verOk
             }
             sigOk && verOk
@@ -709,6 +721,10 @@ class UpdateManager(
         // APK 下载通道前缀。github.com 直链必然被污染，所以主力是 jsDelivr 代理仓库里的 dist/ 包。
         // 实测 gcore 能整包拉（3689054 B，Range 返回 206，支持断点续传）。
         // 这里只写到仓库名，ref 由 version.json 的 ref 字段拼上去（见 buildApkUrls）。
+        // GitHub Releases asset 的下载前缀（后面拼 asset_id）
+        private const val API_ASSET_PREFIX =
+            "https://api.github.com/repos/yyefree/my-tv-0-lite/releases/assets/"
+
         private val APK_CDN_PREFIX = listOf(
             "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite",
             "https://fastly.jsdelivr.net/gh/yyefree/my-tv-0-lite",

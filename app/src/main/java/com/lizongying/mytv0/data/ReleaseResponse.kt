@@ -12,4 +12,7 @@ data class ReleaseResponse(
     // 本次版本对应的 git commit/tag。jsDelivr 对 @main 有 12 小时缓存，
     // 用具体 ref 下载才能保证拿到的是这一版，而不是半年前的缓存。
     @SerializedName("ref") val ref: String? = null,
+    // GitHub Releases 里 APK 的 asset id。走 api.github.com 下载用它，
+    // 这条通道没有 CDN 整树缓存的问题（实测整包 3.69MB / 3.57s）。
+    @SerializedName("asset_id") val asset_id: Long? = null,
 )
