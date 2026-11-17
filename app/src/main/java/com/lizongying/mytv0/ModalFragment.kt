@@ -66,6 +66,18 @@ class ModalFragment : DialogFragment() {
                 }
             }
         } else {
+            // 赞赏收款码是竖图（1454×1978），原来塞进 200dp×200dp 的方框里，
+            // 按比例缩放后只占方框中间一条，电视上根本看不清二维码。
+            // 改为高度占屏幕 70%，宽度由图片自身比例决定（adjustViewBounds），不拉伸不变形。
+            val targetHeight = (resources.displayMetrics.heightPixels * 0.70f).toInt()
+            binding.modalImage.layoutParams = binding.modalImage.layoutParams.apply {
+                width = ViewGroup.LayoutParams.WRAP_CONTENT
+                height = targetHeight
+            }
+            binding.modalImage.adjustViewBounds = true
+            binding.modalImage.scaleType = android.widget.ImageView.ScaleType.FIT_CENTER
+            binding.modalImage.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+
             Glide.with(requireContext())
                 .load(arguments?.getInt(KEY_DRAWABLE_ID))
                 .into(binding.modalImage)
