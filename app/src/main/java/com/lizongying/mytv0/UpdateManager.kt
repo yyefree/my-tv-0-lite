@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -78,7 +79,9 @@ class UpdateManager(
                         } else {
                             val text = body.string()
                             Logger.i(TAG, "getRelease body ${text.length} $text")
-                            parseRelease(text)
+                            // api.github.com/contents 返回的是 {"content":"<base64>","encoding":"base64"}，
+                            // 必须解出来才是真正的 version.json，否则解析必然拿到 null 字段。
+                            parseRelease(unwrapApiContent(text))
                         }
                     } else {
                         Logger.e(TAG, "getRelease $u ${response.codeAlias()}")
@@ -95,6 +98,20 @@ class UpdateManager(
         }
 
         return null
+    }
+
+    // 把 GitHub Contents API 的 base64 包装层拆掉；不是这种格式就原样返回
+    private fun unwrapApiContent(text: String): String {
+        return try {
+            if (!text.contains("\"encoding\"") || !text.contains("base64")) return text
+            val obj = JSONObject(text)
+            val b64 = obj.optString("content", "")
+            if (b64.isEmpty()) return text
+            String(android.util.Base64.decode(b64.replace("\n", ""), android.util.Base64.DEFAULT), Charsets.UTF_8)
+        } catch (e: Exception) {
+            Logger.e(TAG, "unwrapApiContent error $e")
+            text
+        }
     }
 
     // 用 JSONObject 直接解析：不依赖反射/gson，避免 R8 混淆后字段名对不上导致永远拿不到版本号
@@ -397,6 +414,22 @@ class UpdateManager(
         dialog.show((context as FragmentActivity).supportFragmentManager, TAG)
     }
 
+    // 生成 APK 下载通道：jsDelivr 代理仓库 dist/ 目录优先（实测能拉全包），
+    // github.com 官方直链兜底（只有域名没被污染时才通，但来源最可信所以留着）。
+    private fun buildApkUrls(release: ReleaseResponse): List<String> {
+        val name = release.apk_name ?: return emptyList()
+        val list = mutableListOf<String>()
+        for (cdn in APK_CDNS) list.add("$cdn/$name")
+        release.apk_url?.takeIf { it.isNotEmpty() }?.let { list.add(it) }
+        Logger.i(TAG, "buildApkUrls ${list.size} 条: $list")
+        return list
+    }
+
+    // 下载前把「期望的版本号」记下来，下完要核对，避免拿到 jsDelivr 缓存的旧包
+    private var targetVersionCode = 0L
+    private var apkUrlList: List<String> = emptyList()
+    private var apkUrlIndex = 0
+
     private fun startDownload(release: ReleaseResponse) {
         if (release.apk_name.isNullOrEmpty() || release.apk_url.isNullOrEmpty()) {
             return
@@ -407,32 +440,50 @@ class UpdateManager(
         SP.updatePendingName = release.version_name ?: ""
         SP.updatePendingApk = release.apk_name
         SP.updatePendingReady = false
+        targetVersionCode = release.version_code?.toLong() ?: 0L
+
+        apkUrlList = buildApkUrls(release)
+        apkUrlIndex = 0
+        enqueueCurrent()
+    }
+
+    private fun enqueueCurrent() {
+        if (apkUrlIndex >= apkUrlList.size) {
+            Logger.e(TAG, "所有下载通道都不通")
+            setStatus("下载通道全部不通，等下一轮")
+            clearPendingDownload()
+            return
+        }
+        val url = apkUrlList[apkUrlIndex]
+        val apkName = SP.updatePendingApk
+        Logger.i(TAG, "enqueueCurrent ${apkUrlIndex + 1}/${apkUrlList.size} $url")
 
         val downloadManager =
             context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val request =
-            Request(Uri.parse(release.apk_url))
         context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)?.mkdirs()
-        Logger.i(TAG, "save dir ${Environment.DIRECTORY_DOWNLOADS}")
+        // 目的文件已存在时 DownloadManager 会直接失败，所以先把残片删掉
+        File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), apkName).delete()
+
+        val request = Request(Uri.parse(url))
         request.setDestinationInExternalFilesDir(
             context,
             Environment.DIRECTORY_DOWNLOADS,
-            release.apk_name
+            apkName
         )
-        request.setTitle("${context.getString(R.string.app_name)} ${release.version_name}")
+        request.setTitle("${context.getString(R.string.app_name)} ${SP.updatePendingName}")
         request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setAllowedOverRoaming(false)
         request.setMimeType("application/vnd.android.package-archive")
 
-        // 获取下载任务的引用
         val downloadReference = downloadManager.enqueue(request)
         SP.updateDownloadId = downloadReference
-        Logger.i(TAG, "startDownload enqueue id=$downloadReference ${release.apk_name}")
+        Logger.i(TAG, "startDownload enqueue id=$downloadReference $apkName")
 
-        downloadReceiver = DownloadReceiver(release.apk_name, downloadReference)
+        // 旧 receiver 要先注销，否则一次失败会触发好几条通道同时排队
+        unregisterReceiverQuietly()
+        downloadReceiver = DownloadReceiver(apkName, downloadReference)
 
         val intentFilter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.registerReceiver(downloadReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED)
         } else {
@@ -441,6 +492,65 @@ class UpdateManager(
 
         trackProgress(downloadReference)
         setStatus("正在后台下载 0%")
+    }
+
+    private fun unregisterReceiverQuietly() {
+        val r = downloadReceiver ?: return
+        try {
+            context.unregisterReceiver(r)
+        } catch (e: Exception) {
+            Logger.i(TAG, "unregisterReceiver 已失效 ${e.javaClass.simpleName}")
+        }
+        downloadReceiver = null
+    }
+
+    /**
+     * 下载完的包必须验两件事，缺一不可：
+     *  1) 签名与当前应用一致 —— 防止走镜像时被人换包投毒（这是走第三方的底线）
+     *  2) versionCode 等于 version.json 里的值 —— 防止 jsDelivr 的 12 小时缓存把旧包发过来
+     */
+    private fun verifyApk(file: File): Boolean {
+        return try {
+            val pm = context.packageManager
+            @Suppress("DEPRECATION")
+            val pkg = pm.getPackageArchiveInfo(file.absolutePath, PackageManager.GET_SIGNATURES)
+                ?: run {
+                    Logger.e(TAG, "verifyApk 读不出包信息")
+                    return false
+                }
+            @Suppress("DEPRECATION")
+            val newSigs = pkg.signatures
+            @Suppress("DEPRECATION")
+            val mySigs = pm.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES).signatures
+            val sigOk = newSigs != null && mySigs != null &&
+                newSigs.any { n -> mySigs.any { it.toCharsString() == n.toCharsString() } }
+            val vc = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                pkg.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                pkg.versionCode.toLong()
+            }
+            val verOk = targetVersionCode <= 0L || vc == targetVersionCode
+            Logger.i(TAG, "verifyApk 签名一致=$sigOk 版本=$vc(期望 $targetVersionCode) 版本一致=$verOk")
+            sigOk && verOk
+        } catch (e: Exception) {
+            Logger.e(TAG, "verifyApk error", e)
+            false
+        }
+    }
+
+    // 当前通道下完但校验没过（或被删），换下一条继续试
+    private fun tryNextChannel(file: File?, reason: String) {
+        Logger.i(TAG, "通道 ${apkUrlIndex + 1} 不可用（$reason）")
+        file?.let { if (it.exists()) it.delete() }
+        apkUrlIndex++
+        if (apkUrlIndex < apkUrlList.size) {
+            setStatus("换通道重试（${apkUrlIndex + 1}/${apkUrlList.size}）")
+            enqueueCurrent()
+        } else {
+            setStatus("下载通道全部失败，等下一轮")
+            clearPendingDownload()
+        }
     }
 
     private fun getDownloadProgress(
@@ -526,24 +636,27 @@ class UpdateManager(
                                 context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
                                 apkFileName
                             )
-                            if (file.exists() && file.length() > 0) {
-                                SP.updatePendingReady = true
-                                setStatus("已下载完成，等确认安装")
-                                Logger.i(
-                                    TAG,
-                                    "下载完成 $apkFileName (${file.length()} B)，等待用户确认安装"
-                                )
-                                promptPendingInstall()
-                            } else {
-                                Logger.e(TAG, "下载完成但文件不存在或为空")
-                                clearPendingDownload()
+                            Logger.i(TAG, "下载完成 $apkFileName (${file.length()} B)，开始校验")
+                            when {
+                                !file.exists() || file.length() <= 0L ->
+                                    tryNextChannel(file, "文件为空")
+
+                                !verifyApk(file) -> tryNextChannel(file, "签名或版本号对不上")
+
+                                else -> {
+                                    SP.updatePendingReady = true
+                                    setStatus("已下载完成，等确认安装")
+                                    Logger.i(TAG, "校验通过，等待用户确认安装")
+                                    promptPendingInstall()
+                                }
                             }
                         }
 
                         DownloadManager.STATUS_FAILED -> {
-                            Logger.i(TAG, "下载失败，下一轮探测会重试")
-                            setStatus("下载失败，下一轮重试")
-                            clearPendingDownload()
+                            tryNextChannel(
+                                File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), apkFileName),
+                                "下载失败"
+                            )
                         }
 
                         else -> {
@@ -562,10 +675,29 @@ class UpdateManager(
         private const val TAG = "UpdateManager"
         private const val BUFFER_SIZE = 8192
 
-        // 保留 GitHub 作为主源（这台电视偶尔能连上），jsDelivr 作为加速兜底
+        // 版本探测端点。2026-11-18 实测（移动宽带、github.com 域名被 DNS 污染的环境）：
+        //   raw.githubusercontent.com  FAIL（SSL）
+        //   cdn.jsdelivr.net          FAIL（SSL）      ← 原来用的就是这两条，所以升级永远失败
+        //   gcore.jsdelivr.net        OK 0.9s
+        //   fastly.jsdelivr.net       OK 1.4s
+        //   testingcf.jsdelivr.net    OK 2.5s
+        //   api.github.com            OK 0.6s（独立域名，污染不同步）
+        // 所以按「实测能通且快」的顺序排，坏的放最后当兜底。
         private val VERSION_URLS = listOf(
+            "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
+            "https://fastly.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
+            "https://testingcf.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
+            "https://api.github.com/repos/yyefree/my-tv-0-lite/contents/version.json",
             "https://raw.githubusercontent.com/yyefree/my-tv-0-lite/main/version.json",
             "https://cdn.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json"
+        )
+
+        // APK 下载通道。github.com 直链必然被污染，所以主力是 jsDelivr 代理仓库里的 dist/ 包。
+        // 实测 gcore 能整包拉（3689054 B，Range 返回 206，支持断点续传）。
+        private val APK_CDNS = listOf(
+            "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/dist",
+            "https://fastly.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/dist",
+            "https://testingcf.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/dist"
         )
 
         // 每 1 小时静默探测一次；App 启动后先等 60 秒，避免和首屏播放抢带宽
