@@ -32,15 +32,18 @@ import kotlin.math.abs
 class MainActivity : AppCompatActivity() {
 
     private var ok = 0
-    private var playerFragment = PlayerFragment()
-    private val errorFragment = ErrorFragment()
-    private val loadingFragment = LoadingFragment()
-    private var infoFragment = InfoFragment()
-    internal var channelFragment = ChannelFragment()
-    internal var timeFragment = TimeFragment()
-    internal var menuFragment = MenuFragment()
-    internal var settingFragment = SettingFragment()
-    internal var programFragment = ProgramFragment()
+    // 这些必须用 lateinit 而不是字段初始化时 new：
+    // Activity 被系统回收重建后，FragmentManager 恢复的是「另一批」实例，
+    // 如果字段还指着初始化时 new 出来的空壳，play()/show() 都会打在没挂载的对象上。
+    private lateinit var playerFragment: PlayerFragment
+    private lateinit var errorFragment: ErrorFragment
+    private lateinit var loadingFragment: LoadingFragment
+    private lateinit var infoFragment: InfoFragment
+    internal lateinit var channelFragment: ChannelFragment
+    internal lateinit var timeFragment: TimeFragment
+    internal lateinit var menuFragment: MenuFragment
+    internal lateinit var settingFragment: SettingFragment
+    internal lateinit var programFragment: ProgramFragment
 
     private val handler = Handler(Looper.myLooper()!!)
     // 频道菜单 15 s 收起（上游 10 s，手慢还没看完就没了）
@@ -118,13 +121,41 @@ class MainActivity : AppCompatActivity() {
         updateManager = UpdateManager(this, appVersionCode)
         updateManager.startAutoPoll()
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.main_browse_fragment, playerFragment)
-                .add(R.id.main_browse_fragment, infoFragment)
-                .add(R.id.main_browse_fragment, channelFragment)
-                .commitNowAllowingStateLoss()
+        // 一律按 tag 取回或新建。首次启动走新建分支，重建走复用分支，
+        // 两种情况字段都指向真正挂在容器里的那个实例。
+        playerFragment = ensureFragment(F_PLAYER) { PlayerFragment() }
+        infoFragment = ensureFragment(F_INFO) { InfoFragment() }
+        channelFragment = ensureFragment(F_CHANNEL) { ChannelFragment() }
+        loadingFragment = ensureFragment(F_LOADING) { LoadingFragment() }
+        errorFragment = ensureFragment(F_ERROR) { ErrorFragment() }
+        timeFragment = ensureFragment(F_TIME) { TimeFragment() }
+        menuFragment = ensureFragment(F_MENU) { MenuFragment() }
+        settingFragment = ensureFragment(F_SETTING) { SettingFragment() }
+        programFragment = ensureFragment(F_PROGRAM) { ProgramFragment() }
+
+        // 只留播放层、信息层、频道号三层可见，其余隐藏；hide 对已隐藏的 Fragment 是幂等的
+        supportFragmentManager.beginTransaction()
+            .hide(loadingFragment)
+            .hide(errorFragment)
+            .hide(timeFragment)
+            .hide(menuFragment)
+            .hide(settingFragment)
+            .hide(programFragment)
+            .commitNowAllowingStateLoss()
+    }
+
+    /** 按 tag 复用 FragmentManager 已恢复的实例，找不到才新建并 add。 */
+    private fun <T : Fragment> ensureFragment(tag: String, create: () -> T): T {
+        @Suppress("UNCHECKED_CAST")
+        (supportFragmentManager.findFragmentByTag(tag) as? T)?.let {
+            Logger.i(TAG, "复用已恢复的 Fragment $tag")
+            return it
         }
+        val fragment = create()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_browse_fragment, fragment, tag)
+            .commitNowAllowingStateLoss()
+        return fragment
     }
 
     fun updateMenuSize() {
@@ -299,8 +330,12 @@ class MainActivity : AppCompatActivity() {
     private inner class GestureListener(context: Context) :
         GestureDetector.SimpleOnGestureListener() {
 
-        private var screenWidth = windowManager.defaultDisplay.width
-        private var screenHeight = windowManager.defaultDisplay.height
+        // 屏幕尺寸不能只在构造时取一次：手机横竖屏切换、分屏、投屏后分辨率会变，
+        // 缓存下来的旧值会让「左侧调亮度 / 右侧调音量」的分区整体错位。
+        private val screenW: Int
+            get() = resources.displayMetrics.widthPixels
+        private val screenH: Int
+            get() = resources.displayMetrics.heightPixels
         private val audioManager = context.getSystemService(AUDIO_SERVICE) as AudioManager
 
         private var maxVolume = 0
@@ -338,7 +373,7 @@ class MainActivity : AppCompatActivity() {
             val oldY = e1?.rawY ?: 0f
             val newX = e2.rawX
             val newY = e2.rawY
-            if (oldX > screenWidth / 3 && oldX < screenWidth * 2 / 3 && abs(newX - oldX) < abs(newY - oldY)) {
+            if (oldX > screenW / 3 && oldX < screenW * 2 / 3 && abs(newX - oldX) < abs(newY - oldY)) {
                 if (velocityY > 0) {
                     if ((!menuFragment.isAdded || menuFragment.isHidden) && (!settingFragment.isAdded || settingFragment.isHidden)) {
                         prev()
@@ -368,7 +403,7 @@ class MainActivity : AppCompatActivity() {
             val newX = e2.rawX
             val newY = e2.rawY
 
-            if (oldX < screenWidth / 3) {
+            if (oldX < screenW / 3) {
                 val currentTime = System.currentTimeMillis()
                 val deltaTime = currentTime - lastScrollTime
                 lastScrollTime = currentTime
@@ -376,13 +411,13 @@ class MainActivity : AppCompatActivity() {
                 decayFactor =
                     0.01f.coerceAtLeast(decayFactor - 0.03f * deltaTime)
                 val delta =
-                    ((oldY - newY) * decayFactor * 0.2 / screenHeight).toFloat()
+                    ((oldY - newY) * decayFactor * 0.2 / screenH).toFloat()
                 adjustBrightness(delta)
                 decayFactor = 1.0f
                 return super.onScroll(e1, e2, distanceX, distanceY)
             }
 
-            if (oldX > screenWidth * 2 / 3 && abs(distanceY) > abs(distanceX)) {
+            if (oldX > screenW * 2 / 3 && abs(distanceY) > abs(distanceX)) {
                 val currentTime = System.currentTimeMillis()
                 val deltaTime = currentTime - lastScrollTime
                 lastScrollTime = currentTime
@@ -390,7 +425,7 @@ class MainActivity : AppCompatActivity() {
                 decayFactor =
                     0.01f.coerceAtLeast(decayFactor - 0.03f * deltaTime)
                 val delta =
-                    ((oldY - newY) * maxVolume * decayFactor * 0.2 / screenHeight).toInt()
+                    ((oldY - newY) * maxVolume * decayFactor * 0.2 / screenH).toInt()
                 adjustVolume(delta)
                 decayFactor = 1.0f
                 return super.onScroll(e1, e2, distanceX, distanceY)
@@ -513,20 +548,13 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        if (!fragment.isAdded) {
+        // 所有 Fragment 都在 onCreate 里通过 ensureFragment 按 tag add 过了，
+        // 这里只负责 show/hide，不再动态 add（否则会多出一个无 tag 的同类型实例）。
+        if (fragment.isAdded && fragment.isHidden) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.main_browse_fragment, fragment)
+                .show(fragment)
                 .commitAllowingStateLoss()
-            return
         }
-
-        if (!fragment.isHidden) {
-            return
-        }
-
-        supportFragmentManager.beginTransaction()
-            .show(fragment)
-            .commitAllowingStateLoss()
     }
 
     private fun hideFragment(fragment: Fragment) {
@@ -588,16 +616,14 @@ class MainActivity : AppCompatActivity() {
      * 切台前记下"切换前正在播的台"。于是 A→B 后按 0 回 A，再按 0 又回 B，可来回切。
      */
     private fun rememberCurrent() {
-        val id = viewModel.groupModel.getCurrent()?.tv?.id ?: return
-        if (id != lastChannelId) {
-            lastChannelId = id
-        }
+        // 记下「切换前正在播的台」，供按 0 回看。
+        // 这里存的是 tv.id（频道自身标识），不是列表下标——取回时要经 findPositionById 换算。
+        lastChannelId = viewModel.groupModel.getCurrent()?.tv?.id ?: return
     }
 
     internal fun switchToLastChannel() {
         val id = lastChannelId
-        val size = viewModel.groupModel.getAllList()?.size() ?: 0
-        if (id < 0 || id >= size) {
+        if (id < 0) {
             R.string.channel_not_exist.showToast()
             return
         }
@@ -606,9 +632,16 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        Logger.i(TAG, "回到上一台 id=$id")
+        // id 是频道自己的 id，不是列表下标，必须先换算成 position
+        val position = viewModel.groupModel.findPositionById(id)
+        if (position < 0) {
+            R.string.channel_not_exist.showToast()
+            return
+        }
+
+        Logger.i(TAG, "回到上一台 id=$id position=$position")
         R.string.play_last_channel.showToast()
-        play(id)
+        play(position)
     }
 
     internal fun showChannel(channel: Int) {
@@ -763,6 +796,20 @@ class MainActivity : AppCompatActivity() {
         binding.close.setOnClickListener {
             popupWindow.dismiss()
         }
+
+        // WebView 是重量级对象（背后有独立渲染进程和几十 MB 内存），
+        // 只 dismiss 掉窗口而不 destroy，每打开一次就多留一份在内存里。
+        popupWindow.setOnDismissListener {
+            try {
+                webView.stopLoading()
+                webView.loadUrl("about:blank")
+                webView.removeAllViews()
+                webView.destroy()
+                Logger.i(TAG, "webview destroyed")
+            } catch (e: Exception) {
+                Logger.e(TAG, "destroy webview", e)
+            }
+        }
     }
 
     private val keyRouter by lazy { KeyRouter(this) }
@@ -835,5 +882,16 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
+
+        // Fragment 的固定 tag：重建后靠它把实例找回来
+        private const val F_PLAYER = "f_player"
+        private const val F_ERROR = "f_error"
+        private const val F_LOADING = "f_loading"
+        private const val F_INFO = "f_info"
+        private const val F_CHANNEL = "f_channel"
+        private const val F_TIME = "f_time"
+        private const val F_MENU = "f_menu"
+        private const val F_SETTING = "f_setting"
+        private const val F_PROGRAM = "f_program"
     }
 }

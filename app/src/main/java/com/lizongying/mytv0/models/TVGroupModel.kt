@@ -155,6 +155,22 @@ class TVGroupModel : ViewModel() {
         return -1
     }
 
+    // 按内部 id 找它在 getPosition() 语义下的全局位置。
+    // 「按 0 回上一台」记的是 tv.id，而 id 不等于数组下标（频道删过、跳过号都会错位），
+    // 以前直接把 id 传给 play() 当 position 用，会跳到不相干的频道。
+    fun findPositionById(id: Int): Int {
+        var count = 0
+        for (group in tvGroupValue) {
+            for (i in 0 until group.size()) {
+                if (group.getTVModel(i)?.tv?.id == id) {
+                    return count
+                }
+                count++
+            }
+        }
+        return -1
+    }
+
     // get & set
     // keep: In the current list loop
     fun getPrev(keep: Boolean = false): TVModel? {
