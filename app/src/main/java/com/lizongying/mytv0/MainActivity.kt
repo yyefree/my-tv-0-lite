@@ -350,7 +350,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-            showFragment(menuFragment)
+            // 点击分区：左侧三分之二弹出频道菜单；右侧三分之一弹出设置菜单。
+            if (e.rawX > screenW * 2 / 3) {
+                showSetting()
+            } else {
+                showMenu()
+            }
             return true
         }
 
