@@ -83,10 +83,12 @@ object SP {
     const val DEFAULT_CHANNEL_NUM = false
     const val DEFAULT_TIME = true
     const val DEFAULT_BOOT_STARTUP = false
-    // 频道源放在和新版本同一个仓库里：源改推送后，已装的 App 下次启动会自动更新到，
-    // 不用重新发版装包。启动先读本地缓存秒开，45 秒后才去云端校验。
+    // 频道源和新版本放同一个仓库。地址必须用 gcore 的 jsDelivr 域名：
+    // 实测这台盒子直连 raw.githubusercontent.com 直接 SSL 失败（curl 000），
+    // 而 gcore/fastly/testingcf 三个子域都能正常拉。jsDelivr 对 gh 文件有约 12h 缓存，
+    // 所以源改完不会立刻生效，最多半天内跟上 —— 频道源不是天天改，这个延迟可以接受。
     const val DEFAULT_CONFIG_URL =
-        "https://raw.githubusercontent.com/yyefree/my-tv-0-lite/main/app/src/main/res/raw/channels.txt"
+        "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/app/src/main/res/raw/channels.txt"
     const val DEFAULT_PROXY = ""
     // 原值指向 two 个已失效的域名（live.fanmingming.cn / raw.githubusercontent.com），
     // 每次启动都会各超时一次，拖慢首屏。默认留空，需要 EPG 时在设置里自己填。

@@ -100,33 +100,10 @@ class MainViewModel : ViewModel() {
     }
 
     private suspend fun pullConfigQuietly(url: String) {
-        val etag = SP.configEtag
-        var fresh: String? = null
+        // viewModelScope 默认跑在主线程，网络请求必须整块切到 IO，
+        // 否则直接 NetworkOnMainThreadException（这条踩过一次）
+        val text = withContext(Dispatchers.IO) { fetchFresh(url, SP.configEtag) } ?: return
 
-        for (u in getUrls(url)) {
-            try {
-                val builder = okhttp3.Request.Builder().url(u)
-                if (etag.isNotEmpty()) builder.header("If-None-Match", etag)
-                HttpClient.okHttpClient.newCall(builder.build()).execute().use { r ->
-                    if (r.code == 304) {
-                        Logger.i(TAG, "云端源未变化(304) $u")
-                        return
-                    }
-                    if (!r.isSuccessful) {
-                        Logger.w(TAG, "拉源失败 ${r.code} $u")
-                    } else {
-                        fresh = r.body?.string()
-                        val tag = r.header("ETag").orEmpty()
-                        if (tag.isNotEmpty()) SP.configEtag = tag
-                    }
-                }
-                if (fresh != null) break
-            } catch (e: Exception) {
-                Logger.w(TAG, "拉源异常 ${e.javaClass.simpleName} $u")
-            }
-        }
-
-        val text = fresh ?: return
         if (text.length < 64 || !looksLikeChannels(text)) {
             Logger.w(TAG, "云端源格式不认识，忽略 ${text.length}")
             return
@@ -157,6 +134,32 @@ class MainViewModel : ViewModel() {
                 Logger.w(TAG, "写缓存失败 ${e.javaClass.simpleName}")
             }
         }
+    }
+
+    /** 拉取云端源；返回 null 表示 304 未变化、请求失败或内容为空 */
+    private fun fetchFresh(url: String, etag: String): String? {
+        for (u in getUrls(url)) {
+            try {
+                val builder = okhttp3.Request.Builder().url(u)
+                if (etag.isNotEmpty()) builder.header("If-None-Match", etag)
+                HttpClient.okHttpClient.newCall(builder.build()).execute().use { r ->
+                    if (r.code == 304) {
+                        Logger.i(TAG, "云端源未变化(304) $u")
+                        return null
+                    }
+                    if (!r.isSuccessful) {
+                        Logger.w(TAG, "拉源失败 ${r.code} $u")
+                        return@use
+                    }
+                    val tag = r.header("ETag").orEmpty()
+                    if (tag.isNotEmpty()) SP.configEtag = tag
+                    return r.body?.string()
+                }
+            } catch (e: Exception) {
+                Logger.w(TAG, "拉源异常 ${e.javaClass.simpleName} $u")
+            }
+        }
+        return null
     }
 
     /** 轻量格式校验：认 M3U 头、DIYP 的 #genre# 分组，或至少像个多行列表 */
