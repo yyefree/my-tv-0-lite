@@ -89,10 +89,15 @@ class MainViewModel : ViewModel() {
      *   3. 拉到新内容**只写缓存文件，不重建当前频道列表** —— 正在播的节目一点不受影响，
      *      下次冷启动读缓存时自然生效。源更新不该打断看电视的人。
      */
+    // Activity 重建（横竖屏、进程恢复）会再走一遍 onCreate，viewModel 却是复用的，
+    // 不加这个标记就会在同一进程里排第二次 45 秒延迟去拉源
+    private var configPullScheduled = false
+
     fun updateConfig() {
+        if (configPullScheduled) return
         if (!SP.configAutoLoad) return
-        val url = SP.configUrl ?: return
-        if (!url.startsWith("http", ignoreCase = true)) return
+        val url = SP.configUrl?.takeIf { it.startsWith("http", ignoreCase = true) } ?: return
+        configPullScheduled = true
         viewModelScope.launch {
             delay(CONFIG_PULL_DELAY_MS)
             pullConfigQuietly(url)
@@ -122,7 +127,13 @@ class MainViewModel : ViewModel() {
                 if (tmp.length() <= 0) return@withContext
                 val cf = cacheFile ?: return@withContext
                 val old = File(appDirectory, "channels.old")
-                if (cf.exists()) cf.renameTo(old)
+                // 上次替换若失败会留下 channels.old。不先清掉的话 renameTo 必然返回 false，
+                // 之后每次启动都更新不进来 —— 一次失败就永久卡死，所以这里必须显式删。
+                if (old.exists()) old.delete()
+                if (cf.exists() && !cf.renameTo(old)) {
+                    Logger.w(TAG, "备份旧缓存失败，放弃本次替换")
+                    return@withContext
+                }
                 if (tmp.renameTo(cf)) {
                     old.delete()
                     Logger.i(TAG, "云端源已缓存，下次启动生效 ${text.length}")
@@ -138,10 +149,16 @@ class MainViewModel : ViewModel() {
 
     /** 拉取云端源；返回 null 表示 304 未变化、请求失败或内容为空 */
     private fun fetchFresh(url: String, etag: String): String? {
+        // 304 只说明服务端没变，不代表本地还有可用内容：缓存被清空或写坏之后，
+        // 只认 etag 就会一直停在「云端没更新」的假象里，源永远是空的。
+        // 所以本地内容自己不成立时，忽略 etag 重新取一次完整内容。
+        val localOk = looksLikeChannels(getCache())
+        val useEtag = if (localOk) etag else ""
+
         for (u in getUrls(url)) {
             try {
                 val builder = okhttp3.Request.Builder().url(u)
-                if (etag.isNotEmpty()) builder.header("If-None-Match", etag)
+                if (useEtag.isNotEmpty()) builder.header("If-None-Match", useEtag)
                 HttpClient.okHttpClient.newCall(builder.build()).execute().use { r ->
                     if (r.code == 304) {
                         Logger.i(TAG, "云端源未变化(304) $u")
@@ -162,18 +179,31 @@ class MainViewModel : ViewModel() {
         return null
     }
 
-    /** 轻量格式校验：认 M3U 头、DIYP 的 #genre# 分组，或至少像个多行列表 */
+    /**
+     * 替换缓存前的门槛校验。原来只看「换行数多于 8 个」，太松：CDN 出错时回的
+     * 说明页、回调代理页也能凑够 8 行，一旦写进缓存，下次启动解析失败就是整屏空白。
+     * 现在认结构：至少 20 条 #EXTINF 配 20 条地址；或者 DIYP 的 #genre# 分组配 20 条地址。
+     */
     private fun looksLikeChannels(text: String): Boolean {
-        val head = text.take(400)
-        return head.contains("#EXTM3U") || text.contains("#genre#") || text.count { it == '\n' } > 8
+        if (text.length < 200) return false
+        var extinf = 0
+        var addr = 0
+        var genre = false
+        for (line in text.lineSequence()) {
+            val t = line.trim()
+            when {
+                t.startsWith("#EXTINF") -> extinf++
+                t.contains("#genre#") -> genre = true
+                t.startsWith("http://") || t.startsWith("https://") -> addr++
+            }
+        }
+        if (addr < 20) return false
+        return extinf >= 20 || genre
     }
 
     private fun getCache(): String {
-        return if (cacheFile!!.exists()) {
-            cacheFile!!.readText()
-        } else {
-            ""
-        }
+        val f = cacheFile ?: return ""
+        return if (f.exists()) f.readText() else ""
     }
 
     fun init(context: Context) {
