@@ -84,12 +84,6 @@ http://221.13.234.49:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.33:808/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000360/index.m3u8
@@ -150,6 +144,12 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225752/index.m3u8#http://121.51
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225821/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel13/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel13/2300.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel13/1300.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226919/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.58:18890/PLTV/88888888/224/3221225649/index.m3u8#http://39.134.116.30:8080/PLTV/88888910/224/3221225649/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225939/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225649/index.m3u8#http://60.10.167.88:808/hls/17/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225649/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225706/index.m3u8#http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/cctv5phd/4000000/mnf.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000360/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL30000005/index.m3u8
 #EXTINF:-1 tvg-chno="15" tvg-name="CCTV-14" group-title="央视频道",CCTV-14
 #ISP:MOBILE
 #REGION:山东
@@ -193,9 +193,6 @@ http://221.13.234.119:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河南
 http://221.13.234.49:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
@@ -205,9 +202,6 @@ http://221.13.234.119:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000323/index.m3u8
@@ -244,6 +238,9 @@ http://117.148.179.182/PLTV/88888888/224/3221231648/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225933/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://123.6.9.146/live/jz-cctv-14/live.m3u8?zyangd#http://39.135.138.58:18890/PLTV/88888888/224/3221225639/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225639/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225639/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227086/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.58:18890/PLTV/88888888/224/3221225640/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225819/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.59:18890/PLTV/88888910/224/3221225640/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225640/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225732/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000323/index.m3u8
 #EXTINF:-1 tvg-chno="11" tvg-name="CCTV-10" group-title="央视频道",CCTV-10
 #ISP:MOBILE
 #REGION:山东
@@ -311,6 +308,9 @@ http://117.148.179.175/PLTV/88888888/224/3221231666/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225931/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225627/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225814/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.60:18890/PLTV/88888910/224/3221225636/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225636/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226976/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225636/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225627/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225730/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000321/index.m3u8
 #EXTINF:-1 tvg-chno="13" tvg-name="CCTV-12" group-title="央视频道",CCTV-12
 #ISP:MOBILE
 #REGION:山东
@@ -336,12 +336,6 @@ http://61.136.172.236:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0012_2.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000322/index.m3u8
@@ -378,6 +372,9 @@ http://117.148.179.150/PLTV/88888888/224/3221231660/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225932/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://ncyd.jilu8.cn/PLTV/88888910/224/3221225629/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225816/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.59:18890/PLTV/88888910/224/3221225629/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225629/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225637/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226931/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225637/index.m3u8#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226190/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225731/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000322/index.m3u8
 #EXTINF:-1 tvg-chno="14" tvg-name="CCTV-13" group-title="央视频道",CCTV-13
 #ISP:MOBILE
 #REGION:山东
@@ -403,12 +400,6 @@ http://61.136.172.236:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000345/index.m3u8
@@ -427,6 +418,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225638/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888910/224/3221225638/index.m3u8#http://cctvwbndbd.a.bdydns.com/cctvwbnd/cctv13_2/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225817/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227237/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226985/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225638/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225638/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225638/index.m3u8#http://117.169.120.140:8080/live/cctv-13/.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000345/index.m3u8
 #EXTINF:-1 tvg-chno="16" tvg-name="CCTV-15" group-title="央视频道",CCTV-15
 #ISP:MOBILE
 #REGION:山东
@@ -449,15 +443,9 @@ http://221.13.234.49:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:TELECOM
 #REGION:湖北
 http://61.136.172.236:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000346/index.m3u8
@@ -476,6 +464,9 @@ http://117.148.179.169/PLTV/88888888/224/3221231693/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225641/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227270/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226989/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225818/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225641/index.m3u8#http://39.134.115.163:8080/PLTV-/88888910/224/3221225641/index.m3u8#http://39.135.138.58:18890/PLTV/88888910/224/3221225641/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225641/index.m3u8#http://117.169.120.140:8080/live/cctv-15/.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000346/index.m3u8
 #EXTINF:-1 tvg-chno="2" tvg-name="CCTV-2" group-title="央视频道",CCTV-2
 #ISP:MOBILE
 #REGION:山东
@@ -528,6 +519,9 @@ http://117.148.179.147/PLTV/88888888/224/3221231678/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225619/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel2/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel2/2300.m3u8#http://39.135.138.58:18890/PLTV/88888910/224/3221225619/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225800/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226795/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225923/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.116.30:8080/PLTV/88888910/224/3221225619/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225643/index.m3u8?icpid=88888888&from=30&hms_devid=1452#http://60.10.167.88:808/hls/2/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225619/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225619/index.m3u8?icpid=88888888&from=30&hms_devid=1452#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226915/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225619/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225619/index.m3u8#http://117.169.120.140:8080/live/cctv-2/.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225643/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225643/index.m3u8#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226195/index.m3u8#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226224/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000317/index.m3u8
 #EXTINF:-1 tvg-chno="3" tvg-name="CCTV-3" group-title="央视频道",CCTV-3
 #ISP:MOBILE
 #REGION:山东
@@ -610,6 +604,12 @@ http://111.63.117.13:6060/030000001000/CCTV-3/CCTV-3.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888910/224/3221225647/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel3/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel3/2300.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227256/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225647/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225647/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225647/index.m3u8#http://60.10.167.88:808/hls/3/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225634/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225634/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225647/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227055/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.60:18890/PLTV/88888910/224/3221225634/index.m3u8#http://117.169.120.140:8080/live/cctv-3/.m3u8#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226009/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226021/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000359/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000003/index.m3u8
 #EXTINF:-1 tvg-chno="4" tvg-name="CCTV-4" group-title="央视频道",CCTV-4
 #ISP:MOBILE
 #REGION:山东
@@ -638,9 +638,6 @@ http://221.13.234.119:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.33:808/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000320/index.m3u8
@@ -668,6 +665,9 @@ http://117.148.179.160/PLTV/88888888/224/3221231654/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227225/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel4/index.m3u8#http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225621/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226968/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.60:18890/PLTV/88888910/224/3221225621/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225621/index.m3u8?icpid=88888888&from=30&hms_devid=1452#http://39.134.115.163:8080/PLTV/88888910/224/3221225621/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225802/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225621/.m3u8#http://183.207.248.15/PLTV/3/224/3221225534/index.m3u8?#http://39.135.138.59:18890/PLTV/88888910/224/3221225621/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000320/index.m3u8
 #EXTINF:-1 tvg-chno="7" tvg-name="CCTV-6" group-title="央视频道",CCTV-6
 #ISP:MOBILE
 #REGION:山东
@@ -738,6 +738,12 @@ http://117.148.179.153/PLTV/88888888/224/3221231724/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225650/index.m3u8#http://zb.iptv6.top/gg/gg1/dsm.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel6/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel6/2300.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225650/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227260/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.58:18890/TVOD/88888888/224/3221225650/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225650/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225632/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225632/index.m3u8#http://60.10.167.88:808/hls/6/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227137/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225632/index.m3u8#http://117.169.120.140:8080/live/cctv-6/.m3u8#http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/cctv6hd/4000000/mnf.m3u8#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226011/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226010/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000361/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000006/index.m3u8
 #EXTINF:-1 tvg-chno="8" tvg-name="CCTV-7" group-title="央视频道",CCTV-7
 #ISP:MOBILE
 #REGION:山东
@@ -808,6 +814,9 @@ http://117.148.179.160/PLTV/88888888/224/3221231633/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225805/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel7/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel7/2300.m3u8#http://60.10.167.88:808/hls/7/index.m3u8#http://39.135.138.58:18890/PLTV/88888910/224/3221225624/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225624/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225624/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225624/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226972/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225927/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.59:18890/PLTV/88888910/224/3221225644/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225644/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225733/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000318/index.m3u8
 #EXTINF:-1 tvg-chno="9" tvg-name="CCTV-8" group-title="央视频道",CCTV-8
 #ISP:MOBILE
 #REGION:山东
@@ -875,6 +884,12 @@ http://117.148.179.160/PLTV/88888888/224/3221231694/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227266/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225631/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel8/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel8/2300.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225635/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225635/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225635/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227174/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.59:18890/PLTV/88888910/224/3221225631/index.m3u8#http://117.169.120.140:8080/live/cctv-8/.m3u8#http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/cctv8hd/4000000/mnf.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225635/index.m3u8#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226012/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226008/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000362/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000008/index.m3u8
 #EXTINF:-1 tvg-chno="10" tvg-name="CCTV-9" group-title="央视频道",CCTV-9
 #ISP:MOBILE
 #REGION:山东
@@ -939,6 +954,9 @@ http://117.148.179.162/PLTV/88888888/224/3221231697/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225626/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225820/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://60.10.167.88:808/hls/9/index.m3u8#http://39.135.138.58:18890/TVOD/88888888/224/3221225626/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225626/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225626/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225646/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225929/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.59:18890/PLTV/88888910/224/3221225646/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225646/index.m3u8#http://117.169.120.140:8080/live/cctv-9/.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225734/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000319/index.m3u8
 #EXTINF:-1 tvg-chno="12" tvg-name="CCTV11" group-title="央视频道",CCTV11
 #ISP:MOBILE
 #REGION:山东
@@ -967,9 +985,6 @@ http://221.13.234.49:9901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0011_2.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000344/index.m3u8
@@ -988,6 +1003,9 @@ http://117.148.179.164/PLTV/88888888/224/3221231711/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://hwrr.jx.chinamobile.com:8080/PLTV/88888910/224/3221225628/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225628/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227233/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225815/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.60:18890/PLTV/88888910/224/3221225628/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225628/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225628/index.m3u8#http://39.134.115.163:8080/PLTV-/88888910/224/3221225628/index.m3u8#http://117.169.120.140:8080/live/cctv-11/.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000344/index.m3u8
 #EXTINF:-1 tvg-chno="18" tvg-name="CCTV-17" group-title="央视频道",CCTV-17
 #ISP:MOBILE
 #REGION:山东
@@ -1028,6 +1046,9 @@ http://117.148.179.167/PLTV/88888888/224/3221231772/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225908/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225907/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225907/index.m3u8?#http://39.134.115.163:8080/PLTV/88888910/224/3221225908/index.m3u8#http://39.135.138.59:18890/PLTV/88888910/224/3221225908/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226990/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.134.115.163:8080/PLTV/88888910/224/3221225908/index.m3u8?icpid=88888888&from=30&hms_devid=1452#http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226198/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225765/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000303/index.m3u8
 #EXTINF:-1 tvg-chno="17" tvg-name="CCTV-16" group-title="央视频道",CCTV-16
 #ISP:MOBILE
 #REGION:山东
@@ -1050,6 +1071,9 @@ http://liveop.cctv.cn/hls/CCTV16HD/playlist.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://liveop.cctv.cn/hls/CCTV16HD/playlist.m3u8#http://hwrr.jx.chinamobile.com:8080/PLTV/88888910/224/3221226230/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227148/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227125/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000364/index.m3u8
 #EXTINF:-1 tvg-name="CCTV5测试" group-title="央视频道",CCTV5测试
 #ISP:MOBILE
 #REGION:广东
@@ -1061,10 +1085,16 @@ http://120.198.95.220:9901/tsfile/live/1074_1.m3u8?key=txiptv&playlive=1&down=1
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000350/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000350/index.m3u8
 #EXTINF:-1 tvg-chno="20" tvg-name="CCTV4-中文国际美洲" group-title="央视频道",CCTV4-中文国际美洲
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000351/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000351/index.m3u8
 #EXTINF:-1 tvg-chno="21" tvg-name="CCTV4K-超清" group-title="央视频道",CCTV4K-超清
 #ISP:MOBILE
 #REGION:山东
@@ -1089,6 +1119,12 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000009/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000009/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000352/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000009/index.m3u8
 #EXTINF:-1 tvg-chno="27" tvg-name="CGTN俄语" group-title="央视频道",CGTN俄语
 #ISP:MOBILE
 #REGION:山东
@@ -1096,6 +1132,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000357/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000357/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000357/index.m3u8
 #EXTINF:-1 tvg-chno="25" tvg-name="CGTN法国" group-title="央视频道",CGTN法国
 #ISP:MOBILE
 #REGION:山东
@@ -1110,6 +1149,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225645/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000353/index.m3u8
 #EXTINF:-1 tvg-chno="22" tvg-name="CGTN英语" group-title="央视频道",CGTN英语
 #ISP:MOBILE
 #REGION:山东
@@ -1201,6 +1243,9 @@ http://39.134.67.7:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226016/ind
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225618/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel1/index.m3u8#http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel1/2300.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225812/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226624/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225918/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225829/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226995/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221225618/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221226221/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221225922/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221226908/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://39.135.138.58:18890/PLTV/88888888/224/3221226225/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225630/index.m3u8#http://[2409:8087:3428:20:500::100f]:6610/PLTV/88888888/224/3221227014/index.m3u8?servicetype=1&IASHttpSessionId=RR423820220409134714119178#http://117.169.120.235:8080/wh7f454c46tw2790121462_-319069717/hwrr.jx.chinamobile.com/PLTV/88888888/224/3221225618/index.m3u8#http://39.135.138.60:18890/PLTV/88888910/224/3221225618/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225918/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221226221/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225642/index.m3u8#http://39.135.138.58:18890/PLTV/88888888/224/3221225918/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225642/index.m3u8#http://60.10.167.88:808/hls/1/index.m3u8#http://39.134.115.163:8080/PLTV/88888910/224/3221225618/index.m3u8#http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226016/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000311/index.m3u8
 #EXTINF:-1 tvg-chno="32" tvg-name="贵州卫视" group-title="卫视频道",贵州卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1259,6 +1304,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225483/index.m3u8?fmt=ts2hls
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.25/PLTV/88888888/224/3221225522/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000329/index.m3u8
 #EXTINF:-1 tvg-chno="41" tvg-name="东南卫视" group-title="卫视频道",东南卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1284,9 +1332,6 @@ http://121.19.134.33:808/tsfile/live/1032_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:TELECOM
 #REGION:湖北
 http://61.136.172.236:9901/tsfile/live/0137_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0137_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.198.176:9901/tsfile/live/0137_1.m3u8?key=txiptv&playlive=0&authid=0
@@ -1326,6 +1371,9 @@ http://39.134.115.163:8080/PLTV/88888910/224/3221225657/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225657/1653147315-1-1648951029.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000310/index.m3u8
 #EXTINF:-1 tvg-chno="40" tvg-name="东方卫视" group-title="卫视频道",东方卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1351,12 +1399,6 @@ http://61.136.172.236:9901/tsfile/live/0107_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0018_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/0107_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/1005_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000309/index.m3u8
@@ -1414,6 +1456,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225658/1653140236-1-1648950319.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225659/1653140325-1-1651284002.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000309/index.m3u8
 #EXTINF:-1 tvg-chno="51" tvg-name="云南卫视" group-title="卫视频道",云南卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1463,6 +1508,12 @@ http://111.40.196.36/PLTV/88888888/224/3221225635/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.59:18890/PLTV/88888910/224/3221225664/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000039/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000367/index.m3u8
 #EXTINF:-1 tvg-chno="34" tvg-name="北京卫视" group-title="卫视频道",北京卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1491,9 +1542,6 @@ http://101.66.195.138:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=0&authid=
 #ISP:TELECOM
 #REGION:湖北
 http://61.136.172.236:9901/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000302/index.m3u8
@@ -1557,6 +1605,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225673/1653141522-1-1648950446.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225674/1653141549-1-1651284122.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000302/index.m3u8
 #EXTINF:-1 tvg-chno="49" tvg-name="吉林卫视" group-title="卫视频道",吉林卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1612,6 +1663,12 @@ http://111.40.196.36/PLTV/88888888/224/3221225589/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225680/1653149097-1-1648951247.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000363/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000036/index.m3u8
 #EXTINF:-1 tvg-chno="46" tvg-name="四川卫视" group-title="卫视频道",四川卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1664,6 +1721,9 @@ http://live.aikan.miguvideo.com/PLTV/88888888/224/3221231885/1.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.34/PLTV/88888888/224/3221225562/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000348/index.m3u8
 #EXTINF:-1 tvg-chno="31" tvg-name="安徽卫视" group-title="卫视频道",安徽卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1689,9 +1749,6 @@ http://61.136.172.236:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.194.88:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=0&authid=0
@@ -1734,6 +1791,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225691/1653146432-1-1651284611.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225691/1653146382-1-1651284606.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000328/index.m3u8
 #EXTINF:-1 tvg-chno="58" tvg-name="山西卫视" group-title="卫视频道",山西卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1771,6 +1831,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://39.134.115.163:8080/PLTV/88888910/224/3221225730/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000032/index.m3u8
 #EXTINF:-1 tvg-chno="38" tvg-name="广东卫视" group-title="卫视频道",广东卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1796,9 +1859,6 @@ http://101.66.195.138:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=0&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.198.176:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.199.96:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=0&authid=0
@@ -1847,6 +1907,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225701/1653140620-1-1651284060.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225742/1653140709-1-1648950419.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000307/index.m3u8
 #EXTINF:-1 tvg-chno="52" tvg-name="广西卫视" group-title="卫视频道",广西卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1875,9 +1938,6 @@ http://121.19.134.33:808/tsfile/live/0113_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0113_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1006_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000368/index.m3u8
@@ -1899,6 +1959,12 @@ http://39.134.115.163:8080/PLTV/88888910/224/3221225731/index.m3u8?fmt=ts2hls
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.35/PLTV/88888888/224/3221225518/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000038/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000368/index.m3u8
 #EXTINF:-1 tvg-chno="35" tvg-name="江苏卫视" group-title="卫视频道",江苏卫视
 #ISP:MOBILE
 #REGION:山东
@@ -1924,12 +1990,6 @@ http://121.19.134.149:808/tsfile/live/1012_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0127_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/0127_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000304/index.m3u8
@@ -1981,6 +2041,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225702/1653110064-1-1651280974.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225702/1653110094-1-1651280977.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000304/index.m3u8
 #EXTINF:-1 tvg-chno="43" tvg-name="江西卫视" group-title="卫视频道",江西卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2003,9 +2066,6 @@ http://121.19.134.33:808/tsfile/live/1031_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:TELECOM
 #REGION:湖北
 http://61.136.172.236:9901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=0&authid=0
@@ -2060,6 +2120,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225705/1653147474-1-1651284715.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225746/1653147615-1-1648951059.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000335/index.m3u8
 #EXTINF:-1 tvg-chno="33" tvg-name="河北卫视" group-title="卫视频道",河北卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2100,6 +2163,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225610/index.m3u8?fmt=ts2hls
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225732/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000330/index.m3u8
 #EXTINF:-1 tvg-chno="48" tvg-name="河南卫视" group-title="卫视频道",河南卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2146,6 +2212,12 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225611/index.m3u8?fmt=ts2hls
 #ISP:MOBILE
 #REGION:山东
 http://39.134.65.166/PLTV/88888888/224/3221225890/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000358/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000037/index.m3u8
 #EXTINF:-1 tvg-chno="36" tvg-name="浙江卫视" group-title="卫视频道",浙江卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2174,9 +2246,6 @@ http://101.66.198.176:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=0&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000305/index.m3u8
@@ -2249,6 +2318,9 @@ http://39.135.138.60:18890/PLTV/88888888/224/3221225703/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.60:18890/PLTV/88888888/224/3221225744/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000305/index.m3u8
 #EXTINF:-1 tvg-chno="29" tvg-name="湖北卫视" group-title="卫视频道",湖北卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2271,9 +2343,6 @@ http://218.13.170.98:9901/tsfile/live/1007_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.33:808/tsfile/live/1024_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.198.176:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=0&authid=0
@@ -2328,6 +2397,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225699/1653142328-1-1651284245.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225740/1653142428-1-1648950531.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000325/index.m3u8
 #EXTINF:-1 tvg-chno="28" tvg-name="湖南卫视" group-title="卫视频道",湖南卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2353,9 +2425,6 @@ http://121.19.134.33:808/tsfile/live/1012_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/0019_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0128_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:广东
 http://120.198.95.220:9901/tsfile/live/1044_1.m3u8?key=txiptv&playlive=1&down=1
@@ -2413,6 +2482,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225704/1653109760-1-1651280942.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225745/1653109807-1-1648947278.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000324/index.m3u8
 #EXTINF:-1 tvg-chno="30" tvg-name="辽宁卫视" group-title="卫视频道",辽宁卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2495,6 +2567,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225696/1653146508-1-1651284617.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225735/1653146603-1-1648950958.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000326/index.m3u8
 #EXTINF:-1 tvg-chno="44" tvg-name="重庆卫视" group-title="卫视频道",重庆卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2571,6 +2646,9 @@ http://39.135.138.60:18890/PLTV/88888888/224/3221225692/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.60:18890/PLTV/88888888/224/3221225734/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000341/index.m3u8
 #EXTINF:-1 tvg-chno="57" tvg-name="陕西卫视" group-title="卫视频道",陕西卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2617,6 +2695,12 @@ http://111.40.196.34/PLTV/88888888/224/3221225582/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888910/224/3221225729/1653148833-1-1648951214.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000029/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000397/index.m3u8
 #EXTINF:-1 tvg-chno="37" tvg-name="黑龙江卫视" group-title="卫视频道",黑龙江卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2699,6 +2783,9 @@ http://39.135.138.60:18890/PLTV/88888888/224/3221225736/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.60:18890/PLTV/88888888/224/3221225690/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000306/index.m3u8
 #EXTINF:-1 tvg-chno="42" tvg-name="天津卫视" group-title="卫视频道",天津卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2781,6 +2868,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225698/1653141771-1-1651284161.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225739/1653141888-1-1648950485.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000327/index.m3u8
 #EXTINF:-1 tvg-chno="39" tvg-name="深圳卫视" group-title="卫视频道",深圳卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2806,9 +2896,6 @@ http://121.19.134.149:808/tsfile/live/1024_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:TELECOM
 #REGION:湖北
 http://61.136.172.236:9901/tsfile/live/0126_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0126_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000308/index.m3u8
@@ -2872,6 +2959,9 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225700/1653141079-1-1651284077.
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.58:18890/PLTV/88888888/224/3221225741/1653141184-1-1648950460.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000308/index.m3u8
 #EXTINF:-1 tvg-chno="54" tvg-name="新疆卫视" group-title="卫视频道",新疆卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2900,6 +2990,12 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.59:18890/PLTV/88888910/224/3221225725/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000044/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000393/index.m3u8
 #EXTINF:-1 tvg-chno="47" tvg-name="甘肃卫视" group-title="卫视频道",甘肃卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2928,6 +3024,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.28/PLTV/88888888/224/3221225639/index.m3u8?zweimd
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000349/index.m3u8
 #EXTINF:-1 tvg-chno="53" tvg-name="西藏卫视" group-title="卫视频道",西藏卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2965,6 +3064,12 @@ http://39.134.115.163:8080/PLTV/88888910/224/3221225723/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.59:18890/PLTV/88888910/224/3221225723/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000045/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000392/index.m3u8
 #EXTINF:-1 tvg-chno="50" tvg-name="青海卫视" group-title="卫视频道",青海卫视
 #ISP:MOBILE
 #REGION:山东
@@ -2999,6 +3104,12 @@ http://stream.qhbtv.com/qhws/sd/live.m3u8?_upt=f35a89681647856030
 #ISP:MOBILE
 #REGION:山东
 http://39.134.115.163:8080/PLTV/88888910/224/3221225727/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000042/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000366/index.m3u8
 #EXTINF:-1 tvg-chno="56" tvg-name="宁夏卫视" group-title="卫视频道",宁夏卫视
 #ISP:MOBILE
 #REGION:山东
@@ -3030,6 +3141,12 @@ http://111.40.196.31/PLTV/88888888/224/3221225530/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.134.115.163:8080/PLTV/88888910/224/3221225726/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000043/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000395/index.m3u8
 #EXTINF:-1 tvg-chno="55" tvg-name="兵团卫视" group-title="卫视频道",兵团卫视
 #ISP:MOBILE
 #REGION:山东
@@ -3052,6 +3169,12 @@ http://111.40.196.31/PLTV/88888888/224/3221225637/index.m3u8?zweimd
 #ISP:MOBILE
 #REGION:山东
 http://test5.btzx.com.cn/live/btxjbtws.stream/chunklist_w19172251.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000071/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000394/index.m3u8
 #EXTINF:-1 tvg-chno="59" tvg-name="内蒙古卫视" group-title="卫视频道",内蒙古卫视
 #ISP:MOBILE
 #REGION:山东
@@ -3077,6 +3200,12 @@ http://39.135.138.60:18890/PLTV/88888888/224/3221225667/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.39/PLTV/88888888/224/3221225574/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000040/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000398/index.m3u8
 #EXTINF:-1 tvg-chno="45" tvg-name="海南卫视" group-title="卫视频道",海南卫视
 #ISP:MOBILE
 #REGION:山东
@@ -3111,6 +3240,9 @@ http://39.134.115.163:8080/PLTV/88888910/224/3221225722/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.35/PLTV/88888888/224/3221225623/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000347/index.m3u8
 #EXTINF:-1 tvg-chno="65" tvg-name="三沙卫视" group-title="卫视频道",三沙卫视
 #ISP:MOBILE
 #REGION:山东
@@ -3118,6 +3250,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000078/index.m3u8
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.33:808/tsfile/live/1025_1.m3u8?key=txiptv&playlive=1&authid=0
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000078/index.m3u8
 #EXTINF:-1 tvg-chno="66" tvg-name="北京卫视4K" group-title="卫视频道",北京卫视4K
 #ISP:MOBILE
 #REGION:山东
@@ -3125,6 +3260,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000001/index.m3u8
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.149:808/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.132/PLTV/88888888/224/3221227299/518924348.smil/index.m3u8?fmt=ts2hls
 #EXTINF:-1 tvg-chno="64" tvg-name="厦门卫视" group-title="卫视频道",厦门卫视
 #ISP:MOBILE
 #REGION:山东
@@ -3141,6 +3279,9 @@ http://39.135.55.7:6610/PLTV/88888888/224/3221226781/index.m3u8?servicetype=1&IA
 #ISP:MOBILE
 #REGION:山东
 http://111.40.196.32/PLTV/88888888/224/3221225643/index.m3u8?zweimd
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000075/index.m3u8
 #EXTINF:-1 tvg-name="少儿卫视" group-title="卫视频道",少儿卫视
 #ISP:MOBILE
 #REGION:广东
@@ -3160,6 +3301,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000009/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000072/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000072/index.m3u8
 #EXTINF:-1 tvg-name="南方卫视" group-title="卫视频道",南方卫视
 #ISP:MOBILE
 #REGION:广东
@@ -3183,6 +3327,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000005/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000003/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.132/PLTV/88888888/224/3221227437/521682524.smil/index.m3u8?fmt=ts2hls
 #EXTINF:-1 tvg-name="旅游卫视" group-title="卫视频道",旅游卫视
 #ISP:MOBILE
 #REGION:广东
@@ -3199,6 +3346,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000008/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000004/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.132/PLTV/88888888/224/3221227307/521682571.smil/index.m3u8?fmt=ts2hls
 #EXTINF:-1 tvg-chno="70" tvg-name="湖南卫视4K" group-title="卫视频道",湖南卫视4K
 #ISP:MOBILE
 #REGION:山东
@@ -3289,6 +3439,12 @@ http://39.135.138.60:18890/PLTV/88888888/224/3221225697/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.60:18890/PLTV/88888888/224/3221225738/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000301/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL20000004/index.m3u8
 #EXTINF:-1 tvg-chno="248" tvg-name="金鹰卡通" group-title="数字频道",金鹰卡通
 #ISP:MOBILE
 #REGION:山东
@@ -3314,9 +3470,6 @@ http://221.13.234.119:9901/tsfile/live/1010_1.m3u8?key=txiptv&playlive=1&authid=
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.195.138:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=0&authid=0
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:浙江
 http://101.66.198.176:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=0&authid=0
@@ -3338,6 +3491,12 @@ http://iptv.tvfix.org/hls/jykttv.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.134.115.163:8080/PLTV/88888910/224/3221225721/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000047/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002027/index.m3u8
 #EXTINF:-1 tvg-name="杭州影视" group-title="影视频道",杭州影视
 #ISP:UNICOM
 #REGION:浙江
@@ -3398,6 +3557,9 @@ http://121.19.134.149:808/tsfile/live/1035_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.149:808/tsfile/live/1035_1.m3u8?key=txiptv&playlive=1&authid=0
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000076/index.m3u8
 #EXTINF:-1 tvg-name="广东体育" group-title="体育频道",广东体育
 #ISP:TELECOM
 #REGION:广东
@@ -3408,9 +3570,6 @@ http://120.198.95.220:9901/tsfile/live/1013_1.m3u8?key=txiptv&playlive=1&down=1
 #ISP:MOBILE
 #REGION:广东
 http://120.198.95.220:9901/tsfile/live/1010_1.m3u8?key=txiptv&playlive=1&down=1
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1003_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-name="河北少儿科教" group-title="科教频道",河北少儿科教
 #ISP:UNICOM
 #REGION:河北
@@ -3434,6 +3593,9 @@ http://121.19.134.149:808/tsfile/live/1038_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.149:808/tsfile/live/1038_1.m3u8?key=txiptv&playlive=1&authid=0
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000077/index.m3u8
 #EXTINF:-1 tvg-name="卡酷动画" group-title="卡通频道",卡酷动画
 #ISP:UNICOM
 #REGION:河北
@@ -3444,6 +3606,9 @@ http://221.13.234.49:9901/tsfile/live/1009_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河南
 http://221.13.234.119:9901/tsfile/live/1009_1.m3u8?key=txiptv&playlive=1&authid=0
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000048/index.m3u8
 #EXTINF:-1 tvg-chno="231" tvg-name="嘉佳卡通" group-title="数字频道",嘉佳卡通
 #ISP:MOBILE
 #REGION:山东
@@ -3451,9 +3616,6 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000074/index.m3u8
 #ISP:MOBILE
 #REGION:广东
 http://120.198.95.220:9901/tsfile/live/1031_1.m3u8?key=txiptv&playlive=1&down=1
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1005_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000074/index.m3u8
@@ -3463,6 +3625,9 @@ http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221226193/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://hwrr.jx.chinamobile.com:8080/PLTV/88888888/224/3221226193/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000074/index.m3u8
 #EXTINF:-1 tvg-name="广东珠江" group-title="其他频道",广东珠江
 #ISP:MOBILE
 #REGION:广东
@@ -3470,9 +3635,6 @@ http://120.198.95.220:9901/tsfile/live/1007_1.m3u8?key=txiptv&playlive=1&down=1
 #ISP:TELECOM
 #REGION:广东
 http://218.13.170.98:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-name="经济科教" group-title="科教频道",经济科教
 #ISP:MOBILE
 #REGION:广东
@@ -3493,6 +3655,9 @@ http://121.19.134.149:808/tsfile/live/1037_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:UNICOM
 #REGION:河北
 http://121.19.134.33:808/tsfile/live/1028_1.m3u8?key=txiptv&playlive=1&authid=0
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000334/index.m3u8
 #EXTINF:-1 tvg-chno="230" tvg-name="优漫卡通" group-title="数字频道",优漫卡通
 #ISP:MOBILE
 #REGION:山东
@@ -3509,6 +3674,9 @@ http://183.207.249.15:80/PLTV/4/224/3221225933/index.m3u8?
 #ISP:MOBILE
 #REGION:山东
 http://183.207.249.15:80/PLTV/4/224/3221225933/index.m3u8?
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000049/index.m3u8
 #EXTINF:-1 tvg-name="保定新闻综合" group-title="其他频道",保定新闻综合
 #ISP:UNICOM
 #REGION:河北
@@ -3539,6 +3707,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000057/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000315/index.m3u8
 #EXTINF:-1 tvg-chno="75" tvg-name="山东齐鲁" group-title="山东频道",山东齐鲁
 #ISP:MOBILE
 #REGION:山东
@@ -3555,20 +3726,17 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000052/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000313/index.m3u8
 #EXTINF:-1 tvg-name="广东公共" group-title="其他频道",广东公共
 #ISP:MOBILE
 #REGION:广东
 http://120.198.95.220:9901/tsfile/live/1009_1.m3u8?key=txiptv&playlive=1&down=1
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1002_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-name="广东新闻" group-title="其他频道",广东新闻
 #ISP:MOBILE
 #REGION:广东
 http://120.198.95.220:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&down=1
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1001_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-chno="232" tvg-name="快乐垂钓" group-title="数字频道",快乐垂钓
 #ISP:MOBILE
 #REGION:山东
@@ -3649,6 +3817,9 @@ http://39.134.19.252:6610/yinhe/2/ch00000090990000002055/index.m3u8?virtualDomai
 #ISP:MOBILE
 #REGION:山东
 http://117.148.179.138/PLTV/88888888/224/3221231580/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002030/index.m3u8
 #EXTINF:-1 tvg-chno="249" tvg-name="CHC家庭影院" group-title="数字频道",CHC家庭影院
 #ISP:MOBILE
 #REGION:山东
@@ -3684,10 +3855,10 @@ http://39.134.19.252:6610/yinhe/2/ch00000090990000002065/index.m3u8?virtualDomai
 #ISP:MOBILE
 #REGION:山东
 http://v.mp.haue.edu.cn/hls/chchd.m3u8
-#EXTINF:-1 tvg-name="IPTV热播剧场" group-title="影视频道",IPTV热播剧场
 #ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&authid=0
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002029/index.m3u8
+#EXTINF:-1 tvg-name="IPTV热播剧场" group-title="影视频道",IPTV热播剧场
 #EXTINF:-1 tvg-name="TVB星河" group-title="其他频道",TVB星河
 #ISP:MOBILE
 #REGION:广东
@@ -3706,10 +3877,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001001/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002025/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002025/index.m3u8
 #EXTINF:-1 tvg-chno="222" tvg-name="东昌综合" group-title="地方频道",东昌综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001119/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001119/index.m3u8
 #EXTINF:-1 tvg-chno="193" tvg-name="东明TV1" group-title="地方频道",东明TV1
 #ISP:MOBILE
 #REGION:山东
@@ -3718,6 +3895,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001065/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000227/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000227/index.m3u8
 #EXTINF:-1 tvg-chno="143" tvg-name="东营新闻综合" group-title="地方频道",东营新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -3733,10 +3913,22 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000073/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000073/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000073/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00004000/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000073/index.m3u8
 #EXTINF:-1 tvg-chno="116" tvg-name="临朐综合" group-title="地方频道",临朐综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001085/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001085/index.m3u8
 #EXTINF:-1 tvg-chno="102" tvg-name="临沂公共" group-title="地方频道",临沂公共
 #ISP:MOBILE
 #REGION:山东
@@ -3757,6 +3949,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001094/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001103/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001103/index.m3u8
 #EXTINF:-1 tvg-chno="213" tvg-name="临邑TV1" group-title="地方频道",临邑TV1
 #ISP:MOBILE
 #REGION:山东
@@ -3765,6 +3960,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001104/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002016/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002016/index.m3u8
 #EXTINF:-1 tvg-chno="136" tvg-name="乳山TV1" group-title="地方频道",乳山TV1
 #ISP:MOBILE
 #REGION:山东
@@ -3793,6 +3991,9 @@ http://121.19.134.149:808/tsfile/live/1009_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001051/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001051/index.m3u8
 #EXTINF:-1 tvg-name="党建新闻" group-title="其他频道",党建新闻
 #ISP:UNKNOWN
 #REGION:未知
@@ -3801,10 +4002,16 @@ http://flv4mp4.people.com.cn/videofile7/pvmsvideo/2021/3/10/ShiXinPei_71ec1680d0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001095/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001095/index.m3u8
 #EXTINF:-1 tvg-chno="173" tvg-name="兰陵综合" group-title="地方频道",兰陵综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001032/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001032/index.m3u8
 #EXTINF:-1 tvg-name="兵团卫" group-title="其他频道",兵团卫
 #ISP:MOBILE
 #REGION:广东
@@ -3813,6 +4020,9 @@ http://120.198.95.220:9901/tsfile/live/1062_1.m3u8?key=txiptv&playlive=1&down=1
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001040/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001040/index.m3u8
 #EXTINF:-1 tvg-name="凤凰中文" group-title="其他频道",凤凰中文
 #ISP:MOBILE
 #REGION:广东
@@ -3829,6 +4039,9 @@ http://playtv-live.ifeng.com/live/06OLEGEGM4G.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://223.110.245.138/ott.js.chinamobile.com/PLTV/3/224/3221226922/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000380/index.m3u8
 #EXTINF:-1 tvg-name="凤凰资讯" group-title="其他频道",凤凰资讯
 #ISP:MOBILE
 #REGION:广东
@@ -3856,10 +4069,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002000/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://140.207.241.2:8080/live/program/live/dmxchd/4000000/mnf.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002000/index.m3u8
 #EXTINF:-1 tvg-chno="200" tvg-name="单县综合" group-title="地方频道",单县综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001079/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001079/index.m3u8
 #EXTINF:-1 tvg-name="南方五" group-title="其他频道",南方五
 #ISP:MOBILE
 #REGION:广东
@@ -3904,6 +4123,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001105/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001105/index.m3u8
 #EXTINF:-1 tvg-chno="165" tvg-name="周村新闻" group-title="地方频道",周村新闻
 #ISP:MOBILE
 #REGION:山东
@@ -3916,10 +4138,16 @@ http://121.19.134.33:808/tsfile/live/1035_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001008/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001008/index.m3u8
 #EXTINF:-1 tvg-chno="163" tvg-name="嘉祥综合" group-title="地方频道",嘉祥综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001016/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001016/index.m3u8
 #EXTINF:-1 tvg-name="四海垂钓" group-title="体育频道",四海垂钓
 #ISP:UNICOM
 #REGION:河北
@@ -3928,14 +4156,23 @@ http://121.19.134.33:808/tsfile/live/1037_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000674/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000640/index.m3u8
 #EXTINF:-1 tvg-chno="195" tvg-name="夏津公共" group-title="地方频道",夏津公共
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001070/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001070/index.m3u8
 #EXTINF:-1 tvg-chno="194" tvg-name="夏津综合" group-title="地方频道",夏津综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001069/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001069/index.m3u8
 #EXTINF:-1 tvg-name="天映" group-title="其他频道",天映
 #ISP:MOBILE
 #REGION:广东
@@ -3948,9 +4185,6 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001027/index.m3u8
 #EXTINF:-1 tvg-name="女性时尚" group-title="其他频道",女性时尚
-#ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1010_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-chno="119" tvg-name="威海公共2" group-title="地方频道",威海公共2
 #ISP:MOBILE
 #REGION:山东
@@ -3989,10 +4223,16 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001045/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001045/index.m3u8
 #EXTINF:-1 tvg-chno="255" tvg-name="山东交通广播" group-title="广播频道",山东交通广播
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00003002/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00003002/index.m3u8
 #EXTINF:-1 tvg-chno="81" tvg-name="山东农科" group-title="山东频道",山东农科
 #ISP:MOBILE
 #REGION:山东
@@ -4006,6 +4246,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000058/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000339/index.m3u8
 #EXTINF:-1 tvg-chno="82" tvg-name="山东少儿" group-title="山东频道",山东少儿
 #ISP:MOBILE
 #REGION:山东
@@ -4019,6 +4262,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000059/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000340/index.m3u8
 #EXTINF:-1 tvg-name="山东教育" group-title="科教频道",山东教育
 #ISP:UNICOM
 #REGION:河北
@@ -4030,6 +4276,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000331/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000331/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000331/index.m3u8
 #EXTINF:-1 tvg-chno="79" tvg-name="山东文旅" group-title="山东频道",山东文旅
 #ISP:MOBILE
 #REGION:山东
@@ -4037,6 +4286,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000337/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000337/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000337/index.m3u8
 #EXTINF:-1 tvg-chno="78" tvg-name="山东新闻" group-title="山东频道",山东新闻
 #ISP:MOBILE
 #REGION:山东
@@ -4050,6 +4302,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000053/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000314/index.m3u8
 #EXTINF:-1 tvg-chno="77" tvg-name="山东生活" group-title="山东频道",山东生活
 #ISP:MOBILE
 #REGION:山东
@@ -4060,10 +4315,16 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000055/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000336/index.m3u8
 #EXTINF:-1 tvg-chno="254" tvg-name="山东经济广播" group-title="广播频道",山东经济广播
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00003001/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00003001/index.m3u8
 #EXTINF:-1 tvg-chno="80" tvg-name="山东综艺" group-title="山东频道",山东综艺
 #ISP:MOBILE
 #REGION:山东
@@ -4097,6 +4358,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001013/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001046/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001046/index.m3u8
 #EXTINF:-1 tvg-chno="192" tvg-name="平原新闻" group-title="地方频道",平原新闻
 #ISP:MOBILE
 #REGION:山东
@@ -4109,10 +4373,10 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001050/index.m3u8
-#EXTINF:-1 tvg-name="广东少儿" group-title="卡通频道",广东少儿
 #ISP:TELECOM
-#REGION:广东
-http://119.129.172.3:9901/tsfile/live/1004_1.m3u8?key=txiptv&playlive=1&authid=0
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001050/index.m3u8
+#EXTINF:-1 tvg-name="广东少儿" group-title="卡通频道",广东少儿
 #EXTINF:-1 tvg-name="广西影视" group-title="影视频道",广西影视
 #ISP:MOBILE
 #REGION:广东
@@ -4144,6 +4408,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000207/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000207/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000207/index.m3u8
 #EXTINF:-1 tvg-chno="100" tvg-name="德州新闻综合" group-title="地方频道",德州新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4168,6 +4435,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001066/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001066/index.m3u8
 #EXTINF:-1 tvg-chno="89" tvg-name="新泰新闻综合" group-title="地方频道",新泰新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4186,6 +4456,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM/CHANNEL00000263/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000263/index.m3u8
 #EXTINF:-1 tvg-chno="132" tvg-name="昌乐新闻综合" group-title="地方频道",昌乐新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4212,6 +4485,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001055/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001055/index.m3u8
 #EXTINF:-1 tvg-chno="166" tvg-name="桓台1台" group-title="地方频道",桓台1台
 #ISP:MOBILE
 #REGION:山东
@@ -4244,14 +4520,26 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000657/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000667/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000667/index.m3u8
 #EXTINF:-1 tvg-chno="221" tvg-name="汶上综合" group-title="地方频道",汶上综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001116/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001116/index.m3u8
 #EXTINF:-1 tvg-chno="238" tvg-name="汽摩" group-title="数字频道",汽摩
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000711/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000711/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000711/index.m3u8
 #EXTINF:-1 tvg-chno="207" tvg-name="沂南温泉" group-title="地方频道",沂南温泉
 #ISP:MOBILE
 #REGION:山东
@@ -4276,6 +4564,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001002/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001109/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001109/index.m3u8
 #EXTINF:-1 tvg-name="河北三农" group-title="其他频道",河北三农
 #ISP:UNICOM
 #REGION:河北
@@ -4296,10 +4587,16 @@ http://121.19.134.149:808/tsfile/live/1001_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001035/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001035/index.m3u8
 #EXTINF:-1 tvg-chno="240" tvg-name="法制天地" group-title="数字频道",法制天地
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002010/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002010/index.m3u8
 #EXTINF:-1 tvg-chno="201" tvg-name="泗水新闻综合" group-title="地方频道",泗水新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4320,6 +4617,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001114/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000069/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000069/index.m3u8
 #EXTINF:-1 tvg-chno="98" tvg-name="济南文旅体育" group-title="地方频道",济南文旅体育
 #ISP:MOBILE
 #REGION:山东
@@ -4331,42 +4631,72 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000064/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000063/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000063/index.m3u8
 #EXTINF:-1 tvg-chno="96" tvg-name="济南都市" group-title="地方频道",济南都市
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000062/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000062/index.m3u8
 #EXTINF:-1 tvg-chno="150" tvg-name="济南鲁中" group-title="地方频道",济南鲁中
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000244/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000244/index.m3u8
 #EXTINF:-1 tvg-chno="149" tvg-name="济宁公共" group-title="地方频道",济宁公共
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000241/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000241/index.m3u8
 #EXTINF:-1 tvg-chno="147" tvg-name="济宁教育" group-title="地方频道",济宁教育
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000239/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000239/index.m3u8
 #EXTINF:-1 tvg-chno="148" tvg-name="济宁综合" group-title="地方频道",济宁综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000240/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000240/index.m3u8
 #EXTINF:-1 tvg-chno="210" tvg-name="济宁高新" group-title="地方频道",济宁高新
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001101/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001101/index.m3u8
 #EXTINF:-1 tvg-chno="171" tvg-name="济阳综合" group-title="地方频道",济阳综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001030/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001030/index.m3u8
 #EXTINF:-1 tvg-chno="125" tvg-name="海阳综合" group-title="地方频道",海阳综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001091/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001091/index.m3u8
 #EXTINF:-1 tvg-chno="126" tvg-name="海阳综艺" group-title="地方频道",海阳综艺
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001092/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001092/index.m3u8
 #EXTINF:-1 tvg-name="涿州新闻" group-title="其他频道",涿州新闻
 #ISP:UNICOM
 #REGION:河北
@@ -4379,18 +4709,30 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001037/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000292/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000292/index.m3u8
 #EXTINF:-1 tvg-chno="155" tvg-name="淄博生活" group-title="地方频道",淄博生活
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000294/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000294/index.m3u8
 #EXTINF:-1 tvg-chno="154" tvg-name="淄博都市" group-title="地方频道",淄博都市
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000293/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000293/index.m3u8
 #EXTINF:-1 tvg-chno="159" tvg-name="淄川新闻" group-title="地方频道",淄川新闻
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001007/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001007/index.m3u8
 #EXTINF:-1 tvg-name="深圳少儿" group-title="卡通频道",深圳少儿
 #ISP:MOBILE
 #REGION:广东
@@ -4406,22 +4748,13 @@ http://120.198.95.220:9901/tsfile/live/1042_1.m3u8?key=txiptv&playlive=1&down=1
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002024/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002024/index.m3u8
 #EXTINF:-1 tvg-name="湖南公共" group-title="其他频道",湖南公共
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-name="湖南电影" group-title="影视频道",湖南电影
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/1000_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-name="湖南经视" group-title="其他频道",湖南经视
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/1042_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-name="湖南都市" group-title="其他频道",湖南都市
-#ISP:TELECOM
-#REGION:湖南
-http://124.228.160.40:9901/tsfile/live/1044_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 tvg-chno="170" tvg-name="滕州综合" group-title="地方频道",滕州综合
 #ISP:MOBILE
 #REGION:山东
@@ -4430,6 +4763,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001028/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000221/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000221/index.m3u8
 #EXTINF:-1 tvg-chno="105" tvg-name="滨州新闻综合" group-title="地方频道",滨州新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4449,6 +4785,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000281/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000281/index.m3u8
 #EXTINF:-1 tvg-chno="124" tvg-name="烟台影视" group-title="地方频道",烟台影视
 #ISP:MOBILE
 #REGION:山东
@@ -4456,6 +4795,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000283/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000283/index.m3u8
 #EXTINF:-1 tvg-chno="122" tvg-name="烟台新闻综合" group-title="地方频道",烟台新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4470,6 +4812,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000282/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000282/index.m3u8
 #EXTINF:-1 tvg-name="爱电影" group-title="影视频道",爱电影
 #ISP:TELECOM
 #REGION:广东
@@ -4481,10 +4826,22 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000671/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000644/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000671/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00004009/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000671/index.m3u8
 #EXTINF:-1 tvg-chno="244" tvg-name="生活时尚" group-title="数字频道",生活时尚
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002019/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002019/index.m3u8
 #EXTINF:-1 tvg-chno="252" tvg-name="短剧" group-title="数字频道",短剧
 #ISP:MOBILE
 #REGION:山东
@@ -4493,10 +4850,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002031/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001061/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001061/index.m3u8
 #EXTINF:-1 tvg-chno="190" tvg-name="禹城综艺" group-title="地方频道",禹城综艺
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001062/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001062/index.m3u8
 #EXTINF:-1 tvg-name="秦皇岛" group-title="其他频道",秦皇岛
 #ISP:UNICOM
 #REGION:河北
@@ -4509,6 +4872,12 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001073/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002012/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002012/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10002012/index.m3u8
 #EXTINF:-1 tvg-name="经典电影" group-title="影视频道",经典电影
 #ISP:TELECOM
 #REGION:山西
@@ -4521,18 +4890,30 @@ http://120.198.95.220:9901/tsfile/live/1004_1.m3u8?key=txiptv&playlive=1&down=1
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000251/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000251/index.m3u8
 #EXTINF:-1 tvg-chno="151" tvg-name="聊城综合" group-title="地方频道",聊城综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000250/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000250/index.m3u8
 #EXTINF:-1 tvg-chno="91" tvg-name="肥城综合" group-title="地方频道",肥城综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001039/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001039/index.m3u8
 #EXTINF:-1 tvg-chno="182" tvg-name="茌平综合" group-title="地方频道",茌平综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001048/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001048/index.m3u8
 #EXTINF:-1 tvg-chno="139" tvg-name="荣成综合" group-title="地方频道",荣成综合
 #ISP:MOBILE
 #REGION:山东
@@ -4540,18 +4921,30 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001053/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001053/index.m3u8
 #EXTINF:-1 tvg-chno="162" tvg-name="莒南综合" group-title="地方频道",莒南综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001011/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001011/index.m3u8
 #EXTINF:-1 tvg-chno="129" tvg-name="莒县综合" group-title="地方频道",莒县综合
 #ISP:MOBILE
 #REGION:山东
 http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM/CHANNEL00001014/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001014/index.m3u8
 #EXTINF:-1 tvg-chno="181" tvg-name="莘县综合" group-title="地方频道",莘县综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001047/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001047/index.m3u8
 #EXTINF:-1 tvg-chno="141" tvg-name="莱西综合" group-title="地方频道",莱西综合
 #ISP:MOBILE
 #REGION:山东
@@ -4559,6 +4952,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001067/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001067/index.m3u8
 #EXTINF:-1 tvg-chno="220" tvg-name="莱钢电视" group-title="地方频道",莱钢电视
 #ISP:MOBILE
 #REGION:山东
@@ -4575,6 +4971,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000234/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001031/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001031/index.m3u8
 #EXTINF:-1 tvg-chno="128" tvg-name="诸城新闻综合" group-title="地方频道",诸城新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4582,6 +4981,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001004/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001004/index.m3u8
 #EXTINF:-1 tvg-name="谍战剧场" group-title="影视频道",谍战剧场
 #ISP:MOBILE
 #REGION:广东
@@ -4598,14 +5000,23 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001058/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001041/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001041/index.m3u8
 #EXTINF:-1 tvg-chno="245" tvg-name="都市剧场" group-title="数字频道",都市剧场
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002022/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002022/index.m3u8
 #EXTINF:-1 tvg-chno="202" tvg-name="鄄城综合" group-title="地方频道",鄄城综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001084/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001084/index.m3u8
 #EXTINF:-1 tvg-chno="253" tvg-name="重温经典影视" group-title="数字频道",重温经典影视
 #ISP:MOBILE
 #REGION:山东
@@ -4614,10 +5025,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL20000003/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00002018/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002018/index.m3u8
 #EXTINF:-1 tvg-chno="164" tvg-name="长清综合" group-title="地方频道",长清综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001018/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001018/index.m3u8
 #EXTINF:-1 tvg-chno="175" tvg-name="阳信新闻综合" group-title="地方频道",阳信新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -4649,6 +5066,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001057/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001057/index.m3u8
 #EXTINF:-1 tvg-chno="133" tvg-name="青州综合" group-title="地方频道",青州综合
 #ISP:MOBILE
 #REGION:山东
@@ -4656,6 +5076,9 @@ http://223.99.189.25:8089/shandong_cabletv.live.zte.com/223.99.253.7:8081/00/SNM
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001042/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001042/index.m3u8
 #EXTINF:-1 tvg-name="靓彩河北" group-title="其他频道",靓彩河北
 #ISP:UNICOM
 #REGION:河北
@@ -4664,10 +5087,16 @@ http://121.19.134.33:808/tsfile/live/1006_1.m3u8?key=txiptv&playlive=1&authid=0
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001023/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001023/index.m3u8
 #EXTINF:-1 tvg-chno="216" tvg-name="鱼台生活" group-title="地方频道",鱼台生活
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001108/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001108/index.m3u8
 #EXTINF:-1 tvg-chno="215" tvg-name="鱼台综合" group-title="地方频道",鱼台综合
 #ISP:MOBILE
 #REGION:山东
@@ -4676,10 +5105,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001107/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001087/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001087/index.m3u8
 #EXTINF:-1 tvg-chno="112" tvg-name="黄岛综合" group-title="地方频道",黄岛综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001086/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001086/index.m3u8
 #EXTINF:-1 tvg-chno="186" tvg-name="齐河新闻" group-title="地方频道",齐河新闻
 #ISP:MOBILE
 #REGION:山东
@@ -4705,6 +5140,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000355/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000355/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000355/index.m3u8
 #EXTINF:-1 tvg-chno="259" tvg-name="CGTN西语" group-title="SNM央视",CGTN西语
 #ISP:MOBILE
 #REGION:山东
@@ -4854,6 +5292,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000662/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000662/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000662/index.m3u8
 #EXTINF:-1 tvg-chno="282" tvg-name="湖南金鹰卡通" group-title="SNM其它",湖南金鹰卡通
 #ISP:MOBILE
 #REGION:山东
@@ -4880,6 +5321,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000048/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000661/index.m3u8
 #EXTINF:-1 tvg-chno="284" tvg-name="上海哈哈炫动" group-title="SNM其它",上海哈哈炫动
 #ISP:MOBILE
 #REGION:山东
@@ -4936,6 +5380,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000700/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000700/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000700/index.m3u8
 #EXTINF:-1 tvg-chno="292" tvg-name="河南文物宝库" group-title="SNM其它",河南文物宝库
 #ISP:MOBILE
 #REGION:山东
@@ -5031,10 +5478,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001063/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001064/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001064/index.m3u8
 #EXTINF:-1 tvg-chno="315" tvg-name="广饶综合" group-title="山东地方",广饶综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001043/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001043/index.m3u8
 #EXTINF:-1 tvg-chno="316" tvg-name="微山综合" group-title="山东地方",微山综合
 #ISP:MOBILE
 #REGION:山东
@@ -5047,18 +5500,30 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000207/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001029/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001029/index.m3u8
 #EXTINF:-1 tvg-chno="319" tvg-name="无棣综合" group-title="山东地方",无棣综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001024/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001024/index.m3u8
 #EXTINF:-1 tvg-chno="320" tvg-name="梁山综合" group-title="山东地方",梁山综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001075/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001075/index.m3u8
 #EXTINF:-1 tvg-chno="321" tvg-name="武城综合" group-title="山东地方",武城综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001059/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001059/index.m3u8
 #EXTINF:-1 tvg-chno="322" tvg-name="武城综艺影视" group-title="山东地方",武城综艺影视
 #ISP:MOBILE
 #REGION:山东
@@ -5071,10 +5536,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001097/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001098/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001098/index.m3u8
 #EXTINF:-1 tvg-chno="325" tvg-name="沂水生活" group-title="山东地方",沂水生活
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001099/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001099/index.m3u8
 #EXTINF:-1 tvg-chno="326" tvg-name="淄博影视" group-title="山东地方",淄博影视
 #ISP:MOBILE
 #REGION:山东
@@ -5082,6 +5553,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001037/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000295/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001037/index.m3u8
 #EXTINF:-1 tvg-chno="327" tvg-name="淄博新闻综合" group-title="山东地方",淄博新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -5090,10 +5564,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000292/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001038/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001038/index.m3u8
 #EXTINF:-1 tvg-chno="329" tvg-name="邹平综合" group-title="山东地方",邹平综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001058/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001058/index.m3u8
 #EXTINF:-1 tvg-chno="330" tvg-name="金乡综合" group-title="山东地方",金乡综合
 #ISP:MOBILE
 #REGION:山东
@@ -5102,10 +5582,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001034/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001082/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001082/index.m3u8
 #EXTINF:-1 tvg-chno="332" tvg-name="齐河综合" group-title="山东地方",齐河综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001056/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001056/index.m3u8
 #EXTINF:-1 tvg-chno="333" tvg-name="LY1" group-title="山东地方",LY1
 #ISP:MOBILE
 #REGION:山东
@@ -5114,10 +5600,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001104/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000065/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000065/index.m3u8
 #EXTINF:-1 tvg-chno="335" tvg-name="济南少儿" group-title="山东地方",济南少儿
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000067/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000067/index.m3u8
 #EXTINF:-1 tvg-chno="336" tvg-name="东明新闻综合" group-title="山东地方",东明新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -5126,6 +5618,9 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001065/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001094/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001094/index.m3u8
 #EXTINF:-1 tvg-chno="338" tvg-name="宁阳1" group-title="山东地方",宁阳1
 #ISP:MOBILE
 #REGION:山东
@@ -5138,10 +5633,16 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001072/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001020/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001020/index.m3u8
 #EXTINF:-1 tvg-chno="341" tvg-name="沂源综合" group-title="山东地方",沂源综合
 #ISP:MOBILE
 #REGION:山东
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001002/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001002/index.m3u8
 #EXTINF:-1 tvg-chno="342" tvg-name="泰安经济生活" group-title="山东地方",泰安经济生活
 #ISP:MOBILE
 #REGION:山东
@@ -5198,6 +5699,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000218/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000218/index.m3u8
 #EXTINF:-1 tvg-chno="356" tvg-name="胶州新闻" group-title="山东地方",胶州新闻
 #ISP:MOBILE
 #REGION:山东
@@ -5230,6 +5734,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000274/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000274/index.m3u8
 #EXTINF:-1 tvg-chno="364" tvg-name="平度新闻综合" group-title="山东地方",平度新闻综合
 #ISP:MOBILE
 #REGION:山东
@@ -5242,6 +5749,12 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001100/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000275/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001100/index.m3u8
 #EXTINF:-1 tvg-chno="367" tvg-name="日照科技生活" group-title="山东地方",日照科技生活
 #ISP:MOBILE
 #REGION:山东
@@ -5250,6 +5763,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000215/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000215/index.m3u8
 #EXTINF:-1 tvg-chno="369" tvg-name="潍坊经济" group-title="山东地方",潍坊经济
 #ISP:MOBILE
 #REGION:山东
@@ -5262,6 +5778,9 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 #ISP:MOBILE
 #REGION:山东
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001077/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001077/index.m3u8
 #EXTINF:-1 tvg-chno="372" tvg-name="莒县1" group-title="山东地方",莒县1
 #ISP:MOBILE
 #REGION:山东
@@ -5420,6 +5939,9 @@ http://39.134.66.5/PLTV/88888888/224/3221225713/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://bytedance.live.cqccn.com/__cl/cg:live/__c/qsjlHD/__op/default/__f//index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000667/index.m3u8
 #EXTINF:-1 tvg-chno="407" tvg-name="求索生活" group-title="NewTV",求索生活
 #ISP:MOBILE
 #REGION:山东
@@ -5532,6 +6054,9 @@ http://iptv.tvfix.org/hls/hhxdhd.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://39.135.138.59:18890/PLTV/88888910/224/3221225720/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000050/index.m3u8
 #EXTINF:-1 tvg-chno="426" tvg-name="南京少儿" group-title="少儿频道",南京少儿
 #ISP:MOBILE
 #REGION:山东
@@ -7246,3 +7771,368 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221226201/index.m3u8
 #ISP:MOBILE
 #REGION:山东
 http://live.ybtvyun.com/video/s10016-7e5f23de35df/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000668/index.m3u8
+#EXTINF:-1 tvg-name="CCTV-1 综合" group-title="央视频道",CCTV-1 综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00004003/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000001/index.m3u8
+#EXTINF:-1 tvg-name="CCTV-16 4K 超高清" group-title="央视频道",CCTV-16 4K 超高清
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.132/PLTV/88888888/224/3221227032/422297679.smil/index.m3u8?fmt=ts2hls
+#EXTINF:-1 tvg-name="CCTV-4K 超高清" group-title="央视频道",CCTV-4K 超高清
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.132/PLTV/88888888/224/3221227239/494657502.smil/index.m3u8?fmt=ts2hls
+#EXTINF:-1 tvg-name="CCTV-8 电视剧" group-title="央视频道",CCTV-8 电视剧
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL20000001/index.m3u8
+#EXTINF:-1 tvg-name="CCTV5+" group-title="央视频道",CCTV5+
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000316/index.m3u8
+#EXTINF:-1 tvg-name="CGTN西班牙语" group-title="地方频道",CGTN西班牙语
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000354/index.m3u8
+#EXTINF:-1 tvg-name="CGTN阿拉伯语" group-title="地方频道",CGTN阿拉伯语
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000356/index.m3u8
+#EXTINF:-1 tvg-name="CHC家庭电影" group-title="影视频道",CHC家庭电影
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002028/index.m3u8
+#EXTINF:-1 tvg-name="QTV-1" group-title="山东地方",QTV-1
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000500/index.m3u8
+#EXTINF:-1 tvg-name="QTV-2" group-title="山东地方",QTV-2
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000501/index.m3u8
+#EXTINF:-1 tvg-name="QTV-3" group-title="山东地方",QTV-3
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000502/index.m3u8
+#EXTINF:-1 tvg-name="QTV-4" group-title="山东地方",QTV-4
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000503/index.m3u8
+#EXTINF:-1 tvg-name="QTV-5" group-title="山东地方",QTV-5
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000504/index.m3u8
+#EXTINF:-1 tvg-name="QTV-6" group-title="山东地方",QTV-6
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000505/index.m3u8
+#EXTINF:-1 tvg-name="东平综合" group-title="山东地方",东平综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001001/index.m3u8
+#EXTINF:-1 tvg-name="东明电视台" group-title="山东地方",东明电视台
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001065/index.m3u8
+#EXTINF:-1 tvg-name="东营新闻" group-title="山东地方",东营新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000226/index.m3u8
+#EXTINF:-1 tvg-name="东阿综合" group-title="山东地方",东阿综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001093/index.m3u8
+#EXTINF:-1 tvg-name="中华特产" group-title="地方频道",中华特产
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000672/index.m3u8
+#EXTINF:-1 tvg-name="中国教育4台" group-title="央视频道",中国教育4台
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000666/index.m3u8
+#EXTINF:-1 tvg-name="中央新影中学生" group-title="央视频道",中央新影中学生
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000673/index.m3u8
+#EXTINF:-1 tvg-name="中学生" group-title="央视频道",中学生
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL10000673/index.m3u8
+#EXTINF:-1 tvg-name="中数书画频道" group-title="数字频道",中数书画频道
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000651/index.m3u8
+#EXTINF:-1 tvg-name="中数快乐垂钓" group-title="数字频道",中数快乐垂钓
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000648/index.m3u8
+#EXTINF:-1 tvg-name="中数文物宝库" group-title="数字频道",中数文物宝库
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000658/index.m3u8
+#EXTINF:-1 tvg-name="中数梨园" group-title="数字频道",中数梨园
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000656/index.m3u8
+#EXTINF:-1 tvg-name="中数武术世界" group-title="地方频道",中数武术世界
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000657/index.m3u8
+#EXTINF:-1 tvg-name="中数茶频道" group-title="地方频道",中数茶频道
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000649/index.m3u8
+#EXTINF:-1 tvg-name="临淄综合" group-title="地方频道",临淄综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001021/index.m3u8
+#EXTINF:-1 tvg-name="临邑电视台1" group-title="地方频道",临邑电视台1
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001104/index.m3u8
+#EXTINF:-1 tvg-name="乳山综合" group-title="地方频道",乳山综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001049/index.m3u8
+#EXTINF:-1 tvg-name="五莲综合" group-title="地方频道",五莲综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001068/index.m3u8
+#EXTINF:-1 tvg-name="任城生活" group-title="地方频道",任城生活
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001112/index.m3u8
+#EXTINF:-1 tvg-name="任城综合" group-title="地方频道",任城综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001111/index.m3u8
+#EXTINF:-1 tvg-name="优优宝贝" group-title="地方频道",优优宝贝
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000641/index.m3u8
+#EXTINF:-1 tvg-name="先锋兵羽" group-title="地方频道",先锋兵羽
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000650/index.m3u8
+#EXTINF:-1 tvg-name="北京纪实" group-title="卫视频道",北京纪实
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000332/index.m3u8
+#EXTINF:-1 tvg-name="北广四海钓鱼" group-title="地方频道",北广四海钓鱼
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000674/index.m3u8
+#EXTINF:-1 tvg-name="北广环球旅游" group-title="地方频道",北广环球旅游
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000643/index.m3u8
+#EXTINF:-1 tvg-name="北广车迷频道" group-title="地方频道",北广车迷频道
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000645/index.m3u8
+#EXTINF:-1 tvg-name="卫视综艺" group-title="卫视频道",卫视综艺
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000338/index.m3u8
+#EXTINF:-1 tvg-name="周村综合" group-title="地方频道",周村综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001019/index.m3u8
+#EXTINF:-1 tvg-name="宁津综合" group-title="地方频道",宁津综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001003/index.m3u8
+#EXTINF:-1 tvg-name="宁阳电视台2" group-title="地方频道",宁阳电视台2
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001072/index.m3u8
+#EXTINF:-1 tvg-name="宁阳综合" group-title="地方频道",宁阳综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001071/index.m3u8
+#EXTINF:-1 tvg-name="安丘综合" group-title="地方频道",安丘综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001015/index.m3u8
+#EXTINF:-1 tvg-name="定陶电视台" group-title="地方频道",定陶电视台
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001063/index.m3u8
+#EXTINF:-1 tvg-name="家庭理财" group-title="地方频道",家庭理财
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000654/index.m3u8
+#EXTINF:-1 tvg-name="寿光综合" group-title="地方频道",寿光综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001000/index.m3u8
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000702/index.m3u8
+#EXTINF:-1 tvg-name="山东国际" group-title="卫视频道",山东国际
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000060/index.m3u8
+#EXTINF:-1 tvg-name="岚山电视" group-title="地方频道",岚山电视
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001044/index.m3u8
+#EXTINF:-1 tvg-name="岱岳综合" group-title="地方频道",岱岳综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001013/index.m3u8
+#EXTINF:-1 tvg-name="崂山电视" group-title="地方频道",崂山电视
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001022/index.m3u8
+#EXTINF:-1 tvg-name="已停用" group-title="地方频道",已停用
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00004004/index.m3u8
+#EXTINF:-1 tvg-name="平度新闻" group-title="地方频道",平度新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001054/index.m3u8
+#EXTINF:-1 tvg-name="张店综合" group-title="地方频道",张店综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001012/index.m3u8
+#EXTINF:-1 tvg-name="德州新闻" group-title="山东地方",德州新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000206/index.m3u8
+#EXTINF:-1 tvg-name="惠民综合" group-title="地方频道",惠民综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001009/index.m3u8
+#EXTINF:-1 tvg-name="招远综合" group-title="地方频道",招远综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001113/index.m3u8
+#EXTINF:-1 tvg-name="教育就业" group-title="地方频道",教育就业
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000642/index.m3u8
+#EXTINF:-1 tvg-name="新动漫" group-title="地方频道",新动漫
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000659/index.m3u8
+#EXTINF:-1 tvg-name="新娱乐" group-title="地方频道",新娱乐
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000644/index.m3u8
+#EXTINF:-1 tvg-name="日照综合" group-title="山东地方",日照综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000262/index.m3u8
+#EXTINF:-1 tvg-name="昌乐综合" group-title="地方频道",昌乐综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001033/index.m3u8
+#EXTINF:-1 tvg-name="昌邑综合" group-title="地方频道",昌邑综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001083/index.m3u8
+#EXTINF:-1 tvg-name="曲阜综合" group-title="地方频道",曲阜综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001052/index.m3u8
+#EXTINF:-1 tvg-name="泰山综合" group-title="地方频道",泰山综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001114/index.m3u8
+#EXTINF:-1 tvg-name="济南影视" group-title="影视频道",济南影视
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000064/index.m3u8
+#EXTINF:-1 tvg-name="济南新闻" group-title="山东地方",济南新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000312/index.m3u8
+#EXTINF:-1 tvg-name="济南综合" group-title="山东地方",济南综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000061/index.m3u8
+#EXTINF:-1 tvg-name="滨州新闻" group-title="山东地方",滨州新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000220/index.m3u8
+#EXTINF:-1 tvg-name="潍坊影视综艺" group-title="影视频道",潍坊影视综艺
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000217/index.m3u8
+#EXTINF:-1 tvg-name="潍坊都市" group-title="山东地方",潍坊都市
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000216/index.m3u8
+#EXTINF:-1 tvg-name="潍坊高新区" group-title="山东地方",潍坊高新区
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001106/index.m3u8
+#EXTINF:-1 tvg-name="烟台新闻" group-title="山东地方",烟台新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000280/index.m3u8
+#EXTINF:-1 tvg-name="牟平综合" group-title="地方频道",牟平综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001076/index.m3u8
+#EXTINF:-1 tvg-name="综艺影视" group-title="影视频道",综艺影视
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001060/index.m3u8
+#EXTINF:-1 tvg-name="胶州综合" group-title="地方频道",胶州综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001074/index.m3u8
+#EXTINF:-1 tvg-name="菏泽公共" group-title="山东地方",菏泽公共
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000234/index.m3u8
+#EXTINF:-1 tvg-name="菏泽新闻" group-title="山东地方",菏泽新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000232/index.m3u8
+#EXTINF:-1 tvg-name="蓬莱综合" group-title="地方频道",蓬莱综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001088/index.m3u8
+#EXTINF:-1 tvg-name="财富天下" group-title="地方频道",财富天下
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000607/index.m3u8
+#EXTINF:-1 tvg-name="足球" group-title="数字频道",足球
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00000704/index.m3u8
+#EXTINF:-1 tvg-name="长岛电视台" group-title="地方频道",长岛电视台
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001090/index.m3u8
+#EXTINF:-1 tvg-name="阳信新闻" group-title="地方频道",阳信新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001036/index.m3u8
+#EXTINF:-1 tvg-name="高密综合" group-title="地方频道",高密综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001089/index.m3u8
+#EXTINF:-1 tvg-name="魅力足球" group-title="数字频道",魅力足球
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00002021/index.m3u8
+#EXTINF:-1 tvg-name="鱼台新闻" group-title="地方频道",鱼台新闻
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001107/index.m3u8
+#EXTINF:-1 tvg-name="龙口综合" group-title="地方频道",龙口综合
+#ISP:TELECOM
+#REGION:山东
+http://150.138.8.143/00/SNM/CHANNEL00001005/index.m3u8
