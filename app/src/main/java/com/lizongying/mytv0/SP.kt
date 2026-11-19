@@ -77,11 +77,16 @@ object SP {
     private const val KEY_REGION_OVERRIDE = "region_override"
     private const val KEY_SOFT_CHANNELS = "soft_channels"
 
+    private const val KEY_CONFIG_ETAG = "config_etag"
+
     const val DEFAULT_CHANNEL_REVERSAL = false
     const val DEFAULT_CHANNEL_NUM = false
     const val DEFAULT_TIME = true
     const val DEFAULT_BOOT_STARTUP = false
-    const val DEFAULT_CONFIG_URL = ""
+    // 频道源放在和新版本同一个仓库里：源改推送后，已装的 App 下次启动会自动更新到，
+    // 不用重新发版装包。启动先读本地缓存秒开，45 秒后才去云端校验。
+    const val DEFAULT_CONFIG_URL =
+        "https://raw.githubusercontent.com/yyefree/my-tv-0-lite/main/app/src/main/res/raw/channels.txt"
     const val DEFAULT_PROXY = ""
     // 原值指向 two 个已失效的域名（live.fanmingming.cn / raw.githubusercontent.com），
     // 每次启动都会各超时一次，拖慢首屏。默认留空，需要 EPG 时在设置里自己填。
@@ -97,7 +102,7 @@ object SP {
     const val DEFAULT_POSITION_GROUP = 1
     const val DEFAULT_POSITION = 0
     const val DEFAULT_REPEAT_INFO = true
-    const val DEFAULT_CONFIG_AUTO_LOAD = false
+    const val DEFAULT_CONFIG_AUTO_LOAD = true
     var DEFAULT_SOURCES = ""
 
     private lateinit var sp: SharedPreferences
@@ -194,6 +199,11 @@ object SP {
     var configUrl: String?
         get() = sp.getString(KEY_CONFIG_URL, DEFAULT_CONFIG_URL)
         set(value) = sp.edit().putString(KEY_CONFIG_URL, value).apply()
+
+    /** 云端源的 ETag，下次请求带 If-None-Match，没改就 304 直接跳过 */
+    var configEtag: String
+        get() = sp.getString(KEY_CONFIG_ETAG, "") ?: ""
+        set(value) = sp.edit().putString(KEY_CONFIG_ETAG, value).apply()
 
     var configAutoLoad: Boolean
         get() = sp.getBoolean(KEY_CONFIG_AUTO_LOAD, DEFAULT_CONFIG_AUTO_LOAD)

@@ -32,6 +32,7 @@ import com.lizongying.mytv0.requests.HttpClient
 import com.lizongying.mytv0.showToast
 import io.github.lizongying.Gua
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -80,18 +81,88 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 启动后从云端校验频道源。和手动导入（importFromUrl）刻意走两条路：
+     *
+     *   1. 先等 45 秒，让首屏和第一路播放稳定下来，不跟启动抢带宽
+     *   2. 带 If-None-Match，源没改服务端回 304 就直接结束，不下载也不解析
+     *   3. 拉到新内容**只写缓存文件，不重建当前频道列表** —— 正在播的节目一点不受影响，
+     *      下次冷启动读缓存时自然生效。源更新不该打断看电视的人。
+     */
     fun updateConfig() {
-        if (SP.configAutoLoad) {
-            SP.configUrl?.let {
-                if (it.startsWith("http")) {
-                    viewModelScope.launch {
-                        Logger.i(TAG, "update config url: $it")
-                        importFromUrl(it)
-                        updateEPG()
+        if (!SP.configAutoLoad) return
+        val url = SP.configUrl ?: return
+        if (!url.startsWith("http", ignoreCase = true)) return
+        viewModelScope.launch {
+            delay(CONFIG_PULL_DELAY_MS)
+            pullConfigQuietly(url)
+        }
+    }
+
+    private suspend fun pullConfigQuietly(url: String) {
+        val etag = SP.configEtag
+        var fresh: String? = null
+
+        for (u in getUrls(url)) {
+            try {
+                val builder = okhttp3.Request.Builder().url(u)
+                if (etag.isNotEmpty()) builder.header("If-None-Match", etag)
+                HttpClient.okHttpClient.newCall(builder.build()).execute().use { r ->
+                    if (r.code == 304) {
+                        Logger.i(TAG, "云端源未变化(304) $u")
+                        return
+                    }
+                    if (!r.isSuccessful) {
+                        Logger.w(TAG, "拉源失败 ${r.code} $u")
+                    } else {
+                        fresh = r.body?.string()
+                        val tag = r.header("ETag").orEmpty()
+                        if (tag.isNotEmpty()) SP.configEtag = tag
                     }
                 }
+                if (fresh != null) break
+            } catch (e: Exception) {
+                Logger.w(TAG, "拉源异常 ${e.javaClass.simpleName} $u")
             }
         }
+
+        val text = fresh ?: return
+        if (text.length < 64 || !looksLikeChannels(text)) {
+            Logger.w(TAG, "云端源格式不认识，忽略 ${text.length}")
+            return
+        }
+
+        withContext(Dispatchers.IO) {
+            val cur = getCache()
+            if (cur == text) {
+                Logger.i(TAG, "云端源与本地一致")
+                return@withContext
+            }
+            // 先写临时文件再原子替换，避免写到一半断电留下半截缓存把列表搞坏
+            try {
+                val tmp = File(appDirectory, "channels.new")
+                tmp.writeText(text)
+                if (tmp.length() <= 0) return@withContext
+                val cf = cacheFile ?: return@withContext
+                val old = File(appDirectory, "channels.old")
+                if (cf.exists()) cf.renameTo(old)
+                if (tmp.renameTo(cf)) {
+                    old.delete()
+                    Logger.i(TAG, "云端源已缓存，下次启动生效 ${text.length}")
+                } else {
+                    old.renameTo(cf)
+                    Logger.w(TAG, "替换缓存失败，已回滚")
+                }
+            } catch (e: Exception) {
+                Logger.w(TAG, "写缓存失败 ${e.javaClass.simpleName}")
+            }
+        }
+    }
+
+    /** 轻量格式校验：认 M3U 头、DIYP 的 #genre# 分组，或至少像个多行列表 */
+    private fun looksLikeChannels(text: String): Boolean {
+        val head = text.take(400)
+        return head.contains("#EXTM3U") || text.contains("#genre#") || text.count { it == '\n' } > 8
     }
 
     private fun getCache(): String {
@@ -389,6 +460,13 @@ class MainViewModel : ViewModel() {
         val g = Gua()
         if (g.verify(str)) {
             string = g.decode(str)
+            // 内置资源若是编码过的，解码后把明文写回缓存：
+            // 下次设置页、网页端看到的就是可读的 TXT，改源直接编辑缓存即可。
+            try {
+                cacheFile?.writeText(string)
+            } catch (e: Exception) {
+                Logger.w(TAG, "写回明文缓存失败 ${e.javaClass.simpleName}")
+            }
         }
 
         if (string.isEmpty()) {
@@ -626,5 +704,8 @@ class MainViewModel : ViewModel() {
         const val CACHE_FILE_NAME = "channels.txt"
         const val CACHE_EPG = "epg.xml"
         val DEFAULT_CHANNELS_FILE = R.raw.channels
+
+        // 启动后多久去云端校验源。留足余量，避免和首屏、第一路播放抢带宽
+        private const val CONFIG_PULL_DELAY_MS = 45_000L
     }
 }
