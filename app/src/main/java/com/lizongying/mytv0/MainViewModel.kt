@@ -1,5 +1,6 @@
 import android.content.Context
 import android.net.Uri
+import android.util.Base64
 import android.util.Log
 import androidx.core.net.toFile
 import androidx.lifecycle.LiveData
@@ -35,6 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.File
 import java.io.InputStream
 
@@ -104,9 +106,10 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private suspend fun pullConfigQuietly(url: String) {
+    private suspend fun pullConfigQuietly(baseUrl: String) {
         // viewModelScope 默认跑在主线程，网络请求必须整块切到 IO，
         // 否则直接 NetworkOnMainThreadException（这条踩过一次）
+        val url = withContext(Dispatchers.IO) { lockToRef(baseUrl) }
         val text = withContext(Dispatchers.IO) { fetchFresh(url, SP.configEtag) } ?: return
 
         if (text.length < 64 || !looksLikeChannels(text)) {
@@ -145,6 +148,48 @@ class MainViewModel : ViewModel() {
                 Logger.w(TAG, "写缓存失败 ${e.javaClass.simpleName}")
             }
         }
+    }
+
+    /**
+     * 把源地址锁到当前发布的 ref 上。
+     *
+     * 源默认读 @main，可 jsDelivr 对 @main 有 12 小时缓存，改完源要半天才生效。
+     * version.json 里本来就有 ref（发版 tag；平时改源顺手打个 tag 也行），
+     * 换成 @<ref> 是全新地址、全新缓存键，改完基本立刻能拉到。
+     *
+     * api.github.com 没有缓存所以排第一；jsDelivr 那条只作兜底（它自己也有 12h 缓存，
+     * 但至少保证完全连不上 API 时还有个可用的 ref）。实在取不到就老实回 @main。
+     */
+    private fun lockToRef(baseUrl: String): String {
+        if (!baseUrl.contains("@main")) return baseUrl
+        for (u in VERSION_JSON_URLS) {
+            try {
+                HttpClient.okHttpClient.newCall(okhttp3.Request.Builder().url(u).build())
+                    .execute().use { r ->
+                        if (!r.isSuccessful) {
+                            Logger.w(TAG, "取版本清单失败 ${r.code}")
+                            return@use
+                        }
+                        val body = r.body?.string() ?: return@use
+                        // api.github.com 的 contents 接口把文件内容塞进 base64 的 content 字段，
+                        // jsDelivr 返回的才是 version.json 原文，两种都得吃得下
+                        val text = if (body.contains("\"content\"")) {
+                            val b64 = JSONObject(body).optString("content").replace("\n", "")
+                            String(Base64.decode(b64, Base64.DEFAULT), Charsets.UTF_8)
+                        } else {
+                            body
+                        }
+                        val ref = JSONObject(text).optString("ref")
+                        if (ref.isNotEmpty()) {
+                            Logger.w(TAG, "源地址锁定 ref=$ref")
+                            return baseUrl.replace("@main", "@$ref")
+                        }
+                    }
+            } catch (e: Exception) {
+                Logger.w(TAG, "取版本清单异常 ${e.javaClass.simpleName}")
+            }
+        }
+        return baseUrl
     }
 
     /** 拉取云端源；返回 null 表示 304 未变化、请求失败或内容为空 */
@@ -740,5 +785,11 @@ class MainViewModel : ViewModel() {
 
         // 启动后多久去云端校验源。留足余量，避免和首屏、第一路播放抢带宽
         private const val CONFIG_PULL_DELAY_MS = 45_000L
+
+        // 这里只要 ref 字段，不关心版本号。api.github.com 无缓存，所以排第一
+        private val VERSION_JSON_URLS = listOf(
+            "https://api.github.com/repos/yyefree/my-tv-0-lite/contents/version.json",
+            "https://gcore.jsdelivr.net/gh/yyefree/my-tv-0-lite@main/version.json",
+        )
     }
 }
